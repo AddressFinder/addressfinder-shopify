@@ -26,7 +26,7 @@ AddressFinder-Shopify requires IE11, Chrome, Safari, or Firefox.
 2. Scroll down to the Google Analytics section. To complete this section you must have a Google Analytics account. If you do not have one, please read the following article: https://help.shopify.com/manual/reports-and-analytics/google-analytics. You will need to enter your Google Analytics Tracking Code(this will be in the format: "UA-XXXXXXXX-XX")
 3. Click Save
 4. Reopen the Online Store Preferences and go to the Google Analytics section. Your Tracking Code should appear here.
-5. Copy the following script into the "Additional Google Analytics Javascript" textbox that is displayed:
+5. Copy the following script into the "Additional Google Analytics Javascript" textbox that is displayed. However if there is already text present in this textbox, then append the following text:
 ```
 (function(d,w){
   w.AddressFinderPlugin = {
@@ -40,6 +40,8 @@ AddressFinder-Shopify requires IE11, Chrome, Safari, or Firefox.
 ```
 6. Tick the "Use Enhanced Ecommerce" checkbox at the bottom of the Google Analytics section.
 7. Replace the `ADDRESSFINDER_NZ_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
+
+![Shopify Install](/assets/shopify-install.png)
 
 #### Obtaining a licence key
 
