@@ -41,6 +41,8 @@ AddressFinder-Shopify requires IE11, Chrome, Safari, or Firefox.
 6. Tick the "Use Enhanced Ecommerce" checkbox at the bottom of the Google Analytics section.
 7. Replace the `ADDRESSFINDER_NZ_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
 
+[Shopify Install](/assets/shopify-install.png)
+
 #### Obtaining a licence key
 
 New users can register for a free AddressFinder account at one of these links:
