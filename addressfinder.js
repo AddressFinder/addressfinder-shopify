@@ -1,48 +1,18 @@
 
-
-
-
-// (function(){
-//   var widget, initAF = function(){
-//     widget = new AddressFinder.Widget(
-//       document.getElementById('checkout_shipping_address_address1'),
-//       'ADDRESSFINDER_NZ_DEMO_KEY',
-//       'NZ',
-//       {
-//       }
-//     );
-//
-//     widget.on("result:select", function(fullAddress, metaData) {
-//       var selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
-//       document.getElementById('address_line_1').value = selected.address_line_1()
-//       document.getElementById('address_line_2').value = selected.address_line_2()
-//
-//       // If you only have one address line
-//       // document.getElementById('address_line').value = selected.address_line_1_and_2()
-//
-//       document.getElementById('suburb').value = selected.suburb()
-//       document.getElementById('city').value = selected.city()
-//       document.getElementById('postcode').value = selected.postcode()
-//     });
-//     };
-//
-//   function downloadAF(f){
-//     var script = document.createElement('script');
-//     script.src = 'https://api.addressfinder.io/assets/v3/widget.js';
-//     script.async = true;
-//     script.onload=f;
-//     document.body.appendChild(script);
-//   };
-//
-//     downloadAF(initAF);
-// })();
-//
-//
-
-(function(d, w) {
+/*
+ * The AddressFinder plugin for Shopify adds an autocomplete capability to
+ * the billing and shipping address fields of your online store.
+ *
+ * https://github.com/AbleTech/addressfinder-shopify
+ *
+ * VERSION 1.0.0
+ *
+ * Copyright (c) 2016 Abletech
+ */
+ (function(d, w) {
   w.AddressFinderConfig = w.AddressFinderConfig || {};
 
-  w.AddressFinderConfig.fieldsForAddressType = {
+  w.AddressFinderConfig.fieldMappings = {
     billing: {
       address_1: "checkout_billing_address_address1",
       address_2: "checkout_billing_address_address2",
@@ -61,11 +31,26 @@
     }
   }
 
+  /*
+   * Logs the supplied message to the console
+   */
   var logError = function(message){
     if (w.console) {
-      console.log(message);
+      w.console.warn(message);
     }
   }
+
+  /*
+   * Clear all address fields (except country)
+   */
+  var _clearFields = function(addressType) {
+    var fields = w.AddressFinderConfig.fieldMappings[addressType];
+    delete fields.country;
+
+    for (field in fields) {
+      d.getElementById(fields[field]).value = "";
+    }
+  };
 
   /*
    * Sets the value of the input field corresponding to a given element id.
@@ -104,6 +89,9 @@
     logError(errorMessage);
   };
 
+  /*
+   * Selects the AU state using the AddressFinder state code.
+   */
   var _setAuState = function(elementId, value) {
     var statesByCode = {
       "ACT": "Australian Capital Territory",
@@ -119,6 +107,9 @@
     _setFieldValue(elementId, state);
   };
 
+  /*
+   * Selects the NZ region using the AddressFinder region result.
+   */
   var _setNzRegion = function(elementId, value) {
     var regionMappings = {
       "Auckland Region": "Auckland",
@@ -142,6 +133,9 @@
     _setFieldValue(elementId, region);
   };
 
+  /*
+   * Populate the address fields with the NZ address returned by the AF widget
+   */
   var _selectNewZealand = function(fullAddress, metaData) {
     var fieldMappings = this.fieldMappings;
 
@@ -153,23 +147,67 @@
     _setNzRegion(fieldMappings.state, metaData.region);
   }
 
-  var _bindAF = function(addressType){
-    var addressField = document.getElementById(w.AddressFinderConfig.fieldsForAddressType[addressType].address_1);
+  /*
+   * Populate the address fields with the AU address returned by the AF widget
+   */
+  var _selectAustralia = function(address, metaData) {
+    var fieldMappings = this.fieldMappings;
+
+    _setFieldValue(fieldMappings.address_1, metaData.address_line_1);
+    _setFieldValue(fieldMappings.address_2, metaData.address_line_2 || "");
+    _setFieldValue(fieldMappings.city, metaData.locality_name || "");
+    _setAuState(fieldMappings.state, metaData.state_territory);
+    _setFieldValue(fieldMappings.postcode, metaData.postcode);
+  };
+
+  /*
+   * Binds the AddressFinder widget to the form, and monitors the country field
+   * for changes. Selects the appropriate NZ or AU widget.
+   */
+  var _bindAddressFinderToForm = function(addressType){
+    var addressField = document.getElementById(w.AddressFinderConfig.fieldMappings[addressType].address_1);
 
     if(!addressField){
-      logError("Unable to find address field with ID " + w.AddressFinderConfig.fieldsForAddressType[addressType].address_1);
+      logError("Unable to find address field with ID " + w.AddressFinderConfig.fieldMappings[addressType].address_1);
       return;
     }
 
     var widgets = {};
 
     widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderConfig.key, 'NZ');
-    widgets.nz.fieldMappings = w.AddressFinderConfig.fieldsForAddressType[addressType];
+    widgets.nz.fieldMappings = w.AddressFinderConfig.fieldMappings[addressType];
     widgets.nz.on("result:select", _selectNewZealand);
 
-    // widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderConfig.key, 'AU');
-    // widgets.au.cfieldMappings = w.AddressFinderConfig.fieldsForAddressType[addressType];
-    // widgets.au.on("result:select", _selectAustralia);
+    widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderConfig.key, 'AU');
+    widgets.au.fieldMappings = w.AddressFinderConfig.fieldMappings[addressType];
+    widgets.au.on("result:select", _selectAustralia);
+
+    var countryFieldID = w.AddressFinderConfig.fieldMappings[addressType].country;
+
+    var _toggleWidgets = function(retainFields) {
+      var selectedCountry = d.getElementById(countryFieldID).value;
+
+      if (selectedCountry == "New Zealand") {
+        widgets.nz.enable();
+        widgets.au.disable();
+      } else if (selectedCountry == "Australia") {
+        widgets.au.enable();
+        widgets.nz.disable();
+      } else {
+        widgets.au.disable();
+        widgets.nz.disable();
+      }
+
+      if(retainFields != true){
+        _clearFields(addressType);
+      }
+    };
+
+    /* enable/disable correct widget at start */
+    _toggleWidgets(true);
+
+    /* enable/disable correct widget for subsequent changes in country selected */
+    d.getElementById(countryFieldID).addEventListener("change", _toggleWidgets);
 
     /* ensure results are displayed */
     var addresses = d.getElementsByClassName("af_list");
@@ -179,32 +217,30 @@
   };
 
   /*
-   * This callback function invokes the AF widget
+   * Looks for billing or shipping address fields, and if they exist it will
+   * call _bindAddressFinderToForm() to configure the integration.
    */
-  var _initPlugin = function() {
-    if(d.getElementById(w.AddressFinderConfig.fieldsForAddressType.billing.address_1)){
-      _bindAF("billing");
+  var _initAddressTypes = function() {
+    if(d.getElementById(w.AddressFinderConfig.fieldMappings.billing.address_1)){
+      _bindAddressFinderToForm("billing");
     }
-    if(d.getElementById(w.AddressFinderConfig.fieldsForAddressType.shipping.address_1)){
-      _bindAF("shipping");
+    if(d.getElementById(w.AddressFinderConfig.fieldMappings.shipping.address_1)){
+      _bindAddressFinderToForm("shipping");
     }
   };
 
-  /*
-   * This function is called when the window DOMContentLoaded event fires.
-   * It adds the AddressFinder widget script, and when it loads, calls _initAF().
-   */
   var _addScript = function() {
     var s = d.createElement("script");
     s.src = "https://api.addressfinder.io/assets/v3/widget.js";
     s.async = 1;
-    s.onload = _initPlugin;
+    s.onload = _initAddressTypes;
     d.body.appendChild(s);
   };
 
-  var billing_address_1 = d.getElementById(w.AddressFinderConfig.fieldsForAddressType.billing.address_1);
-  var shipping_address_1 = d.getElementById(w.AddressFinderConfig.fieldsForAddressType.shipping.address_1);
+  var billing_address_1 = d.getElementById(w.AddressFinderConfig.fieldMappings.billing.address_1);
+  var shipping_address_1 = d.getElementById(w.AddressFinderConfig.fieldMappings.shipping.address_1);
 
+  // Only load AddressFinder if the billing or shipping fields exist on the page
   if(billing_address_1 || shipping_address_1){
     _addScript();
   }
