@@ -5,7 +5,7 @@
  *
  * https://github.com/AbleTech/addressfinder-shopify
  *
- * VERSION 1.0.0
+ * VERSION 1.0.1
  *
  * Copyright (c) 2016 Abletech
  */
