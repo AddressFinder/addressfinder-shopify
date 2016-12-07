@@ -5,7 +5,7 @@
  *
  * https://github.com/AbleTech/addressfinder-shopify
  *
- * VERSION 1.0.1
+ * VERSION 1.0.2
  *
  * Copyright (c) 2016 Abletech
  */
@@ -172,15 +172,15 @@
       return;
     }
 
-    d.AddressFinderPlugin.widgets = {};
+    w.AddressFinderPlugin.widgets = {};
 
-    d.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'NZ');
-    d.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
-    d.AddressFinderPlugin.widgets.nz.on("result:select", _selectNewZealand);
+    w.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'NZ');
+    w.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    w.AddressFinderPlugin.widgets.nz.on("result:select", _selectNewZealand);
 
-    d.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'AU');
-    d.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
-    d.AddressFinderPlugin.widgets.au.on("result:select", _selectAustralia);
+    w.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'AU');
+    w.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    w.AddressFinderPlugin.widgets.au.on("result:select", _selectAustralia);
 
     var countryFieldID = w.AddressFinderPlugin.fieldMappings[addressType].country;
 
@@ -188,14 +188,14 @@
       var selectedCountry = d.getElementById(countryFieldID).value;
 
       if (selectedCountry == "New Zealand") {
-        d.AddressFinderPlugin.widgets.nz.enable();
-        d.AddressFinderPlugin.widgets.au.disable();
+        w.AddressFinderPlugin.widgets.nz.enable();
+        w.AddressFinderPlugin.widgets.au.disable();
       } else if (selectedCountry == "Australia") {
-        d.AddressFinderPlugin.widgets.au.enable();
-        d.AddressFinderPlugin.widgets.nz.disable();
+        w.AddressFinderPlugin.widgets.au.enable();
+        w.AddressFinderPlugin.widgets.nz.disable();
       } else {
-        d.AddressFinderPlugin.widgets.au.disable();
-        d.AddressFinderPlugin.widgets.nz.disable();
+        w.AddressFinderPlugin.widgets.au.disable();
+        w.AddressFinderPlugin.widgets.nz.disable();
       }
 
       if(retainFields != true){
