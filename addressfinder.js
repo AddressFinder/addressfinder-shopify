@@ -10,9 +10,9 @@
  * Copyright (c) 2016 Abletech
  */
  (function(d, w) {
-  w.AddressFinderConfig = w.AddressFinderConfig || {};
+  w.AddressFinderPlugin = w.AddressFinderPlugin || {};
 
-  w.AddressFinderConfig.fieldMappings = {
+  w.AddressFinderPlugin.fieldMappings = {
     billing: {
       address_1: "checkout_billing_address_address1",
       address_2: "checkout_billing_address_address2",
@@ -44,7 +44,7 @@
    * Clear all address fields (except country)
    */
   var _clearFields = function(addressType) {
-    var fields = w.AddressFinderConfig.fieldMappings[addressType];
+    var fields = w.AddressFinderPlugin.fieldMappings[addressType];
     delete fields.country;
 
     for (field in fields) {
@@ -165,37 +165,37 @@
    * for changes. Selects the appropriate NZ or AU widget.
    */
   var _bindAddressFinderToForm = function(addressType){
-    var addressField = document.getElementById(w.AddressFinderConfig.fieldMappings[addressType].address_1);
+    var addressField = document.getElementById(w.AddressFinderPlugin.fieldMappings[addressType].address_1);
 
     if(!addressField){
-      logError("Unable to find address field with ID " + w.AddressFinderConfig.fieldMappings[addressType].address_1);
+      logError("Unable to find address field with ID " + w.AddressFinderPlugin.fieldMappings[addressType].address_1);
       return;
     }
 
-    var widgets = {};
+    d.AddressFinderPlugin.widgets = {};
 
-    widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderConfig.key, 'NZ');
-    widgets.nz.fieldMappings = w.AddressFinderConfig.fieldMappings[addressType];
-    widgets.nz.on("result:select", _selectNewZealand);
+    d.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'NZ');
+    d.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    d.AddressFinderPlugin.widgets.nz.on("result:select", _selectNewZealand);
 
-    widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderConfig.key, 'AU');
-    widgets.au.fieldMappings = w.AddressFinderConfig.fieldMappings[addressType];
-    widgets.au.on("result:select", _selectAustralia);
+    d.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'AU');
+    d.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    d.AddressFinderPlugin.widgets.au.on("result:select", _selectAustralia);
 
-    var countryFieldID = w.AddressFinderConfig.fieldMappings[addressType].country;
+    var countryFieldID = w.AddressFinderPlugin.fieldMappings[addressType].country;
 
     var _toggleWidgets = function(retainFields) {
       var selectedCountry = d.getElementById(countryFieldID).value;
 
       if (selectedCountry == "New Zealand") {
-        widgets.nz.enable();
-        widgets.au.disable();
+        d.AddressFinderPlugin.widgets.nz.enable();
+        d.AddressFinderPlugin.widgets.au.disable();
       } else if (selectedCountry == "Australia") {
-        widgets.au.enable();
-        widgets.nz.disable();
+        d.AddressFinderPlugin.widgets.au.enable();
+        d.AddressFinderPlugin.widgets.nz.disable();
       } else {
-        widgets.au.disable();
-        widgets.nz.disable();
+        d.AddressFinderPlugin.widgets.au.disable();
+        d.AddressFinderPlugin.widgets.nz.disable();
       }
 
       if(retainFields != true){
@@ -221,10 +221,10 @@
    * call _bindAddressFinderToForm() to configure the integration.
    */
   var _initAddressTypes = function() {
-    if(d.getElementById(w.AddressFinderConfig.fieldMappings.billing.address_1)){
+    if(d.getElementById(w.AddressFinderPlugin.fieldMappings.billing.address_1)){
       _bindAddressFinderToForm("billing");
     }
-    if(d.getElementById(w.AddressFinderConfig.fieldMappings.shipping.address_1)){
+    if(d.getElementById(w.AddressFinderPlugin.fieldMappings.shipping.address_1)){
       _bindAddressFinderToForm("shipping");
     }
   };
@@ -237,8 +237,8 @@
     d.body.appendChild(s);
   };
 
-  var billing_address_1 = d.getElementById(w.AddressFinderConfig.fieldMappings.billing.address_1);
-  var shipping_address_1 = d.getElementById(w.AddressFinderConfig.fieldMappings.shipping.address_1);
+  var billing_address_1 = d.getElementById(w.AddressFinderPlugin.fieldMappings.billing.address_1);
+  var shipping_address_1 = d.getElementById(w.AddressFinderPlugin.fieldMappings.shipping.address_1);
 
   // Only load AddressFinder if the billing or shipping fields exist on the page
   if(billing_address_1 || shipping_address_1){
