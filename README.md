@@ -18,7 +18,7 @@ and Australian Shopify Stores.
 
 #### Compatibility
 
-AddressFinder-Shopify requires IE11, Chrome, Safari, or Firefox.
+AddressFinder-Shopify supports all modern browsers. Versions of Internet Explorer are supported from version 9 to current. 
 
 ## Installation
 
