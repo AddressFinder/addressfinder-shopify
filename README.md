@@ -17,10 +17,10 @@ and Australian Shopify Stores.
 * [New Zealand](https://addressfinder.nz/)
 
 #### Compatibility
-
-AddressFinder-Shopify requires IE11, Chrome, Safari, or Firefox.
+AddressFinder-Shopify supports all modern browsers. Versions of Internet Explorer are supported from version 9 to current.
 
 ## Installation
+If you already have Google Analytics installed, please start at Step 4.
 
 1. Log into the admin panel for your Shopify site, and navigate to Online Store -> Preferences.
 2. Scroll down to the Google Analytics section. To complete this section you must have a Google Analytics account. If you do not have one, please read the following article: https://help.shopify.com/manual/reports-and-analytics/google-analytics. You will need to enter your Google Analytics Tracking Code(this will be in the format: "UA-XXXXXXXX-XX")
@@ -51,6 +51,15 @@ New users can register for a free AddressFinder account at one of these links:
 
 Existing users can obtain their API key from the
 [AddressFinder Portal](https://portal.addressfinder.io/).
+
+### Customising the Checkout Page
+By default the Checkout page has a single address field enabled. Though if you want to have a second Address Line field(Address 2) then you will need to enable this. This can be done by going to Shopify Settings -> Checkout -> Form options -> Address line 2(apartment, unit, etc) -> select Optional/Required/Hidden as you wish -> Save.
+
+![Enable Second Address Field](/assets/multiple-address-lines.png)
+
+You can change the existing label and placeholder of the second address field (containing Apt, suite etc) to 'Address 2' if you feel that it may confuse your customers. This can be achieved by going to Shopify Settings -> Checkout -> Checkout language -> Manage checkout language -> Scroll down to the 'Checkout contact' heading. Under this heading, look for the Address 2 label and Address 2 placeholder fields which containing Apt, suite, etc. Change the contents of these fields to read Address 2 (optional - add this if the field is optional) and then click Save.
+
+![Rename Address 2 field](/assets/rename-address-2-field.png)
 
 ## Software License
 
