@@ -43,6 +43,10 @@ If you already have Google Analytics installed, please start at Step 4.
 
 ![Shopify Install](/assets/shopify-install.png)
 
+8. By default the Checkout page has a single address field enabled. You will need to add a second Address Line field(Address 2) enabled in order to capture complete address details. This can be done by going to Shopify Settings -> Checkout -> Form options -> Address line 2(apartment, unit, etc) -> select Optional -> Save.
+
+![Enable Second Address Field](/assets/multiple-address-lines.png)
+
 #### Obtaining a licence key
 
 New users can register for a free AddressFinder account at one of these links:
@@ -52,11 +56,7 @@ New users can register for a free AddressFinder account at one of these links:
 Existing users can obtain their API key from the
 [AddressFinder Portal](https://portal.addressfinder.io/).
 
-### Essential adjustments to the Checkout Page
-By default the Checkout page has a single address field enabled. You will need to add a second Address Line field(Address 2) enabled in order to capture complete address details. This can be done by going to Shopify Settings -> Checkout -> Form options -> Address line 2(apartment, unit, etc) -> select Optional -> Save.
-
-![Enable Second Address Field](/assets/multiple-address-lines.png)
-
+### Useful Adjustment to the Checkout Page
 You can change the existing label and placeholder of the second address field (containing Apt, suite etc) to 'Address 2' if you feel that it may confuse your customers. This can be achieved by going to Shopify Settings -> Checkout -> Checkout language -> Manage checkout language -> Scroll down to the 'Checkout contact' heading. Under this heading, look for the Address 2 label and Address 2 placeholder fields which containing Apt, suite, etc. Change the contents of these fields to read Address 2(optional) and then click Save.
 
 ![Rename Address 2 field](/assets/rename-address-2-field.png)
