@@ -27,21 +27,21 @@ If you already have Google Analytics installed, please start at Step 4.
 3. Click Save
 4. Reopen your Shopify Online Store Preferences and go to the Google Analytics section. Your Tracking Code should appear here.
 5. Copy the following script into the "Additional Google Analytics Javascript" textbox that is displayed. However if there is already text present in this textbox, then append the following text:
-```
-(function(d,w){
-  w.AddressFinderPlugin = {
-    key: "ADDRESSFINDER_NZ_DEMO_KEY"
-  };
-    var s = d.createElement("script");
-    s.src = "https://api.addressfinder.io/assets/shopify/v1/boot.js";
-    s.async = 1;
-    d.body.appendChild(s);
-})(document, window);
-```
+  ```
+  (function(d,w){
+    w.AddressFinderPlugin = {
+      key: "ADDRESSFINDER_NZ_DEMO_KEY"
+    };
+      var s = d.createElement("script");
+      s.src = "https://api.addressfinder.io/assets/shopify/v1/boot.js";
+      s.async = 1;
+      d.body.appendChild(s);
+  })(document, window);
+  ```
 6. Tick the "Use Enhanced Ecommerce" checkbox at the bottom of the Google Analytics section.
 7. Replace the `ADDRESSFINDER_NZ_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
 
-![Shopify Install](/assets/shopify-install.png)
+  ![Shopify Install](/assets/shopify-install.png)
 
 8. By default the Checkout page has a single address field enabled. You will need to add a second Address Line field(Address 2) enabled in order to capture complete address details. This can be done by going to Shopify Settings -> Checkout -> Form options -> Address line 2(apartment, unit, etc) -> select Optional -> Save.
 
