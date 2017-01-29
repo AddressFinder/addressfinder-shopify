@@ -27,6 +27,7 @@ If you already have Google Analytics installed, please start at Step 4.
 3. Click Save
 4. Reopen your Shopify Online Store Preferences and go to the Google Analytics section. Your Tracking Code should appear here.
 5. Copy the following script into the "Additional Google Analytics Javascript" textbox that is displayed. However if there is already text present in this textbox, then append the following text:
+
   ```
   (function(d,w){
     w.AddressFinderPlugin = {
