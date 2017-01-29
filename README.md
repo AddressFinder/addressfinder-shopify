@@ -44,7 +44,7 @@ If you already have Google Analytics installed, please start at Step 4.
 
   ![Shopify Install](/assets/shopify-install.png)
 
-8. By default the Checkout page has a single address field enabled. You will need to add a second Address Line field(Address 2) enabled in order to capture complete address details. This can be done by going to Shopify Settings -> Checkout -> Form options -> Address line 2(apartment, unit, etc) -> select Optional -> Save.
+8. By default the Checkout page has a single address field enabled. You will need to add a second Address Line field(Address 2) in order to capture complete address details. This can be done by going to Shopify Settings -> Checkout -> Form options -> Address line 2(apartment, unit, etc) -> select Optional -> Save.
 
 ![Enable Second Address Field](/assets/multiple-address-lines.png)
 
