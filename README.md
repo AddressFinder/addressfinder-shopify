@@ -58,7 +58,7 @@ Existing users can obtain their API key from the
 [AddressFinder Portal](https://portal.addressfinder.io/).
 
 ### Useful Adjustment to the Checkout Page
-You can change the existing label and placeholder of the second address field (containing Apt, suite etc) to 'Address 2' if you feel that it may confuse your customers. This can be achieved by going to Shopify Settings -> Checkout -> Checkout language -> Manage checkout language -> Scroll down to the 'Checkout contact' heading. Under this heading, look for the Optional address2 label and Optional Address2 placeholder fields which contain "Apt, suite, etc. (optional)". Change the contents of these fields to read Address 2(optional) and then click Save.
+You can change the existing label and placeholder of the second address field (containing Apt, suite etc) to 'Address 2' if you feel that it may confuse your customers. This can be achieved by going to Shopify Settings -> Checkout -> Checkout language -> Manage checkout language -> Scroll down to the 'Checkout contact' heading. Under this heading, look for the Optional address2 label and Optional Address2 placeholder fields which contain "Apt, suite, etc. (optional)". Change the contents of these fields to read Address 2(optional) and then click Save. You can repeat the above instructions to change the ‘City’ field to be called ‘Suburb' as Suburb is an important address attribute while City is not.
 
 ![Rename Address 2 field](/assets/rename-address-2-field.png)
 
