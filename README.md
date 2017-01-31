@@ -58,7 +58,7 @@ Here in New Zealand we have different rules and regulations when it comes to the
 
 1. Go into your Shopify settings>Checkout and scroll down to Form Options. (https://addressfinder.myshopify.com/admin/settings/checkout) As per below, make 'Address line 2 (apartment,unit etc)' Optional. You may want to make 'Company Name' and 'Phone Number' optional also. Then Save.
 
-![Including the Address Line 2 Field - NZ](/assets/nz-enable-address-fields.png)
+  ![Including the Address Line 2 Field - NZ](/assets/nz-enable-address-fields.png)
 
 2. Remain in the Shopify Settings>Checkout page and scroll down further to the 'Checkout Language' section.
 
@@ -66,11 +66,11 @@ Click on 'Manage Checkout Language'.
 
 Scroll all the way down to 'Checkout Contact' and then further to the 'Optional address2 label' field. Populate this with "Address 2 (optional)". Also populate the 'City Label' field with "Town/City". Then Save.
 
-![Renaming Fields - NZ](/assets/nz-rename-fields.png)
+  ![Renaming Fields - NZ](/assets/nz-rename-fields.png)
 
 Depending on your theme your shipping page should look something like this...
 
-![Complete Shipping Page - NZ](/assets/nz-complete-shipping-page.png)
+  ![Complete Shipping Page - NZ](/assets/nz-complete-shipping-page.png)
 
 ### Adjustments to comply with AU specific Address Formatting
 Here in Australia, we have different rules and regulations when it comes to the way we set out our addresses. In order to capture all of the correct address information we suggest you make a couple of adjustments to the billing/shipping page layout. These adjustments are 1) inclusion of the 'Address Line 2' field and 2) renaming of the 'Address line 2' and 'City' fields.
