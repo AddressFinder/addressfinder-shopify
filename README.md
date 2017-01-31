@@ -44,10 +44,6 @@ If you already have Google Analytics installed, please start at Step 4.
 
   ![Shopify Install](/assets/shopify-install.png)
 
-8. By default the Checkout page has a single address field enabled. You will need to add a second Address Line field(Address 2) in order to capture complete address details. This can be done by going to Shopify Settings -> Checkout -> Form options -> Address line 2(apartment, unit, etc) -> select Optional -> Save.
-
-![Enable Second Address Field](/assets/multiple-address-lines.png)
-
 #### Obtaining a licence key
 
 New users can register for a free AddressFinder account at one of these links:
@@ -57,10 +53,43 @@ New users can register for a free AddressFinder account at one of these links:
 Existing users can obtain their API key from the
 [AddressFinder Portal](https://portal.addressfinder.io/).
 
-### Useful Adjustment to the Checkout Page
-You can change the existing label and placeholder of the second address field (containing Apt, suite etc) to 'Address 2' if you feel that it may confuse your customers. This can be achieved by going to Shopify Settings -> Checkout -> Checkout language -> Manage checkout language -> Scroll down to the 'Checkout contact' heading. Under this heading, look for the Optional address2 label and Optional Address2 placeholder fields which contain "Apt, suite, etc. (optional)". Change the contents of these fields to read Address 2(optional) and then click Save. You can repeat the above instructions to change the ‘City’ field and rename it ‘Suburb' as Suburb is an important address attribute while City is not.
+### Adjustments to comply with NZ specific Address Formatting
+Here in New Zealand we have different rules and regulations when it comes to the way we set out our addresses. In order to capture all of the correct address information we suggest you make a couple of adjustments to the billing/shipping page layout. These adjustments are 1) inclusion of the 'Address Line 2' field and 2) renaming of the 'Address line 2' and 'City' fields.
 
-![Rename Address 2 field](/assets/rename-address-2-field.png)
+1. Go into your Shopify settings>Checkout and scroll down to Form Options. (https://addressfinder.myshopify.com/admin/settings/checkout) As per below, make 'Address line 2 (apartment,unit etc)' Optional. You may want to make 'Company Name' and 'Phone Number' optional also. Then Save.
+
+  ![Including the Address Line 2 Field - NZ](/assets/nz-enable-address-fields.png)
+
+2. Remain in the Shopify Settings>Checkout page and scroll down further to the 'Checkout Language' section.
+
+Click on 'Manage Checkout Language'.
+
+Scroll all the way down to 'Checkout Contact' and then further to the 'Optional address2 label' field. Populate this with "Address 2 (optional)". Also populate the 'City Label' field with "Town/City". Then Save.
+
+  ![Renaming Fields - NZ](/assets/nz-rename-fields.png)
+
+Depending on your theme your shipping page should look something like this...
+
+  ![Complete Shipping Page - NZ](/assets/nz-complete-shipping-page.png)
+
+### Adjustments to comply with AU specific Address Formatting
+Here in Australia, we have different rules and regulations when it comes to the way we set out our addresses. In order to capture all of the correct address information we suggest you make a couple of adjustments to the billing/shipping page layout. These adjustments are 1) inclusion of the 'Address Line 2' field and 2) renaming of the 'Address line 2' and 'City' fields.
+
+1) Go into your shopify settings>Checkout and scroll down to Form Options. (https://addressfinder.myshopify.com/admin/settings/checkout) As per below, make 'Address line 2 (apartment,unit etc)' Optional. You may want to make 'Company Name' and 'Phone Number' optional also. Then Save.
+
+  ![Including the Address Line 2 Field - AU](/assets/au-enable-address-fields.png)
+
+2) Remain in the Shopify Settings>Checkout page and scroll down further to the 'Checkout Language' section.
+
+Click on 'Manage Checkout Language'.
+
+Scroll all the way down to 'Checkout Contact' and then further to the 'Optional address2 label' field. Populate this with "Address 2 (optional)". Also populate the 'City Label' field with "Suburb/Locality". Then save.
+
+  ![Renaming Fields - AU](/assets/au-rename-fields.png)
+
+Depending on your theme, your checkout page should look something like this...
+
+  ![Complete Shipping Page - AU](/assets/au-complete-shipping-page.png)
 
 ## Software License
 
