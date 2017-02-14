@@ -47,15 +47,8 @@
     }
   }
 
-  var billing_address_1  = null,
-      shipping_address_1 = null,
-      selectedMapping    = null,
-      scanMapping        = {
-        billing:       'billing',
-        billing_plus:  'billing',
-        shipping:      'shipping',
-        shipping_plus: 'shipping'
-      };
+  var selectedMapping = null,
+      targetField     = null;
 
   /*
    * Logs the supplied message to the console
@@ -190,20 +183,19 @@
    * for changes. Selects the appropriate NZ or AU widget.
    */
   var _bindAddressFinderToForm = function(){
-    var addressField = billing_address_1 || shipping_address_1;
 
-    if(!addressField){
+    if(!targetField){
       logError("Unable to find address field with ID " + w.AddressFinderPlugin.fieldMappings[selectedMapping].address_1);
       return;
     }
 
     w.AddressFinderPlugin.widgets = {};
 
-    w.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'NZ');
+    w.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(targetField, w.AddressFinderPlugin.key, 'NZ');
     w.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     w.AddressFinderPlugin.widgets.nz.on("result:select", _selectNewZealand);
 
-    w.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'AU');
+    w.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(targetField, w.AddressFinderPlugin.key, 'AU');
     w.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     w.AddressFinderPlugin.widgets.au.on("result:select", _selectAustralia);
 
@@ -241,29 +233,17 @@
     }
   };
 
-  /*
-   * Looks for billing or shipping address fields, and if they exist it will
-   * call _bindAddressFinderToForm() to configure the integration.
-   */
-  var _initAddressTypes = function() {
-    if (selectedMapping) {
-      _bindAddressFinderToForm();
-    }
-  };
-
   var _addScript = function() {
     var s = d.createElement("script");
     s.src = "https://api.addressfinder.io/assets/v3/widget.js";
     s.async = 1;
-    s.onload = _initAddressTypes;
+    s.onload = _bindAddressFinderToForm;
     d.body.appendChild(s);
   };
 
-  for (keyName of Object.keys(scanMapping)) {
-    var targetField = d.getElementById(w.AddressFinderPlugin.fieldMappings[keyName].address_1);
-    var formMode = scanMapping[keyName];
+  for (keyName of Object.keys(w.AddressFinderPlugin.fieldMappings)) {
+    targetField = d.getElementById(w.AddressFinderPlugin.fieldMappings[keyName].address_1);
     if (targetField) {
-      formMode === 'billing' ? billing_address_1 = targetField : shipping_address_1 = targetField;
       selectedMapping = keyName;
       break;
     }
