@@ -13,6 +13,22 @@
   w.AddressFinderPlugin = w.AddressFinderPlugin || {};
 
   w.AddressFinderPlugin.fieldMappings = {
+    billing_plus: {
+      address_1: "checkout_billing_address_attributes_address1",
+      address_2: "checkout_billing_address_attributes_address2",
+      city: "checkout_billing_address_attributes_city",
+      state: "checkout_billing_address_attributes_province",
+      country: "checkout_billing_address_attributes_country",
+      postcode: "checkout_billing_address_attributes_zip"
+    },
+    shipping_plus: {
+      address_1: "checkout_shipping_address_attributes_address1",
+      address_2: "checkout_shipping_address_attributes_address2",
+      city: "checkout_shipping_address_attributes_city",
+      state: "checkout_shipping_address_attributes_province",
+      country: "checkout_shipping_address_attributes_country",
+      postcode: "checkout_shipping_address_attributes_zip"
+    },
     billing: {
       address_1: "checkout_billing_address_address1",
       address_2: "checkout_billing_address_address2",
@@ -31,6 +47,16 @@
     }
   }
 
+  var billing_address_1  = null,
+      shipping_address_1 = null,
+      selectedMapping    = null,
+      scanMapping        = {
+        billing:       'billing',
+        billing_plus:  'billing',
+        shipping:      'shipping',
+        shipping_plus: 'shipping'
+      };
+
   /*
    * Logs the supplied message to the console
    */
@@ -43,8 +69,8 @@
   /*
    * Clear all address fields (except country)
    */
-  var _clearFields = function(addressType) {
-    var fields = w.AddressFinderPlugin.fieldMappings[addressType];
+  var _clearFields = function() {
+    var fields = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     delete fields.country;
 
     for (field in fields) {
@@ -85,9 +111,8 @@
                        + "Attempted to update value for field that could not be found.\n"
                        + "\nField ID: " + elementId
                        + "\nValue: " + value;
-
-    logError(errorMessage);
-  };
+      logError(errorMessage);
+    };
 
   /*
    * Selects the AU state using the AddressFinder state code.
@@ -130,8 +155,8 @@
       "West Coast Region": "West Coast"
     }
     var region = regionMappings[value];
-    _setFieldValue(elementId, region);
-  };
+      _setFieldValue(elementId, region);
+    };
 
   /*
    * Populate the address fields with the NZ address returned by the AF widget
@@ -164,33 +189,33 @@
    * Binds the AddressFinder widget to the form, and monitors the country field
    * for changes. Selects the appropriate NZ or AU widget.
    */
-  var _bindAddressFinderToForm = function(addressType){
-    var addressField = document.getElementById(w.AddressFinderPlugin.fieldMappings[addressType].address_1);
+  var _bindAddressFinderToForm = function(){
+    var addressField = billing_address_1 || shipping_address_1;
 
     if(!addressField){
-      logError("Unable to find address field with ID " + w.AddressFinderPlugin.fieldMappings[addressType].address_1);
+      logError("Unable to find address field with ID " + w.AddressFinderPlugin.fieldMappings[selectedMapping].address_1);
       return;
     }
 
     w.AddressFinderPlugin.widgets = {};
 
     w.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'NZ');
-    w.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    w.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     w.AddressFinderPlugin.widgets.nz.on("result:select", _selectNewZealand);
 
     w.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'AU');
-    w.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    w.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     w.AddressFinderPlugin.widgets.au.on("result:select", _selectAustralia);
 
-    var countryFieldID = w.AddressFinderPlugin.fieldMappings[addressType].country;
+    var countryFieldID = w.AddressFinderPlugin.fieldMappings[selectedMapping].country;
 
     var _toggleWidgets = function(retainFields) {
       var selectedCountry = d.getElementById(countryFieldID).value;
 
-      if (selectedCountry == "New Zealand") {
+      if (selectedCountry == "New Zealand" || selectedCountry == "NZ") {
         w.AddressFinderPlugin.widgets.nz.enable();
         w.AddressFinderPlugin.widgets.au.disable();
-      } else if (selectedCountry == "Australia") {
+      } else if (selectedCountry == "Australia" || selectedCountry == "AU") {
         w.AddressFinderPlugin.widgets.au.enable();
         w.AddressFinderPlugin.widgets.nz.disable();
       } else {
@@ -199,7 +224,7 @@
       }
 
       if(retainFields != true){
-        _clearFields(addressType);
+        _clearFields();
       }
     };
 
@@ -221,11 +246,8 @@
    * call _bindAddressFinderToForm() to configure the integration.
    */
   var _initAddressTypes = function() {
-    if(d.getElementById(w.AddressFinderPlugin.fieldMappings.billing.address_1)){
-      _bindAddressFinderToForm("billing");
-    }
-    if(d.getElementById(w.AddressFinderPlugin.fieldMappings.shipping.address_1)){
-      _bindAddressFinderToForm("shipping");
+    if (selectedMapping) {
+      _bindAddressFinderToForm();
     }
   };
 
@@ -237,11 +259,18 @@
     d.body.appendChild(s);
   };
 
-  var billing_address_1 = d.getElementById(w.AddressFinderPlugin.fieldMappings.billing.address_1);
-  var shipping_address_1 = d.getElementById(w.AddressFinderPlugin.fieldMappings.shipping.address_1);
+  for (keyName of Object.keys(scanMapping)) {
+    var targetField = d.getElementById(w.AddressFinderPlugin.fieldMappings[keyName].address_1);
+    var formMode = scanMapping[keyName];
+    if (targetField) {
+      formMode === 'billing' ? billing_address_1 = targetField : shipping_address_1 = targetField;
+      selectedMapping = keyName;
+      break;
+    }
+  }
 
   // Only load AddressFinder if the billing or shipping fields exist on the page
-  if(billing_address_1 || shipping_address_1){
+  if (selectedMapping) {
     _addScript();
   }
 })(document, window);
