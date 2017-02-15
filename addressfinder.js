@@ -9,7 +9,8 @@
  *
  * Copyright (c) 2016 Abletech
  */
- (function(d, w) {
+(function(d, w){
+
   w.AddressFinderPlugin = w.AddressFinderPlugin || {};
 
   w.AddressFinderPlugin.fieldMappings = {
@@ -182,7 +183,7 @@
    * Binds the AddressFinder widget to the form, and monitors the country field
    * for changes. Selects the appropriate NZ or AU widget.
    */
-  var _bindAddressFinderToForm = function(){
+  var _bindAddressFinderToForm = function(AddressFinder){
 
     if(!targetField){
       logError("Unable to find address field with ID " + w.AddressFinderPlugin.fieldMappings[selectedMapping].address_1);
@@ -233,12 +234,12 @@
     }
   };
 
-  var _addScript = function() {
-    var s = d.createElement("script");
+  function addScript() {
+    var s = document.createElement("script");
     s.src = "https://api.addressfinder.io/assets/v3/widget.js";
     s.async = 1;
     s.onload = _bindAddressFinderToForm;
-    d.body.appendChild(s);
+    document.body.appendChild(s);
   };
 
   for (keyName of Object.keys(w.AddressFinderPlugin.fieldMappings)) {
@@ -251,6 +252,20 @@
 
   // Only load AddressFinder if the billing or shipping fields exist on the page
   if (selectedMapping) {
-    _addScript();
+    if ("function" == typeof define && define.amd) {
+      require.config({
+        paths: {
+          addressfinder: 'https://api.addressfinder.io/assets/v3/core',
+          reqwest:       'https://files-abletech-nz.s3.amazonaws.com/addressfinder/reqwest',
+          neat_complete: 'https://files-abletech-nz.s3.amazonaws.com/addressfinder/neat-complete'
+        }
+      });
+      require(['addressfinder'], function(AddressFinder){
+        _bindAddressFinderToForm(AddressFinder);
+      })
+    } else {
+      addScript();
+    }
   }
-})(document, window);
+
+})();
