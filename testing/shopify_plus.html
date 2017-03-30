@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <title>Shopify+ form</title>
+  <link rel="stylesheet" href="checkout-shopify.css">
+  <style>
+    body {padding:2rem; box-sizing:border-box;}
+    .btn{background:#62b01e;color:#ffffff;opacity:1;transition:opacity .2s ease-in-out}
+    .btn:hover{background:#62b01e;color:#ffffff;opacity:.8}
+    .btn:focus{box-shadow:0 0 0 2px #333 inset}
+    a{text-decoration:none;color:#737272!important;opacity:1;transition:opacity .2s ease-in-out}
+    a:hover{color:#737272!important;opacity:.8}
+    .icon--spinner,.applied-reduction-code__icon,.previous-link__icon,.order-summary-toggle__dropdown,.order-summary-toggle__icon{fill:#737272!important}
+    .field__input:focus,.content-box .field--active .field__input--iframe-container--loaded{box-shadow:0 0 0 2px #737272!important}
+    .applied-reduction-code__information,.order-summary-toggle__text{color:#737272!important}
+    .input-checkbox,.input-radio{box-shadow:0 0 0 0 #737272 inset!important}
+    .input-checkbox:focus,.input-radio:focus{border:2px solid #737272!important}
+    .input-checkbox:checked,.input-radio:checked{box-shadow:0 0 0 10px #737272 inset!important}
+    .current-location-indicator{background:#737272!important}
+    @-webkit-keyframes checkmark-fill{100%{box-shadow:inset 0 0 0 30px #737272!important}}
+    @keyframes checkmark-fill{100%{box-shadow:inset 0 0 0 30px #737272!important}}
+    ::-moz-selection{background:#737272!important;color:#ffffff!important}
+    ::selection{background:#737272!important;color:#ffffff!important}
+    ::-moz-selection{background:#737272!important;color:#ffffff!important}
+    .field__message--error{color:#f24e4e!important}
+    .notice{background:#f24e4e!important}
+    .has-error .field__input,.field--error .field__input,.has-error .field__input:focus{box-shadow:0 0 0 2px #f24e4e!important}
+    .has-error .help-block{color:#f24e4e!important}
+    .sidebar .btn--disabled{background:#ccc;color:#fff}
+    .sidebar .input-checkbox:hover,.sidebar .input-radio:hover,.sidebar .input-checkbox:disabled,.sidebar .input-radio:disabled{border-color:#2c2d2c!important}
+    .sidebar .input-checkbox,.sidebar .input-radio{border-color:#373837!important}
+    .page--logo-sidebar .banner{background:transparent!important}
+    .sidebar:after{background:#ffffff}.shopify-theme{background:#ffffff}
+    .shopify-theme .order-summary-toggle{background:rgba(0,0,0,0.02);border-top:1px solid rgba(0,0,0,0.1);border-bottom:1px solid rgba(0,0,0,0.1)}
+  </style>
+  <body>
+    <div class="main">
+      <form id="checkout_form" class="simple_form animate-floating-labels" novalidate="novalidate" action="." accept-charset="UTF-8" method="post">
+        <input name="utf8" type="hidden" value="✓">
+        <input type="hidden" name="_method" value="put">
+        <input type="hidden" name="authenticity_token" value="LOLWUT">
+        <input value="" type="hidden" name="checkout[ga_client_id]" id="checkout_ga_client_id">
+        <input type="hidden" name="checkout_signature" id="checkout_signature" value="LOLWUT">
+        <input type="hidden" name="locale" id="locale" value="shopify">
+        <input value="step_customer_information" type="hidden" name="checkout[previous_step]" id="checkout_previous_step">
+        <input value="step_shipping_method" type="hidden" name="checkout[step]" id="checkout_step">
+        <div class="panel-group tab-content">
+          <div class="active-panel tab-pane panel fade in active" id="shopify_customer_information">
+            <div class="panel panel-collapse collapse in section" id="customer_information">
+              <div class="section__header">
+                <h2 class="section__title">Customer information</h2>
+              </div>
+              <div class="section__content">
+                <div class="fieldset js-fieldset">
+                  <div class="field">
+                    <div class="form-group email optional checkout_email field__input-wrapper">
+                      <label class="email optional field__label control-label" for="checkout_email">Email Address (Please take care to get this exactly right)</label>
+                      <input class="string email optional field__input form-control" placeholder="Email Address (Please take care to get this exactly right)" type="email" value="" name="checkout[email]" id="checkout_email">
+                    </div>
+                  </div>
+                </div>
+                <p class="section__content__text">Already have an account?&nbsp;<a data-no-turbolink="true" href="#">Log in</a></p>
+              </div>
+            </div>
+            <div class="panel panel-collapse collapse section" id="shipping_address">
+              <div class="section__header">
+                <h2 class="section__title">Shipping address</h2>
+              </div>
+              <div class="section-content">
+                <div class="fieldset js-fieldset">
+                  <div class="address-box ">
+                    <div id="shipping_address_content">
+                      <div class="field--half field">
+                        <div class="form-group string required checkout_shipping_address_first_name field__input-wrapper">
+                          <label class="string required field__label control-label" for="checkout_shipping_address_attributes_first_name"><abbr title="required">*</abbr> First name</label>
+                          <input class="string required field__input form-control" required="required" aria-required="true" placeholder="First name" type="text" value="" name="checkout[shipping_address_attributes][first_name]" id="checkout_shipping_address_attributes_first_name">
+                        </div>
+                      </div>
+                      <div class="field--half field">
+                        <div class="form-group string required checkout_shipping_address_last_name field__input-wrapper">
+                          <label class="string required field__label control-label" for="checkout_shipping_address_attributes_last_name"><abbr title="required">*</abbr> Last name</label>
+                          <input class="string required field__input form-control" required="required" aria-required="true" placeholder="Last name" type="text" value="" name="checkout[shipping_address_attributes][last_name]" id="checkout_shipping_address_attributes_last_name">
+                        </div>
+                      </div>
+                      <div class="field">
+                        <div class="field__input-wrapper">
+                          <div class="form-group string optional checkout_shipping_address_company">
+                            <label class="string optional field__label control-label" for="checkout_shipping_address_attributes_company">Company (optional)</label>
+                            <input class="string optional field__input form-control" placeholder="Company (optional)" type="text" value="" name="checkout[shipping_address_attributes][company]" id="checkout_shipping_address_attributes_company">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="field--two-thirds field">
+                        <div class="form-group string optional checkout_shipping_address_address1 field__input-wrapper">
+                          <label class="string optional field__label control-label" for="checkout_shipping_address_attributes_address1">Address</label>
+                          <input class="string optional field__input form-control" placeholder="Address" type="text" value="" name="checkout[shipping_address_attributes][address1]" id="checkout_shipping_address_attributes_address1">
+                        </div>
+                      </div>
+                      <div class="field--third field">
+                        <div class="form-group string optional checkout_shipping_address_address2 field__input-wrapper">
+                          <label class="string optional field__label control-label" for="checkout_shipping_address_attributes_address2">Address line 2 (optional)</label>
+                          <input class="string optional field__input form-control" placeholder="Address line 2 (optional)" type="text" value="" name="checkout[shipping_address_attributes][address2]" id="checkout_shipping_address_attributes_address2">
+                        </div>
+                      </div>
+                      <div class="field">
+                        <div class="form-group string optional checkout_shipping_address_city field__input-wrapper">
+                          <label class="string optional field__label control-label" for="checkout_shipping_address_attributes_city">Suburb</label>
+                          <input class="string optional field__input form-control" placeholder="Suburb" type="text" value="" name="checkout[shipping_address_attributes][city]" id="checkout_shipping_address_attributes_city">
+                        </div>
+                      </div>
+                      <div class="field field--three-eights">
+                        <div class="field__input-wrapper field__input-wrapper--select field--show-floating-label">
+                          <div class="form-group select optional checkout_shipping_address_country">
+                            <label class="select optional field__label control-label" for="checkout_shipping_address_attributes_country">Country</label>
+                            <select class="select optional country-select field__input field__input--select form-control" data-region-labels="[[&quot;Region&quot;,&quot;\\{\\{ 'shopify.addresses.region' | t \\}\\}&quot;],[&quot;Prefecture&quot;,&quot;\\{\\{ 'shopify.addresses.prefecture' | t \\}\\}&quot;],[&quot;Province&quot;,&quot;\\{\\{ 'shopify.addresses.province' | t \\}\\}&quot;],[&quot;State/Territory&quot;,&quot;_state_and_territory_translation_&quot;],[&quot;State&quot;,&quot;\\{\\{ 'shopify.addresses.state' | t \\}\\}&quot;],[&quot;_state_and_territory_translation_&quot;,&quot;\\{\\{ 'shopify.addresses.state_and_territory' | t \\}\\}&quot;]]" placeholder="Country" name="checkout[shipping_address_attributes][country]" id="checkout_shipping_address_attributes_country">
+                              <option value=""></option>
+                              <option data-region-title="State/Territory" data-regions="[{&quot;name&quot;:&quot;Australian Capital Territory&quot;,&quot;code&quot;:&quot;ACT&quot;},{&quot;name&quot;:&quot;New South Wales&quot;,&quot;code&quot;:&quot;NSW&quot;},{&quot;name&quot;:&quot;Northern Territory&quot;,&quot;code&quot;:&quot;NT&quot;},{&quot;name&quot;:&quot;Queensland&quot;,&quot;code&quot;:&quot;QLD&quot;},{&quot;name&quot;:&quot;South Australia&quot;,&quot;code&quot;:&quot;SA&quot;},{&quot;name&quot;:&quot;Tasmania&quot;,&quot;code&quot;:&quot;TAS&quot;},{&quot;name&quot;:&quot;Victoria&quot;,&quot;code&quot;:&quot;VIC&quot;},{&quot;name&quot;:&quot;Western Australia&quot;,&quot;code&quot;:&quot;WA&quot;}]" selected="selected" value="AU">Australia</option>
+                              <option data-region-title="State/Territory" data-regions="[]" value="NZ">New Zealand</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="field field--three-eights">
+                        <div class="form-group select required checkout_shipping_address_province field__input-wrapper field__input-wrapper--select field--show-floating-label">
+                          <label class="select required field__label control-label" for="checkout_shipping_address_attributes_province">State/territory</label>
+                          <select class="select required region-select field__input field__input--select form-control" placeholder="State/territory" required="required" aria-required="true" name="checkout[shipping_address_attributes][province]" id="checkout_shipping_address_attributes_province">
+                            <option value=""></option>
+                            <option value="ACT">Australian Capital Territory</option>
+                            <option value="NSW">New South Wales</option>
+                            <option value="NT">Northern Territory</option>
+                            <option value="QLD">Queensland</option>
+                            <option value="SA">South Australia</option>
+                            <option value="TAS">Tasmania</option>
+                            <option value="VIC">Victoria</option>
+                            <option value="WA">Western Australia</option>
+                          </select>
+                        </div>
+                        <div class="form-group string optional checkout_shipping_address_province hidden field__input-wrapper field__input-wrapper--select field--show-floating-label">
+                          <label class="string optional field__label control-label" for="checkout_shipping_address_attributes_province">State/territory</label>
+                          <input class="string optional region-input field__input form-control" disabled="disabled" placeholder="State/territory" type="text" value="" name="checkout[shipping_address_attributes][province]" id="checkout_shipping_address_attributes_province">
+                        </div>
+                      </div>
+                      <div class="field field--quarter">
+                        <div class="form-group string optional checkout_shipping_address_zip field__input-wrapper">
+                          <label class="string optional field__label control-label" for="checkout_shipping_address_attributes_zip">Zip code</label>
+                          <input class="string optional field__input field__input--zip form-control" placeholder="Zip code" type="text" value="" name="checkout[shipping_address_attributes][zip]" id="checkout_shipping_address_attributes_zip">
+                        </div>
+                      </div>
+                      <div class="field">
+                        <div class="form-group tel required checkout_shipping_address_phone field__input-wrapper">
+                          <label class="tel required field__label control-label" for="checkout_shipping_address_attributes_phone"><abbr title="required">*</abbr> Phone</label>
+                          <input class="string tel required field__input form-control" required="required" aria-required="true" placeholder="Phone" type="tel" value="" name="checkout[shipping_address_attributes][phone]" id="checkout_shipping_address_attributes_phone">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="step__footer">
+                  <button name="button" type="submit" class="step__footer__continue-btn btn theme-btn check-btn-next" data-checkout-button-next="">Continue to shipping method</button>
+                  <a data-no-turbolink="true" class="step__footer__previous-link" href="https://www.powerplanter.com.au/cart"><svg class="previous-link__icon icon--chevron icon" height="11.3" width="6.7"><use xlink:href="#previous-link__icon" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>&nbsp;Return to cart</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+    (function(d,w){
+      w.AddressFinderPlugin = {
+        key: "ADDRESSFINDER_NZ_DEMO_KEY"
+      };
+      var s = d.createElement("script");
+      s.src = "../addressfinder.js";
+      s.async = 1;
+      d.body.appendChild(s);
+    })(document, window);
+  </script>
+</html>

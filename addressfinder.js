@@ -5,14 +5,31 @@
  *
  * https://github.com/AbleTech/addressfinder-shopify
  *
- * VERSION 1.0.2
+ * VERSION 1.0.3
  *
  * Copyright (c) 2016 Abletech
  */
- (function(d, w) {
+(function(d, w){
+
   w.AddressFinderPlugin = w.AddressFinderPlugin || {};
 
   w.AddressFinderPlugin.fieldMappings = {
+    billing_plus: {
+      address_1: "checkout_billing_address_attributes_address1",
+      address_2: "checkout_billing_address_attributes_address2",
+      city: "checkout_billing_address_attributes_city",
+      state: "checkout_billing_address_attributes_province",
+      country: "checkout_billing_address_attributes_country",
+      postcode: "checkout_billing_address_attributes_zip"
+    },
+    shipping_plus: {
+      address_1: "checkout_shipping_address_attributes_address1",
+      address_2: "checkout_shipping_address_attributes_address2",
+      city: "checkout_shipping_address_attributes_city",
+      state: "checkout_shipping_address_attributes_province",
+      country: "checkout_shipping_address_attributes_country",
+      postcode: "checkout_shipping_address_attributes_zip"
+    },
     billing: {
       address_1: "checkout_billing_address_address1",
       address_2: "checkout_billing_address_address2",
@@ -31,6 +48,9 @@
     }
   }
 
+  var selectedMapping = null,
+      targetField     = null;
+
   /*
    * Logs the supplied message to the console
    */
@@ -43,8 +63,8 @@
   /*
    * Clear all address fields (except country)
    */
-  var _clearFields = function(addressType) {
-    var fields = w.AddressFinderPlugin.fieldMappings[addressType];
+  var _clearFields = function() {
+    var fields = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     delete fields.country;
 
     for (field in fields) {
@@ -85,9 +105,8 @@
                        + "Attempted to update value for field that could not be found.\n"
                        + "\nField ID: " + elementId
                        + "\nValue: " + value;
-
-    logError(errorMessage);
-  };
+      logError(errorMessage);
+    };
 
   /*
    * Selects the AU state using the AddressFinder state code.
@@ -130,8 +149,8 @@
       "West Coast Region": "West Coast"
     }
     var region = regionMappings[value];
-    _setFieldValue(elementId, region);
-  };
+      _setFieldValue(elementId, region);
+    };
 
   /*
    * Populate the address fields with the NZ address returned by the AF widget
@@ -164,33 +183,32 @@
    * Binds the AddressFinder widget to the form, and monitors the country field
    * for changes. Selects the appropriate NZ or AU widget.
    */
-  var _bindAddressFinderToForm = function(addressType){
-    var addressField = document.getElementById(w.AddressFinderPlugin.fieldMappings[addressType].address_1);
+  var _bindAddressFinderToForm = function(AddressFinder){
 
-    if(!addressField){
-      logError("Unable to find address field with ID " + w.AddressFinderPlugin.fieldMappings[addressType].address_1);
+    if(!targetField){
+      logError("Unable to find address field with ID " + w.AddressFinderPlugin.fieldMappings[selectedMapping].address_1);
       return;
     }
 
     w.AddressFinderPlugin.widgets = {};
 
-    w.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'NZ');
-    w.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    w.AddressFinderPlugin.widgets.nz = new AddressFinder.Widget(targetField, w.AddressFinderPlugin.key, 'NZ');
+    w.AddressFinderPlugin.widgets.nz.fieldMappings = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     w.AddressFinderPlugin.widgets.nz.on("result:select", _selectNewZealand);
 
-    w.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(addressField, w.AddressFinderPlugin.key, 'AU');
-    w.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[addressType];
+    w.AddressFinderPlugin.widgets.au = new AddressFinder.Widget(targetField, w.AddressFinderPlugin.key, 'AU');
+    w.AddressFinderPlugin.widgets.au.fieldMappings = w.AddressFinderPlugin.fieldMappings[selectedMapping];
     w.AddressFinderPlugin.widgets.au.on("result:select", _selectAustralia);
 
-    var countryFieldID = w.AddressFinderPlugin.fieldMappings[addressType].country;
+    var countryFieldID = w.AddressFinderPlugin.fieldMappings[selectedMapping].country;
 
     var _toggleWidgets = function(retainFields) {
       var selectedCountry = d.getElementById(countryFieldID).value;
 
-      if (selectedCountry == "New Zealand") {
+      if (selectedCountry == "New Zealand" || selectedCountry == "NZ") {
         w.AddressFinderPlugin.widgets.nz.enable();
         w.AddressFinderPlugin.widgets.au.disable();
-      } else if (selectedCountry == "Australia") {
+      } else if (selectedCountry == "Australia" || selectedCountry == "AU") {
         w.AddressFinderPlugin.widgets.au.enable();
         w.AddressFinderPlugin.widgets.nz.disable();
       } else {
@@ -199,7 +217,7 @@
       }
 
       if(retainFields != true){
-        _clearFields(addressType);
+        _clearFields();
       }
     };
 
@@ -216,32 +234,38 @@
     }
   };
 
-  /*
-   * Looks for billing or shipping address fields, and if they exist it will
-   * call _bindAddressFinderToForm() to configure the integration.
-   */
-  var _initAddressTypes = function() {
-    if(d.getElementById(w.AddressFinderPlugin.fieldMappings.billing.address_1)){
-      _bindAddressFinderToForm("billing");
-    }
-    if(d.getElementById(w.AddressFinderPlugin.fieldMappings.shipping.address_1)){
-      _bindAddressFinderToForm("shipping");
-    }
-  };
-
-  var _addScript = function() {
-    var s = d.createElement("script");
+  function addScript() {
+    var s = document.createElement("script");
     s.src = "https://api.addressfinder.io/assets/v3/widget.js";
     s.async = 1;
-    s.onload = _initAddressTypes;
-    d.body.appendChild(s);
+    s.onload = _bindAddressFinderToForm;
+    document.body.appendChild(s);
   };
 
-  var billing_address_1 = d.getElementById(w.AddressFinderPlugin.fieldMappings.billing.address_1);
-  var shipping_address_1 = d.getElementById(w.AddressFinderPlugin.fieldMappings.shipping.address_1);
+  for (keyName of Object.keys(w.AddressFinderPlugin.fieldMappings)) {
+    targetField = d.getElementById(w.AddressFinderPlugin.fieldMappings[keyName].address_1);
+    if (targetField) {
+      selectedMapping = keyName;
+      break;
+    }
+  }
 
   // Only load AddressFinder if the billing or shipping fields exist on the page
-  if(billing_address_1 || shipping_address_1){
-    _addScript();
+  if (selectedMapping) {
+    if ("function" == typeof define && define.amd) {
+      require.config({
+        paths: {
+          addressfinder: 'https://api.addressfinder.io/assets/v3/core',
+          reqwest:       'https://files-abletech-nz.s3.amazonaws.com/addressfinder/reqwest',
+          neat_complete: 'https://files-abletech-nz.s3.amazonaws.com/addressfinder/neat-complete'
+        }
+      });
+      require(['addressfinder'], function(AddressFinder){
+        _bindAddressFinderToForm(AddressFinder);
+      })
+    } else {
+      addScript();
+    }
   }
-})(document, window);
+
+})();
