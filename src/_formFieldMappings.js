@@ -37,11 +37,13 @@
     };
 
   function mappings(){
+    var m = this;
+    m.currentForm = null;
     function _getFieldName(fieldName) {
       return fieldTypeMappings[fieldName];
     }
     function _getFieldIDString(field, currentForm){
-      if (currentForm === undefined) currentForm = this.currentForm;
+      if (currentForm === undefined) currentForm = m.currentForm;
       var fieldString = '';
       if (currentForm.prefix) fieldString += currentForm.prefix;
       fieldString += _getFieldName(field);
@@ -51,33 +53,31 @@
     function _getFormFields() {
       var formFieldsObj = {};
       for (var keyName in fieldTypeMappings) {
-        formFieldsObj[keyName] = _getFieldIDString(keyName, this.currentForm);
+        formFieldsObj[keyName] = _getFieldIDString(keyName);
       }
       return formFieldsObj;
     }
-    this.currentForm = null;
-    this.setForm = function(formIdentifier){
-      this.currentForm = formMappings[formIdentifier];
-      this.currentForm.name = formIdentifier;
-      this.currentForm.fields = _getFormFields();
-      return this.currentForm;
+    m.setForm = function(formIdentifier){
+      m.currentForm = formMappings[formIdentifier];
+      m.currentForm.name = formIdentifier;
+      m.currentForm.fields = _getFormFields();
+      return m.currentForm;
     };
-    this.findMatchingForm = function(){
+    m.findMatchingForm = function(){
       var firstFieldKeyName = Object.keys(fieldTypeMappings)[0];
       for (var keyName in formMappings) {
         var stringID = _getFieldIDString(firstFieldKeyName, formMappings[keyName]);
         if (document.getElementById(stringID)) {
-          this.setForm(keyName);
-          return true;
+          m.setForm(keyName);
+          break;
         }
       }
-      return false;
+      return (m.currentForm) ? true : false;
     };
-    this.init = function(){
-      this.findMatchingForm();
+    m.init = function(){
+      m.findMatchingForm();
     };
-    this.init();
-    return this;
+    return m;
   }
   w.AF ? w.AF.FormFieldMappings = mappings : w.AF = {FormFieldMappings: mappings};
 })(window);

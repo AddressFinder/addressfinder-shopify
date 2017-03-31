@@ -1,4 +1,4 @@
-(function(){
+(function(w){
   var countries = {
     au: {
       provinces: {
@@ -33,5 +33,5 @@
       }
     }
   };
-
-})();
+  w.AF ? w.AF.CountryMappings = countries : w.AF = {CountryMappings: countries};
+})(window);
