@@ -1,5 +1,3 @@
-public
-config.ru
-tmp
 node_modules
 .DS_Store
+.vscode

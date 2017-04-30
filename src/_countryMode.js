@@ -1,6 +1,8 @@
 (function(w){
   var countries = {
     au: {
+      iso: 'AU',
+      title: 'Australia',
       provinces: {
         'ACT': 'Australian Capital Territory',
         'NSW': 'New South Wales',
@@ -13,6 +15,8 @@
       }
     },
     nz: {
+      iso: 'NZ',
+      title: 'New Zealand',
       provinces: {
         'Auckland Region': 'Auckland',
         'Bay of Plenty Region': 'Bay of Plenty',
