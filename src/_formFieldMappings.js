@@ -1,3 +1,23 @@
+/**
+ * Shopify address forms can be run in many differnt situations:
+ *  - Billing or Shipping mode
+ *  - Situations: Shopify Plus Checkout, Standard Shopify Checkout, and Shopify User Registration
+ *
+ * The fields used are consistent enough to contain…
+ *  - address_1
+ *  - address_2
+ *  - city
+ *  - state
+ *  - country
+ *  - zip
+ * … for each form instance.
+ *
+ * Each form situation and mode will use different prefixes and/or suffixes as field identifiers.
+ * E.g. the registration address line 1 field is: `address_` + `address_1` + `_new`
+ *
+ * Once the appropriate form has been identified based on the matching `address1` field,
+ * this util will set the form in scope, see: `m.currentForm`.
+ */
 (function(w){
   var fieldTypeMappings = {
       address_1: 'address1',

@@ -1,3 +1,10 @@
+/*
+ - AF only supports AU and NZ address types for now
+ - Provinces contain a list of Shopify field-value mappings
+ - Each of the keys within the `countries` object become:
+   - Instances of a widget
+   - Watch values for the Country form field
+*/
 (function(w){
   var countries = {
     au: {

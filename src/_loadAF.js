@@ -1,3 +1,10 @@
+/**
+ * Shopify uses requireJS in specific implementations, most notably: Shopify Plus.
+ * This script makes sure that the AddressFinder widget is loaded on the global scope,
+ * depending whether the target shopify form uses requireJS or not.
+ * Once the library is loaded and AF is on the window scope, the callback function is called.
+ * This script also makes sure that AF widget script isn't loaded more than once.
+ */
 (function(d, w){
 
   function _traditionalLoad(f) {
