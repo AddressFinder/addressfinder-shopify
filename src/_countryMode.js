@@ -19,6 +19,28 @@
         'TAS': 'Tasmania',
         'VIC': 'Victoria',
         'WA' : 'Western Australia'
+      },
+      fieldAPIMappngs: {
+        address_1: {
+          name: 'address_line_1',
+          type: 'field'
+        },
+        address_2: {
+          name: 'address_line_2',
+          type: 'field'
+        },
+        city: {
+          name: 'locality_name',
+          type: 'field'
+        },
+        postcode: {
+          name: 'postcode',
+          type: 'field'
+        },
+        state:     {
+          name: 'state_territory',
+          type: 'field'
+        }
       }
     },
     nz: {
@@ -41,6 +63,28 @@
         'Waikato Region': 'Waikato',
         'Wellington Region': 'Wellington',
         'West Coast Region': 'West Coast'
+      },
+      fieldAPIMappngs: {
+        address_1: {
+          name: 'address_line_1_and_2',
+          type: 'function'
+        },
+        address_2: {
+          name: 'suburb',
+          type: 'function'
+        },
+        city: {
+          name: 'city',
+          type: 'function'
+        },
+        postcode: {
+          name: 'postcode',
+          type: 'function'
+        },
+        state:     {
+          name: 'region',
+          type: 'field'
+        }
       }
     }
   };
