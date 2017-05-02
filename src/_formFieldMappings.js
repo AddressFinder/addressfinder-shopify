@@ -24,7 +24,6 @@
       address_2: 'address2',
       city: 'city',
       state: 'province',
-      country: 'country',
       postcode: 'zip'
     },
     formMappings = {
@@ -66,36 +65,41 @@
       if (currentForm === undefined) currentForm = m.currentForm;
       var fieldString = '';
       if (currentForm.prefix) fieldString += currentForm.prefix;
-      fieldString += _getFieldName(field);
+      fieldString += (field === 'country' ? 'country' : _getFieldName(field));
       if (currentForm.suffix) fieldString += currentForm.suffix;
       return fieldString;
     }
     function _getFormFields() {
       var formFieldsObj = {};
       for (var keyName in fieldTypeMappings) {
-        formFieldsObj[keyName] = _getFieldIDString(keyName);
+        var id = _getFieldIDString(keyName);
+        var mapping = fieldTypeMappings[keyName];
+        var field = new w.AF.FormField(id, mapping);
+        formFieldsObj[keyName] = field;
       }
       return formFieldsObj;
     }
-    m.setForm = function(formIdentifier){
+    function _setForm(formIdentifier){
       m.currentForm = formMappings[formIdentifier];
+      m.currentForm.countryField = _getFieldIDString('country');
       m.currentForm.name = formIdentifier;
       m.currentForm.fields = _getFormFields();
       return m.currentForm;
-    };
-    m.findMatchingForm = function(){
-      var firstFieldKeyName = Object.keys(fieldTypeMappings)[0];
-      for (var keyName in formMappings) {
+    }
+    function _findMatchingForm(){
+      var firstFieldKeyName = Object.keys(fieldTypeMappings)[0],
+        formMappingsKeys = Object.keys(formMappings);
+      formMappingsKeys.forEach(function(keyName){
         var stringID = _getFieldIDString(firstFieldKeyName, formMappings[keyName]);
         if (document.getElementById(stringID)) {
-          m.setForm(keyName);
-          break;
+          _setForm(keyName);
+          return;
         }
-      }
+      });
       return (m.currentForm) ? true : false;
-    };
+    }
     m.init = function(){
-      m.findMatchingForm();
+      _findMatchingForm();
     };
     return m;
   }

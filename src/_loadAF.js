@@ -8,7 +8,6 @@
 (function(d, w){
 
   function _traditionalLoad(f) {
-    w.console.log('in traditionalLoad');
     var s = d.createElement('script');
     s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
     s.async = 1;
@@ -17,7 +16,6 @@
   }
 
   function _requireLoad(f) {
-    w.console.log('in requireLoad');
     var af = w.require.config({
       context: 'af',
       baseUrl: '',
@@ -27,7 +25,6 @@
         neat_complete: 'https://files-abletech-nz.s3.amazonaws.com/addressfinder/neat-complete'
       }
     });
-    w.console.log('af', af);
     af(w.require(['addressfinder'], function(AddressFinder){
       if (f !== undefined) f(AddressFinder);
       w.console.log('AddressFinder', AddressFinder);
