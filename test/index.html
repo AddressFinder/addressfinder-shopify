@@ -1,5 +1,76 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Test</title>
+  </head>
   <body>
+    <!--<form id="shipping_standard">
+      <h2>Shipping Address, Shopify Standard</h2>
+      <div>
+        <label>Address line 1</label>
+        <input type="text" id="address_address1_new" name="address_address1_new">
+      </div>
+      <div>
+        <label>Address line 2</label>
+        <input type="text" id="address_address2_new" name="address_address2_new">
+      </div>
+      <div>
+        <label>City</label>
+        <input type="text" id="address_city_new" name="address_city_new">
+      </div>
+      <div>
+        <label>State</label>
+        <input type="text" id="address_state_new" name="address_state_new">
+      </div>
+      <div>
+        <label>Postcode</label>
+        <input type="text" id="address_postcode_new" name="address_postcode_new">
+      </div>
+      <div>
+        <label>Country</label>
+        <select id="address_country_new" name="address_country_new">
+          <option value="-1">Select a country</option>
+          <option value="AU" selected>Australia</option>
+          <option value="NZ">New Zealand</option>
+        </select>
+      </div>
+    </form>-->
+    <form id="registration">
+      <h2>Registration</h2>
+      <div>
+        <label>Address line 1</label>
+        <input type="text" id="address_address1_new" name="address_address1_new">
+      </div>
+      <div>
+        <label>Address line 2</label>
+        <input type="text" id="address_address2_new" name="address_address2_new">
+      </div>
+      <div>
+        <label>City</label>
+        <input type="text" id="address_city_new" name="address_city_new">
+      </div>
+      <div>
+        <label>State</label>
+        <input type="text" id="address_state_new" name="address_state_new">
+      </div>
+      <div>
+        <label>Postcode</label>
+        <input type="text" id="address_postcode_new" name="address_postcode_new">
+      </div>
+      <div>
+        <label>Country</label>
+        <select id="address_country_new" name="address_country_new">
+          <option value="-1" selected>Select a country</option>
+          <option value="AU">Australia</option>
+          <option value="NZ">New Zealand</option>
+        </select>
+      </div>
+    </form>
   </body>
+  <script>
+    AddressFinderPlugin = {
+      key: 'ADDRESSFINDER_NZ_DEMO_KEY'
+    };
+  </script>
+  <script src="../dist/addressfinder.js"></script>
 </html>
