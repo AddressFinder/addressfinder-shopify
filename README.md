@@ -103,14 +103,15 @@ This project requires:
 
 - Node
 - NPM
+- Gulp
 
 1. First, install dependencies by using `npm install` or `yarn`.
 2. Make sure you have `gulp-cli` installed globally: `npm install gulp-cli -g`
 
 ### Building
 
-`gulp build`
+`gulp production`
 
 ### Developing
 
-`gulp`
+`gulp develop`

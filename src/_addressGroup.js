@@ -1,18 +1,39 @@
+/**
+ * An AddressGroup is a collection of related address form fields, such as:
+ * - address1
+ * - address2
+ * - city/locality
+ * - province/state
+ * - zip/postcode
+ * - country
+ *
+ * Once a group has been identified, this script will set up the necessary widgets (one per matching country)
+ * as well as add event handlers to the country field and add the AF Widgets to the address1 field.
+ *
+ * Note, there could be several AddressGroups in the page. Each instance of an AddressGroup handles its own widgets and field mappings.
+ */
 (function(d,w){
   function AddressGroup(){
     var f = this;
 
     f.activeAddressGroup = null;
+    f.countryElement = null;
     f.activeCountryISO = null;
     f.activeWidget = null;
     f.widgets = [];
 
+    function _createWidgets() {
+      Object.keys(w.AF.CountryMappings).forEach(_createWidget);
+    }
+
     function _createWidget(countryISO) {
-      // Only create widgets for matching countries
-      var widget = new w.AF.ShopifyWidget();
-      var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
-      widget.init(addressField, countryISO);
-      f.widgets.push(widget);
+      if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings[countryISO].title + '"]')) {
+        var widget = new w.AF.ShopifyWidget();
+        var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
+        widget.init(addressField, countryISO);
+        w.console.log('Initialised a widget for:', countryISO);
+        f.widgets.push(widget);
+      }
     }
 
     function _setFieldValues(address, metaData){
@@ -63,10 +84,11 @@
 
     f.init = function(formObj){
       f.activeAddressGroup = formObj;
-      if (f.activeAddressGroup && f.activeAddressGroup.fields) {
-        Object.keys(w.AF.CountryMappings).forEach(_createWidget);
-        d.querySelector(f.activeAddressGroup.countryField).addEventListener('change', _countryChangeHandler);
-        _setCountry(d.querySelector(f.activeAddressGroup.countryField).value);
+      f.countryElement = d.querySelector(f.activeAddressGroup.countryField);
+      if (f.activeAddressGroup && f.activeAddressGroup.fields && f.countryElement) {
+        _createWidgets();
+        f.countryElement.addEventListener('change', _countryChangeHandler);
+        _setCountry(f.countryElement.value);
         _setWidgetHandlers();
       }
     };

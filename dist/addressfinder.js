@@ -1,18 +1,39 @@
+/**
+ * An AddressGroup is a collection of related address form fields, such as:
+ * - address1
+ * - address2
+ * - city/locality
+ * - province/state
+ * - zip/postcode
+ * - country
+ *
+ * Once a group has been identified, this script will set up the necessary widgets (one per matching country)
+ * as well as add event handlers to the country field and add the AF Widgets to the address1 field.
+ *
+ * Note, there could be several AddressGroups in the page. Each instance of an AddressGroup handles its own widgets and field mappings.
+ */
 (function(d,w){
   function AddressGroup(){
     var f = this;
 
     f.activeAddressGroup = null;
+    f.countryElement = null;
     f.activeCountryISO = null;
     f.activeWidget = null;
     f.widgets = [];
 
+    function _createWidgets() {
+      Object.keys(w.AF.CountryMappings).forEach(_createWidget);
+    }
+
     function _createWidget(countryISO) {
-      // Only create widgets for matching countries
-      var widget = new w.AF.ShopifyWidget();
-      var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
-      widget.init(addressField, countryISO);
-      f.widgets.push(widget);
+      if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings[countryISO].title + '"]')) {
+        var widget = new w.AF.ShopifyWidget();
+        var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
+        widget.init(addressField, countryISO);
+        w.console.log('Initialised a widget for:', countryISO);
+        f.widgets.push(widget);
+      }
     }
 
     function _setFieldValues(address, metaData){
@@ -63,10 +84,11 @@
 
     f.init = function(formObj){
       f.activeAddressGroup = formObj;
-      if (f.activeAddressGroup && f.activeAddressGroup.fields) {
-        Object.keys(w.AF.CountryMappings).forEach(_createWidget);
-        d.querySelector(f.activeAddressGroup.countryField).addEventListener('change', _countryChangeHandler);
-        _setCountry(d.querySelector(f.activeAddressGroup.countryField).value);
+      f.countryElement = d.querySelector(f.activeAddressGroup.countryField);
+      if (f.activeAddressGroup && f.activeAddressGroup.fields && f.countryElement) {
+        _createWidgets();
+        f.countryElement.addEventListener('change', _countryChangeHandler);
+        _setCountry(f.countryElement.value);
         _setWidgetHandlers();
       }
     };
@@ -128,21 +150,37 @@
       title: 'New Zealand',
       provinces: {
         'Auckland Region': 'Auckland',
+        'AUK': 'Auckland',
         'Bay of Plenty Region': 'Bay of Plenty',
+        'BOP': 'Bay of Plenty',
         'Canterbury Region': 'Canterbury',
+        'CAN': 'Canterbury',
         'Gisborne Region': 'Gisborne',
+        'GIS': 'Gisborne',
         'Hawke\'s Bay Region': 'Hawke\'s Bay',
+        'HKB': 'Hawke\'s Bay',
         'Manawatu-Wanganui Region': 'Manawatu-Wanganui',
+        'MWT': 'Manawatu-Wanganui',
         'Marlborough Region': 'Marlborough',
+        'MBH': 'Marlborough',
         'Nelson Region': 'Nelson',
+        'NSN': 'Nelson',
         'Northland Region': 'Northland',
+        'NTL': 'Northland',
         'Otago Region': 'Otago',
+        'OTA': 'Otago',
         'Southland Region': 'Southland',
+        'STL': 'Southland',
         'Taranaki Region': 'Taranaki',
+        'TKI': 'Taranaki',
         'Tasman Region': 'Tasman',
+        'TAS': 'Tasman',
         'Waikato Region': 'Waikato',
+        'WKO': 'Waikato',
         'Wellington Region': 'Wellington',
-        'West Coast Region': 'West Coast'
+        'WGN': 'Wellington',
+        'West Coast Region': 'West Coast',
+        'WTC': 'West Coast'
       },
       fieldAPIMappings: {
         address1: {
@@ -405,6 +443,11 @@
 
 })(window);
 
+/**
+ * This script is responsible for invoking and loading AddressFinder within a Spotify form instance.
+ * It starts by identifying all the possible address-groups in Shopify forms, such as Checkout and Account: add new address.
+ * Once all the necessary libraries are loaded, and a matching address-group is found, the AF Shopify Plugin will `bootUp`.
+ */
 (function(w){
 
   function _warn(message){
@@ -428,9 +471,9 @@
   function testForReadiness(){
     var errorOccured = false,
       checkArray = [
-        {objName:'AddressFinderPlugin', message:'No AddressFinder Key found. See: https://addressfinder.nz/docs/shopify/'},
-        {objName:'AddressFinder',       message:'The AddressFinder Widget Script failed to load'},
-        {objName:'AF',                  message:''}
+        {objName:'AddressFinderPlugin', message:'No AddressFinder Key specified. See: https://addressfinder.nz/docs/shopify/'},
+        {objName:'AddressFinder',       message:'The AddressFinder Widget Script failed to load.'},
+        {objName:'AF',                  message:'One or more of the AF Shopify script packages are not loaded.'}
       ];
     checkArray.forEach(function(item){
       if (!w[item['objName']]) {
