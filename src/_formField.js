@@ -6,11 +6,11 @@
  *  - a method for updating the form field value
  */
 (function(w){
-  function FormField(id, mapping){
+
+  function FormField(id, mappingId){
     var f = this;
-    f.id = id;
+    f.mappingId = mappingId;
     f.element = document.getElementById(id);
-    f.mapping = mapping;
     f.setValue = function(value) {
       if (value === undefined) value = '';
       f.element.value = value;

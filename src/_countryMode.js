@@ -20,12 +20,12 @@
         'VIC': 'Victoria',
         'WA' : 'Western Australia'
       },
-      fieldAPIMappngs: {
-        address_1: {
+      fieldAPIMappings: {
+        address1: {
           name: 'address_line_1',
           type: 'field'
         },
-        address_2: {
+        address2: {
           name: 'address_line_2',
           type: 'field'
         },
@@ -33,12 +33,12 @@
           name: 'locality_name',
           type: 'field'
         },
-        postcode: {
-          name: 'postcode',
-          type: 'field'
-        },
-        state:     {
+        province: {
           name: 'state_territory',
+          type: 'lookup'
+        },
+        zip: {
+          name: 'postcode',
           type: 'field'
         }
       }
@@ -51,7 +51,7 @@
         'Bay of Plenty Region': 'Bay of Plenty',
         'Canterbury Region': 'Canterbury',
         'Gisborne Region': 'Gisborne',
-        'Hawke’s Bay Region': 'Hawke’s Bay',
+        'Hawke\'s Bay Region': 'Hawke\'s Bay',
         'Manawatu-Wanganui Region': 'Manawatu-Wanganui',
         'Marlborough Region': 'Marlborough',
         'Nelson Region': 'Nelson',
@@ -64,12 +64,12 @@
         'Wellington Region': 'Wellington',
         'West Coast Region': 'West Coast'
       },
-      fieldAPIMappngs: {
-        address_1: {
+      fieldAPIMappings: {
+        address1: {
           name: 'address_line_1_and_2',
           type: 'function'
         },
-        address_2: {
+        address2: {
           name: 'suburb',
           type: 'function'
         },
@@ -77,13 +77,13 @@
           name: 'city',
           type: 'function'
         },
-        postcode: {
+        province: {
+          name: 'region',
+          type: 'lookup'
+        },
+        zip: {
           name: 'postcode',
           type: 'function'
-        },
-        state:     {
-          name: 'region',
-          type: 'field'
         }
       }
     }

@@ -14,6 +14,9 @@
   function Widget(){
 
     var widget = this;
+    widget.AFKey = null;
+    widget.field = null;
+    widget.country = null;
     widget.instance = null;
 
     function _create(){
@@ -21,7 +24,9 @@
     }
 
     widget.setStateByCountry = function(countryISO){
-      widget.country.iso == countryISO ? widget.instance.enable() : widget.instance.disable();
+      var isCurrentCountry = widget.country.iso == countryISO;
+      isCurrentCountry ? widget.instance.enable() : widget.instance.disable();
+      return isCurrentCountry;
     };
 
     widget.init = function(targetField, countryISO){

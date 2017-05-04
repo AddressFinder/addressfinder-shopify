@@ -20,12 +20,12 @@
         'VIC': 'Victoria',
         'WA' : 'Western Australia'
       },
-      fieldAPIMappngs: {
-        address_1: {
+      fieldAPIMappings: {
+        address1: {
           name: 'address_line_1',
           type: 'field'
         },
-        address_2: {
+        address2: {
           name: 'address_line_2',
           type: 'field'
         },
@@ -33,12 +33,12 @@
           name: 'locality_name',
           type: 'field'
         },
-        postcode: {
-          name: 'postcode',
-          type: 'field'
-        },
-        state:     {
+        province: {
           name: 'state_territory',
+          type: 'lookup'
+        },
+        zip: {
+          name: 'postcode',
           type: 'field'
         }
       }
@@ -51,7 +51,7 @@
         'Bay of Plenty Region': 'Bay of Plenty',
         'Canterbury Region': 'Canterbury',
         'Gisborne Region': 'Gisborne',
-        'Hawke’s Bay Region': 'Hawke’s Bay',
+        'Hawke\'s Bay Region': 'Hawke\'s Bay',
         'Manawatu-Wanganui Region': 'Manawatu-Wanganui',
         'Marlborough Region': 'Marlborough',
         'Nelson Region': 'Nelson',
@@ -64,12 +64,12 @@
         'Wellington Region': 'Wellington',
         'West Coast Region': 'West Coast'
       },
-      fieldAPIMappngs: {
-        address_1: {
+      fieldAPIMappings: {
+        address1: {
           name: 'address_line_1_and_2',
           type: 'function'
         },
-        address_2: {
+        address2: {
           name: 'suburb',
           type: 'function'
         },
@@ -77,19 +77,109 @@
           name: 'city',
           type: 'function'
         },
-        postcode: {
+        province: {
+          name: 'region',
+          type: 'lookup'
+        },
+        zip: {
           name: 'postcode',
           type: 'function'
-        },
-        state:     {
-          name: 'region',
-          type: 'field'
         }
       }
     }
   };
   w.AF ? w.AF.CountryMappings = countries : w.AF = {CountryMappings: countries};
 })(window);
+
+(function(d,w){
+  function Form(){
+    var f = this;
+
+    f.mappings = null;
+    f.currentForm = null;
+    f.activeCountryISO = null;
+    f.activeWidget = null;
+    f.widgets = [];
+
+    function _createWidget(countryISO) {
+      var widget = new w.AF.ShopifyWidget();
+      var addressField = f.currentForm.fields[Object.keys(f.currentForm.fields)[0]].element;
+      widget.init(addressField, countryISO);
+      f.widgets.push(widget);
+    }
+
+    function _setFieldValues(address, metaData){
+      w.console.log('address', address);
+      w.console.log('metaData', metaData);
+      Object.keys(f.currentForm.fields).forEach(function(fieldKeyName){
+        var fieldItem = f.currentForm.fields[fieldKeyName];
+        var fieldAPIMapping = f.activeWidget.country.fieldAPIMappings[fieldItem.mappingId];
+        if (f.activeWidget.country.iso == 'NZ' && fieldAPIMapping.type == 'function') {
+          var selected = new w.AddressFinder.NZSelectedAddress(address, metaData);
+          w.console.log('use AF formatting functions');
+          fieldItem.setValue(selected[fieldAPIMapping.name]());
+          return;
+        } else if (fieldAPIMapping.type == 'lookup') {
+          w.console.log('use AF province lookup', f.activeWidget.country.provinces[metaData[fieldAPIMapping.name]]);
+          fieldItem.setValue(f.activeWidget.country.provinces[metaData[fieldAPIMapping.name]]);
+          return;
+        } else {
+          w.console.log('use AF API Mapping in metaData: ', metaData[fieldAPIMapping.name]);
+          fieldItem.setValue(metaData[fieldAPIMapping.name]);
+        }
+      });
+    }
+
+    function _setWidgetHandlers(){
+      f.widgets.forEach(function(widget){
+        widget.instance.on('result:select', _setFieldValues);
+      });
+    }
+
+    function _clearFields(){
+      Object.keys(f.currentForm.fields).forEach(function(field){
+        f.currentForm.fields[field].setValue();
+      });
+    }
+
+    function _setWidgetStatus(countryISO){
+      f.activeCountryISO = countryISO;
+      f.activeWidget = null;
+      f.widgets.forEach(function(widget){
+        // Set widget state and return a boolean at the same time
+        if (widget.setStateByCountry(countryISO)) f.activeWidget = widget;
+      });
+    }
+
+    function _formChangeHandler(event){
+      var targetElem = event.target;
+      if (targetElem.getAttribute('id') == f.currentForm.countryField && targetElem.value) {
+        if (f.activeWidget) _clearFields();
+        _setWidgetStatus(targetElem.value);
+      }
+    }
+
+    f.init = function(){
+      var ffm = new w.AF.FormFieldMappings();
+      ffm.init();
+
+      f.currentForm = ffm.currentForm;
+      if (f.currentForm && f.currentForm.fields) {
+        Object.keys(w.AF.CountryMappings).forEach(_createWidget);
+
+        d.body.addEventListener('change', _formChangeHandler);
+
+        _setWidgetStatus(d.getElementById(f.currentForm.countryField).value);
+        _setWidgetHandlers();
+      }
+    };
+
+    return f;
+  }
+
+  w.AF ? w.AF.Form = Form : w.AF = {Form: Form};
+
+})(document, window);
 
 /**
  * An AF.FormField is a helper for each address-like element in the Shopify Form.
@@ -99,11 +189,11 @@
  *  - a method for updating the form field value
  */
 (function(w){
-  function FormField(id, mapping){
+
+  function FormField(id, mappingId){
     var f = this;
-    f.id = id;
+    f.mappingId = mappingId;
     f.element = document.getElementById(id);
-    f.mapping = mapping;
     f.setValue = function(value) {
       if (value === undefined) value = '';
       f.element.value = value;
@@ -134,81 +224,76 @@
  * Once the appropriate form has been identified based on the matching `address1` field,
  * this util will set the form in scope, see: `m.currentForm`.
  */
+
 (function(w){
-  var fieldTypeMappings = {
-      address_1: 'address1',
-      address_2: 'address2',
-      city: 'city',
-      state: 'province',
-      postcode: 'zip'
-    },
-    formMappings = {
-      billing_plus: {
-        type: 'billing',
-        platform: 'plus',
+  var fieldTypeMappings = [
+      'address1',
+      'address2',
+      'city',
+      'province',
+      'zip'
+    ],
+    formMappings = [
+      {
+        // type: 'billing',
+        // platform: 'plus',
         prefix: 'checkout_billing_address_attributes_'
       },
-      shipping_plus: {
-        type: 'shipping',
-        platform: 'plus',
+      {
+        // type: 'shipping',
+        // platform: 'plus',
         prefix: 'checkout_shipping_address_attributes_'
       },
-      billing_standard: {
-        type: 'billing',
-        platform: 'standard',
+      {
+        // type: 'billing',
+        // platform: 'standard',
         prefix: 'checkout_billing_address_'
       },
-      shipping_standard: {
-        type: 'shipping',
-        platform: 'standard',
+      {
+        // type: 'shipping',
+        // platform: 'standard',
         prefix: 'checkout_shipping_address_'
       },
-      shipping_registration: {
-        type: 'shipping',
-        platform: 'registration',
+      {
+        // type: 'shipping',
+        // platform: 'registration',
         prefix: 'address_',
         suffix: '_new'
       }
-    };
+    ];
 
   function mappings(){
     var m = this;
     m.currentForm = null;
-    function _getFieldName(fieldName) {
-      return fieldTypeMappings[fieldName];
-    }
-    function _getFieldIDString(field, currentForm){
+
+    function _getFieldIDString(index, currentForm){
       if (currentForm === undefined) currentForm = m.currentForm;
       var fieldString = '';
       if (currentForm.prefix) fieldString += currentForm.prefix;
-      fieldString += (field === 'country' ? 'country' : _getFieldName(field));
+      fieldString += (index === 'country' ? 'country' : fieldTypeMappings[index]);
       if (currentForm.suffix) fieldString += currentForm.suffix;
       return fieldString;
     }
     function _getFormFields() {
       var formFieldsObj = {};
-      for (var keyName in fieldTypeMappings) {
-        var id = _getFieldIDString(keyName);
-        var mapping = fieldTypeMappings[keyName];
-        var field = new w.AF.FormField(id, mapping);
-        formFieldsObj[keyName] = field;
-      }
+      fieldTypeMappings.forEach(function(item, index){
+        var id = _getFieldIDString(index);
+        var field = new w.AF.FormField(id, item);
+        formFieldsObj[id] = field;
+      });
       return formFieldsObj;
     }
-    function _setForm(formIdentifier){
-      m.currentForm = formMappings[formIdentifier];
+    function _setForm(index){
+      m.currentForm = formMappings[index];
       m.currentForm.countryField = _getFieldIDString('country');
-      m.currentForm.name = formIdentifier;
       m.currentForm.fields = _getFormFields();
       return m.currentForm;
     }
     function _findMatchingForm(){
-      var firstFieldKeyName = Object.keys(fieldTypeMappings)[0],
-        formMappingsKeys = Object.keys(formMappings);
-      formMappingsKeys.forEach(function(keyName){
-        var stringID = _getFieldIDString(firstFieldKeyName, formMappings[keyName]);
+      formMappings.forEach(function(item, index){
+        var stringID = _getFieldIDString(0, formMappings[index]);
         if (document.getElementById(stringID)) {
-          _setForm(keyName);
+          _setForm(index);
           return;
         }
       });
@@ -300,6 +385,9 @@
   function Widget(){
 
     var widget = this;
+    widget.AFKey = null;
+    widget.field = null;
+    widget.country = null;
     widget.instance = null;
 
     function _create(){
@@ -307,7 +395,9 @@
     }
 
     widget.setStateByCountry = function(countryISO){
-      widget.country.iso == countryISO ? widget.instance.enable() : widget.instance.disable();
+      var isCurrentCountry = widget.country.iso == countryISO;
+      isCurrentCountry ? widget.instance.enable() : widget.instance.disable();
+      return isCurrentCountry;
     };
 
     widget.init = function(targetField, countryISO){
@@ -326,64 +416,8 @@
 (function(d, w){
 
   function bootUp(){
-    var f = new w.AF.FormFieldMappings();
+    var f = new w.AF.Form();
     f.init();
-
-    var currentFormFields = f.currentForm.fields;
-    var widgets = [];
-    function _createWidget(countryISO) {
-      var widget = new w.AF.ShopifyWidget();
-      var addressField = currentFormFields[Object.keys(currentFormFields)[0]].element;
-      widget.init(addressField, countryISO);
-      widgets.push(widget);
-    }
-
-    function _setFieldValueByMetaData(){
-
-    }
-
-    function _setFieldValues(address, metaData){
-      w.console.log('address', address);
-      w.console.log('metaData', metaData);
-      var mappings = widget.country.fieldAPIMappngs;
-      Object.keys(mappings).forEach(function(fieldName){
-        w.console.log('fieldName', fieldName);
-        if (widget.country.iso == 'NZ' && mappings[fieldName].type == 'function') {
-          w.console.log('use AF formatting functions');
-          return;
-        }
-        _setFieldValueByMetaData(metaData[mappings[fieldName].name]);
-        w.console.log('use AF API Mapping in metaData: ', metaData[mappings[fieldName].name]);
-      });
-    }
-
-    function _setWidgetHandlers(){
-      widgets.forEach(function(widget){
-        widget.instance.on('result:select', _setFieldValues);
-      });
-    }
-
-    function _setWidgetStatus(countryISO){
-      widgets.forEach(function(widget){
-        widget.setStateByCountry(countryISO);
-      });
-    }
-
-    function _formChangeHandler(event){
-      var targetElem = event.target;
-      if (targetElem.getAttribute('id') == f.currentForm.countryField && targetElem.value) {
-        _setWidgetStatus(targetElem.value);
-      }
-    }
-
-    if (currentFormFields) {
-      Object.keys(w.AF.CountryMappings).forEach(_createWidget);
-
-      d.body.addEventListener('change', _formChangeHandler);
-
-      _setWidgetStatus(d.getElementById(f.currentForm.countryField).value);
-      _setWidgetHandlers();
-    }
   }
 
   function testForReadiness(){
