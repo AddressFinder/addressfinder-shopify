@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Checkout Billing Address, Shopify Plus</title>
+    <title>Checkout Billing Address, Shopify Standard</title>
   </head>
   <body>
     <form>
-      <h2>Checkout Billing Address, Shopify Plus</h2>
+      <h2>Checkout Billing Address, Shopify Standard</h2>
       <div>
         <label>Address line 1</label>
-        <input type="text" id="checkout_billing_address_address1" name="checkout[billing_address][address1]">
+        <input type="text" id="checkout_billing_address_address1" name="address1_billing">
       </div>
       <div>
         <label>Address line 2</label>
-        <input type="text" id="checkout_billing_address_address2" name="checkout[billing_address][address2]">
+        <input type="text" id="checkout_billing_address_address2" name="address2_billing">
       </div>
       <div>
         <label>City</label>
-        <input type="text" id="checkout_billing_address_city" name="checkout[billing_address][city]">
+        <input type="text" id="checkout_billing_address_city" name="city_billing">
       </div>
       <div>
         <label>Province/State</label>
@@ -52,11 +52,11 @@
       </div>
       <div>
         <label>ZIP/Postcode</label>
-        <input type="text" id="checkout_billing_address_zip" name="checkout[billing_address][zip]">
+        <input type="text" id="checkout_billing_address_zip" name="zip_billing">
       </div>
       <div>
         <label>Country</label>
-        <select id="checkout_billing_address_country" name="checkout[billing_address][country]">
+        <select id="checkout_billing_address_country" name="country_billing">
           <option value="-1">Select a country</option>
           <option value="AU" selected>Australia</option>
           <option value="NZ">New Zealand</option>

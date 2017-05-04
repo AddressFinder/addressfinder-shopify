@@ -35,6 +35,7 @@
       if (countryISO) widget.country = w.AF.CountryMappings[countryISO.toLowerCase()];
       if (w.AddressFinder && w.AddressFinder.Widget) _create();
     };
+
     return widget;
   }
 

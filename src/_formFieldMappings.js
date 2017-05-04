@@ -16,7 +16,7 @@
  * E.g. the registration address line 1 field is: `address_` + `address_1` + `_new`
  *
  * Once the appropriate form has been identified based on the matching `address1` field,
- * this util will set the form in scope, see: `m.currentForm`.
+ * this util will set the form in scope, see: `m.activeMapping`.
  */
 
 (function(w){
@@ -31,70 +31,71 @@
       {
         // type: 'billing',
         // platform: 'plus',
-        prefix: 'checkout_billing_address_attributes_'
+        prefix: 'checkout[billing_address][',
+        suffix: ']'
       },
       {
         // type: 'shipping',
         // platform: 'plus',
-        prefix: 'checkout_shipping_address_attributes_'
+        prefix: 'checkout[shipping_address][',
+        suffix: ']'
       },
       {
         // type: 'billing',
         // platform: 'standard',
-        prefix: 'checkout_billing_address_'
+        suffix: '_billing'
       },
       {
         // type: 'shipping',
         // platform: 'standard',
-        prefix: 'checkout_shipping_address_'
+        suffix: '_shipping'
       },
       {
-        // type: 'shipping',
-        // platform: 'registration',
-        prefix: 'address_',
-        suffix: '_new'
+        // type: 'address',
+        // platform: 'account',
+        prefix: 'address[',
+        suffix: ']'
       }
-    ];
+    ],
+    selector = {
+      prefix: '[name="',
+      suffix: '"]'
+    };
 
   function mappings(){
     var m = this;
-    m.currentForm = null;
+    m.activeMapping = null;
 
-    function _getFieldIDString(index, currentForm){
-      if (currentForm === undefined) currentForm = m.currentForm;
+    function _getFieldIDString(index, mapping){
       var fieldString = '';
-      if (currentForm.prefix) fieldString += currentForm.prefix;
+      fieldString += selector.prefix;
+      if (mapping.prefix) fieldString += mapping.prefix;
       fieldString += (index === 'country' ? 'country' : fieldTypeMappings[index]);
-      if (currentForm.suffix) fieldString += currentForm.suffix;
+      if (mapping.suffix) fieldString += mapping.suffix;
+      fieldString += selector.suffix;
       return fieldString;
     }
     function _getFormFields() {
       var formFieldsObj = {};
       fieldTypeMappings.forEach(function(item, index){
-        var id = _getFieldIDString(index);
+        var id = _getFieldIDString(index, m.activeMapping);
         var field = new w.AF.FormField(id, item);
         formFieldsObj[id] = field;
       });
       return formFieldsObj;
     }
-    function _setForm(index){
-      m.currentForm = formMappings[index];
-      m.currentForm.countryField = _getFieldIDString('country');
-      m.currentForm.fields = _getFormFields();
-      return m.currentForm;
-    }
-    function _findMatchingForm(){
+    m.findAddressGroups = function(){
+      var tempArray = [];
       formMappings.forEach(function(item, index){
-        var stringID = _getFieldIDString(0, formMappings[index]);
-        if (document.getElementById(stringID)) {
-          _setForm(index);
-          return;
+        m.activeMapping = formMappings[index];
+        var stringSelector = _getFieldIDString(0, m.activeMapping);
+        if (document.querySelector(stringSelector)) {
+          m.activeMapping.countryField = _getFieldIDString('country', m.activeMapping);
+          m.activeMapping.fields = _getFormFields();
+          tempArray.push(m.activeMapping);
         }
       });
-      return (m.currentForm) ? true : false;
-    }
-    m.init = function(){
-      _findMatchingForm();
+      return tempArray;
     };
     return m;
   }

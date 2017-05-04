@@ -7,10 +7,10 @@
  */
 (function(w){
 
-  function FormField(id, mappingId){
+  function FormField(selector, mappingId){
     var f = this;
     f.mappingId = mappingId;
-    f.element = document.getElementById(id);
+    f.element = document.querySelector(selector);
     f.setValue = function(value) {
       if (value === undefined) value = '';
       f.element.value = value;

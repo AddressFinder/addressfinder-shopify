@@ -1,37 +1,32 @@
 (function(d,w){
-  function Form(){
+  function AddressGroup(){
     var f = this;
 
-    f.mappings = null;
-    f.currentForm = null;
+    f.activeAddressGroup = null;
     f.activeCountryISO = null;
     f.activeWidget = null;
     f.widgets = [];
 
     function _createWidget(countryISO) {
+      // Only create widgets for matching countries
       var widget = new w.AF.ShopifyWidget();
-      var addressField = f.currentForm.fields[Object.keys(f.currentForm.fields)[0]].element;
+      var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
       widget.init(addressField, countryISO);
       f.widgets.push(widget);
     }
 
     function _setFieldValues(address, metaData){
-      w.console.log('address', address);
-      w.console.log('metaData', metaData);
-      Object.keys(f.currentForm.fields).forEach(function(fieldKeyName){
-        var fieldItem = f.currentForm.fields[fieldKeyName];
+      Object.keys(f.activeAddressGroup.fields).forEach(function(fieldKeyName){
+        var fieldItem = f.activeAddressGroup.fields[fieldKeyName];
         var fieldAPIMapping = f.activeWidget.country.fieldAPIMappings[fieldItem.mappingId];
         if (f.activeWidget.country.iso == 'NZ' && fieldAPIMapping.type == 'function') {
           var selected = new w.AddressFinder.NZSelectedAddress(address, metaData);
-          w.console.log('use AF formatting functions');
           fieldItem.setValue(selected[fieldAPIMapping.name]());
           return;
         } else if (fieldAPIMapping.type == 'lookup') {
-          w.console.log('use AF province lookup', f.activeWidget.country.provinces[metaData[fieldAPIMapping.name]]);
           fieldItem.setValue(f.activeWidget.country.provinces[metaData[fieldAPIMapping.name]]);
           return;
         } else {
-          w.console.log('use AF API Mapping in metaData: ', metaData[fieldAPIMapping.name]);
           fieldItem.setValue(metaData[fieldAPIMapping.name]);
         }
       });
@@ -44,12 +39,12 @@
     }
 
     function _clearFields(){
-      Object.keys(f.currentForm.fields).forEach(function(field){
-        f.currentForm.fields[field].setValue();
+      Object.keys(f.activeAddressGroup.fields).forEach(function(field){
+        f.activeAddressGroup.fields[field].setValue();
       });
     }
 
-    function _setWidgetStatus(countryISO){
+    function _setCountry(countryISO){
       f.activeCountryISO = countryISO;
       f.activeWidget = null;
       f.widgets.forEach(function(widget){
@@ -58,25 +53,20 @@
       });
     }
 
-    function _formChangeHandler(event){
-      var targetElem = event.target;
-      if (targetElem.getAttribute('id') == f.currentForm.countryField && targetElem.value) {
+    function _countryChangeHandler(event){
+      var targetElemValue = event.target.value;
+      if (targetElemValue != f.activeCountryISO) {
         if (f.activeWidget) _clearFields();
-        _setWidgetStatus(targetElem.value);
+        _setCountry(targetElemValue);
       }
     }
 
-    f.init = function(){
-      var ffm = new w.AF.FormFieldMappings();
-      ffm.init();
-
-      f.currentForm = ffm.currentForm;
-      if (f.currentForm && f.currentForm.fields) {
+    f.init = function(formObj){
+      f.activeAddressGroup = formObj;
+      if (f.activeAddressGroup && f.activeAddressGroup.fields) {
         Object.keys(w.AF.CountryMappings).forEach(_createWidget);
-
-        d.body.addEventListener('change', _formChangeHandler);
-
-        _setWidgetStatus(d.getElementById(f.currentForm.countryField).value);
+        d.querySelector(f.activeAddressGroup.countryField).addEventListener('change', _countryChangeHandler);
+        _setCountry(d.querySelector(f.activeAddressGroup.countryField).value);
         _setWidgetHandlers();
       }
     };
@@ -84,6 +74,6 @@
     return f;
   }
 
-  w.AF ? w.AF.Form = Form : w.AF = {Form: Form};
+  w.AF ? w.AF.AddressGroup = AddressGroup : w.AF = {AddressGroup: AddressGroup};
 
 })(document, window);

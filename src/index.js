@@ -1,8 +1,21 @@
-(function(d, w){
+(function(w){
+
+  function _warn(message){
+    if (w.console && w.console.warn) {
+      w.console.warn(message);
+    }
+  }
 
   function bootUp(){
-    var f = new w.AF.Form();
-    f.init();
+    var ffm = new w.AF.FormFieldMappings();
+    var addressGroups = ffm.findAddressGroups();
+    addressGroups.forEach(function(item, index){
+      var addressGroup = new w.AF.AddressGroup();
+      if (item.fields) {
+        addressGroup.init(item);
+        addressGroups[index] = addressGroup;
+      }
+    });
   }
 
   function testForReadiness(){
@@ -14,7 +27,7 @@
       ];
     checkArray.forEach(function(item){
       if (!w[item['objName']]) {
-        w.console.warn(item['message']);
+        _warn(item['message']);
         errorOccured = true;
         return;
       }
@@ -25,4 +38,4 @@
   var scriptLoader = new w.AF.ScriptLoader();
   scriptLoader.loadScript(testForReadiness);
 
-})(document, window);
+})(window);
