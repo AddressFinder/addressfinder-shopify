@@ -29,7 +29,7 @@
     function _createWidget(countryISO) {
       if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings.list[countryISO].title + '"]')) {
         var widget = new w.AF.ShopifyWidget();
-        var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
+        var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element();
         widget.init(addressField, countryISO.toUpperCase());
         f.widgets.push(widget);
       }
@@ -42,12 +42,16 @@
         if (f.activeWidget.country.iso == 'NZ' && fieldAPIMapping.type == 'function') {
           var selected = new w.AddressFinder.NZSelectedAddress(address, metaData);
           fieldItem.setValue(selected[fieldAPIMapping.name]());
-          return;
         } else if (fieldAPIMapping.type == 'lookup') {
-          var province = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
-          if (!fieldItem.element.querySelector('[value="' + province + '"]')) province = w.AF.CountryMappings.findProvinceFieldValueAlias(f.activeWidget.country.iso, province);
+          var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
+          var province = null;
+          provinceLookups.forEach(function(item){
+            if (fieldItem.element().querySelector('[value="' + item + '"]')) {
+              province = item;
+              return;
+            }
+          });
           fieldItem.setValue(province);
-          return;
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);
         }
@@ -116,14 +120,14 @@
         iso: 'AU',
         title: 'Australia',
         provinceAPIMappings: {
-          'ACT': 'Australian Capital Territory',
-          'NSW': 'New South Wales',
-          'NT' : 'Northern Territory',
-          'QLD': 'Queensland',
-          'SA' : 'South Australia',
-          'TAS': 'Tasmania',
-          'VIC': 'Victoria',
-          'WA' : 'Western Australia'
+          'ACT': ['Australian Capital Territory', 'ACT'],
+          'NSW': ['New South Wales', 'NSW'],
+          'NT' : ['Northern Territory', 'NT'],
+          'QLD': ['Queensland', 'QLD'],
+          'SA' : ['South Australia', 'SA'],
+          'TAS': ['Tasmania', 'TAS'],
+          'VIC': ['Victoria', 'VIC'],
+          'WA' : ['Western Australia', 'WA']
         },
         fieldAPIMappings: {
           address1: {
@@ -151,41 +155,23 @@
       nz: {
         iso: 'NZ',
         title: 'New Zealand',
-        provinceFieldAliases: {
-          'Auckland': 'AUK',
-          'Bay of Plenty': 'BOP',
-          'Canterbury': 'CAN',
-          'Gisborne': 'GIS',
-          'Hawke\'s Bay': 'HKB',
-          'Manawatu-Wanganui': 'MWT',
-          'Marlborough': 'MBH',
-          'Nelson': 'NSN',
-          'Northland': 'NTL',
-          'Otago': 'OTA',
-          'Southland': 'STL',
-          'Taranaki': 'TKI',
-          'Tasman': 'TAS',
-          'Waikato': 'WKO',
-          'Wellington': 'WGN',
-          'West Coast': 'WTC'
-        },
         provinceAPIMappings: {
-          'Auckland Region': 'Auckland',
-          'Bay of Plenty Region': 'Bay of Plenty',
-          'Canterbury Region': 'Canterbury',
-          'Gisborne Region': 'Gisborne',
-          'Hawke\'s Bay Region': 'Hawke\'s Bay',
-          'Manawatu-Wanganui Region': 'Manawatu-Wanganui',
-          'Marlborough Region': 'Marlborough',
-          'Nelson Region': 'Nelson',
-          'Northland Region': 'Northland',
-          'Otago Region': 'Otago',
-          'Southland Region': 'Southland',
-          'Taranaki Region': 'Taranaki',
-          'Tasman Region': 'Tasman',
-          'Waikato Region': 'Waikato',
-          'Wellington Region': 'Wellington',
-          'West Coast Region': 'West Coast'
+          'Auckland Region':          ['Auckland', 'AUK'],
+          'Bay of Plenty Region':     ['Bay of Plenty', 'BOP'],
+          'Canterbury Region':        ['Canterbury', 'CAN'],
+          'Gisborne Region':          ['Gisborne', 'GIS'],
+          'Hawke\'s Bay Region':      ['Hawke\'s Bay', 'HKB'],
+          'Manawatu-Wanganui Region': ['Manawatu-Wanganui', 'MWT'],
+          'Marlborough Region':       ['Marlborough', 'MBH'],
+          'Nelson Region':            ['Nelson', 'NSN'],
+          'Northland Region':         ['Northland', 'NTL'],
+          'Otago Region':             ['Otago', 'OTA'],
+          'Southland Region':         ['Southland', 'STL'],
+          'Taranaki Region':          ['Taranaki', 'TKI'],
+          'Tasman Region':            ['Tasman', 'TAS'],
+          'Waikato Region':           ['Waikato', 'WKO'],
+          'Wellington Region':        ['Wellington', 'WGN'],
+          'West Coast Region':        ['West Coast', 'WTC']
         },
         fieldAPIMappings: {
           address1: {
@@ -252,10 +238,13 @@
   function FormField(selector, mappingId){
     var f = this;
     f.mappingId = mappingId;
-    f.element = document.querySelector(selector);
+    f.selector = selector;
+    f.element = function(){
+      return document.querySelector(f.selector);
+    };
     f.setValue = function(value) {
       if (value === undefined) value = '';
-      f.element.value = value;
+      f.element().value = value;
     };
 
     return f;
@@ -355,7 +344,7 @@
         m.activeMapping = formMappings[index];
         var stringSelector = _getFieldIDString(0, m.activeMapping);
         if (document.querySelector(stringSelector)) {
-          m.activeMapping.countryField = _getFieldIDString('country', m.activeMapping);
+          m.activeMapping.countryField = 'select' + _getFieldIDString('country', m.activeMapping);
           m.activeMapping.fields = _getFormFields();
           tempArray.push(m.activeMapping);
         }

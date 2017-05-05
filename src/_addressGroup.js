@@ -29,7 +29,7 @@
     function _createWidget(countryISO) {
       if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings.list[countryISO].title + '"]')) {
         var widget = new w.AF.ShopifyWidget();
-        var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
+        var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element();
         widget.init(addressField, countryISO.toUpperCase());
         f.widgets.push(widget);
       }
@@ -42,12 +42,16 @@
         if (f.activeWidget.country.iso == 'NZ' && fieldAPIMapping.type == 'function') {
           var selected = new w.AddressFinder.NZSelectedAddress(address, metaData);
           fieldItem.setValue(selected[fieldAPIMapping.name]());
-          return;
         } else if (fieldAPIMapping.type == 'lookup') {
-          var province = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
-          if (!fieldItem.element.querySelector('[value="' + province + '"]')) province = w.AF.CountryMappings.findProvinceFieldValueAlias(f.activeWidget.country.iso, province);
+          var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
+          var province = null;
+          provinceLookups.forEach(function(item){
+            if (fieldItem.element().querySelector('[value="' + item + '"]')) {
+              province = item;
+              return;
+            }
+          });
           fieldItem.setValue(province);
-          return;
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);
         }

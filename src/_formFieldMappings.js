@@ -90,7 +90,7 @@
         m.activeMapping = formMappings[index];
         var stringSelector = _getFieldIDString(0, m.activeMapping);
         if (document.querySelector(stringSelector)) {
-          m.activeMapping.countryField = _getFieldIDString('country', m.activeMapping);
+          m.activeMapping.countryField = 'select' + _getFieldIDString('country', m.activeMapping);
           m.activeMapping.fields = _getFormFields();
           tempArray.push(m.activeMapping);
         }

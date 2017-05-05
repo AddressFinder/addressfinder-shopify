@@ -10,10 +10,13 @@
   function FormField(selector, mappingId){
     var f = this;
     f.mappingId = mappingId;
-    f.element = document.querySelector(selector);
+    f.selector = selector;
+    f.element = function(){
+      return document.querySelector(f.selector);
+    };
     f.setValue = function(value) {
       if (value === undefined) value = '';
-      f.element.value = value;
+      f.element().value = value;
     };
 
     return f;
