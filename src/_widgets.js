@@ -32,7 +32,7 @@
     widget.init = function(targetField, countryISO){
       widget.AFKey = w.AddressFinderPlugin.key;
       if (targetField) widget.field = targetField;
-      if (countryISO) widget.country = w.AF.CountryMappings[countryISO.toLowerCase()];
+      if (countryISO) widget.country = w.AF.CountryMappings.findMappingByValue(countryISO);
       if (w.AddressFinder && w.AddressFinder.Widget) _create();
     };
 

@@ -23,15 +23,14 @@
     f.widgets = [];
 
     function _createWidgets() {
-      Object.keys(w.AF.CountryMappings).forEach(_createWidget);
+      Object.keys(w.AF.CountryMappings.list).forEach(_createWidget);
     }
 
     function _createWidget(countryISO) {
-      if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings[countryISO].title + '"]')) {
+      if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings.list[countryISO].title + '"]')) {
         var widget = new w.AF.ShopifyWidget();
         var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
-        widget.init(addressField, countryISO);
-        w.console.log('Initialised a widget for:', countryISO);
+        widget.init(addressField, countryISO.toUpperCase());
         f.widgets.push(widget);
       }
     }
@@ -65,7 +64,8 @@
       });
     }
 
-    function _setCountry(countryISO){
+    function _setCountry(countryValue){
+      var countryISO = w.AF.CountryMappings.findCountryISOByValue(countryValue);
       f.activeCountryISO = countryISO;
       f.activeWidget = null;
       f.widgets.forEach(function(widget){

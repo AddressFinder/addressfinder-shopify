@@ -23,15 +23,14 @@
     f.widgets = [];
 
     function _createWidgets() {
-      Object.keys(w.AF.CountryMappings).forEach(_createWidget);
+      Object.keys(w.AF.CountryMappings.list).forEach(_createWidget);
     }
 
     function _createWidget(countryISO) {
-      if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings[countryISO].title + '"]')) {
+      if (f.countryElement.querySelector('[value="' + countryISO.toUpperCase() + '"]') || f.countryElement.querySelector('[value="' + w.AF.CountryMappings.list[countryISO].title + '"]')) {
         var widget = new w.AF.ShopifyWidget();
         var addressField = f.activeAddressGroup.fields[Object.keys(f.activeAddressGroup.fields)[0]].element;
-        widget.init(addressField, countryISO);
-        w.console.log('Initialised a widget for:', countryISO);
+        widget.init(addressField, countryISO.toUpperCase());
         f.widgets.push(widget);
       }
     }
@@ -65,7 +64,8 @@
       });
     }
 
-    function _setCountry(countryISO){
+    function _setCountry(countryValue){
+      var countryISO = w.AF.CountryMappings.findCountryISOByValue(countryValue);
       f.activeCountryISO = countryISO;
       f.activeWidget = null;
       f.widgets.forEach(function(widget){
@@ -109,101 +109,106 @@
 */
 (function(w){
   var countries = {
-    au: {
-      iso: 'AU',
-      title: 'Australia',
-      provinces: {
-        'ACT': 'Australian Capital Territory',
-        'NSW': 'New South Wales',
-        'NT' : 'Northern Territory',
-        'QLD': 'Queensland',
-        'SA' : 'South Australia',
-        'TAS': 'Tasmania',
-        'VIC': 'Victoria',
-        'WA' : 'Western Australia'
+    list: {
+      au: {
+        iso: 'AU',
+        title: 'Australia',
+        provinces: {
+          'ACT': 'Australian Capital Territory',
+          'NSW': 'New South Wales',
+          'NT' : 'Northern Territory',
+          'QLD': 'Queensland',
+          'SA' : 'South Australia',
+          'TAS': 'Tasmania',
+          'VIC': 'Victoria',
+          'WA' : 'Western Australia'
+        },
+        fieldAPIMappings: {
+          address1: {
+            name: 'address_line_1',
+            type: 'field'
+          },
+          address2: {
+            name: 'address_line_2',
+            type: 'field'
+          },
+          city: {
+            name: 'locality_name',
+            type: 'field'
+          },
+          province: {
+            name: 'state_territory',
+            type: 'lookup'
+          },
+          zip: {
+            name: 'postcode',
+            type: 'field'
+          }
+        }
       },
-      fieldAPIMappings: {
-        address1: {
-          name: 'address_line_1',
-          type: 'field'
+      nz: {
+        iso: 'NZ',
+        title: 'New Zealand',
+        provinces: {
+          'Auckland Region': 'Auckland',
+          'Bay of Plenty Region': 'Bay of Plenty',
+          'Canterbury Region': 'Canterbury',
+          'Gisborne Region': 'Gisborne',
+          'Hawke\'s Bay Region': 'Hawke\'s Bay',
+          'Manawatu-Wanganui Region': 'Manawatu-Wanganui',
+          'Marlborough Region': 'Marlborough',
+          'Nelson Region': 'Nelson',
+          'Northland Region': 'Northland',
+          'Otago Region': 'Otago',
+          'Southland Region': 'Southland',
+          'Taranaki Region': 'Taranaki',
+          'Tasman Region': 'Tasman',
+          'Waikato Region': 'Waikato',
+          'Wellington Region': 'Wellington',
+          'West Coast Region': 'West Coast'
         },
-        address2: {
-          name: 'address_line_2',
-          type: 'field'
-        },
-        city: {
-          name: 'locality_name',
-          type: 'field'
-        },
-        province: {
-          name: 'state_territory',
-          type: 'lookup'
-        },
-        zip: {
-          name: 'postcode',
-          type: 'field'
+        fieldAPIMappings: {
+          address1: {
+            name: 'address_line_1_and_2',
+            type: 'function'
+          },
+          address2: {
+            name: 'suburb',
+            type: 'function'
+          },
+          city: {
+            name: 'city',
+            type: 'function'
+          },
+          province: {
+            name: 'region',
+            type: 'lookup'
+          },
+          zip: {
+            name: 'postcode',
+            type: 'function'
+          }
         }
       }
     },
-    nz: {
-      iso: 'NZ',
-      title: 'New Zealand',
-      provinces: {
-        'Auckland Region': 'Auckland',
-        'AUK': 'Auckland',
-        'Bay of Plenty Region': 'Bay of Plenty',
-        'BOP': 'Bay of Plenty',
-        'Canterbury Region': 'Canterbury',
-        'CAN': 'Canterbury',
-        'Gisborne Region': 'Gisborne',
-        'GIS': 'Gisborne',
-        'Hawke\'s Bay Region': 'Hawke\'s Bay',
-        'HKB': 'Hawke\'s Bay',
-        'Manawatu-Wanganui Region': 'Manawatu-Wanganui',
-        'MWT': 'Manawatu-Wanganui',
-        'Marlborough Region': 'Marlborough',
-        'MBH': 'Marlborough',
-        'Nelson Region': 'Nelson',
-        'NSN': 'Nelson',
-        'Northland Region': 'Northland',
-        'NTL': 'Northland',
-        'Otago Region': 'Otago',
-        'OTA': 'Otago',
-        'Southland Region': 'Southland',
-        'STL': 'Southland',
-        'Taranaki Region': 'Taranaki',
-        'TKI': 'Taranaki',
-        'Tasman Region': 'Tasman',
-        'TAS': 'Tasman',
-        'Waikato Region': 'Waikato',
-        'WKO': 'Waikato',
-        'Wellington Region': 'Wellington',
-        'WGN': 'Wellington',
-        'West Coast Region': 'West Coast',
-        'WTC': 'West Coast'
-      },
-      fieldAPIMappings: {
-        address1: {
-          name: 'address_line_1_and_2',
-          type: 'function'
-        },
-        address2: {
-          name: 'suburb',
-          type: 'function'
-        },
-        city: {
-          name: 'city',
-          type: 'function'
-        },
-        province: {
-          name: 'region',
-          type: 'lookup'
-        },
-        zip: {
-          name: 'postcode',
-          type: 'function'
-        }
+    findMappingByValue: function(countryString){
+      var list = this.list;
+      var countryMapping = list[countryString.toLowerCase()];
+      if (!countryMapping) {
+        // Might be a word-based country value
+        Object.keys(list).forEach(function(keyName){
+          var item = list[keyName];
+          if (item.title.toUpperCase() == countryString.toUpperCase()) countryMapping = item;
+        });
       }
+      return countryMapping;
+    },
+    findCountryAttributeByValue: function(attribute, countryString) {
+      var countryMapping = this.findMappingByValue(countryString);
+      return countryMapping ? countryMapping[attribute] : countryString;
+    },
+    findCountryISOByValue: function(countryString){
+      return this.findCountryAttributeByValue('iso', countryString);
     }
   };
   w.AF ? w.AF.CountryMappings = countries : w.AF = {CountryMappings: countries};
@@ -432,7 +437,7 @@
     widget.init = function(targetField, countryISO){
       widget.AFKey = w.AddressFinderPlugin.key;
       if (targetField) widget.field = targetField;
-      if (countryISO) widget.country = w.AF.CountryMappings[countryISO.toLowerCase()];
+      if (countryISO) widget.country = w.AF.CountryMappings.findMappingByValue(countryISO);
       if (w.AddressFinder && w.AddressFinder.Widget) _create();
     };
 
