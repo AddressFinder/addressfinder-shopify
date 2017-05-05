@@ -44,7 +44,9 @@
           fieldItem.setValue(selected[fieldAPIMapping.name]());
           return;
         } else if (fieldAPIMapping.type == 'lookup') {
-          fieldItem.setValue(f.activeWidget.country.provinces[metaData[fieldAPIMapping.name]]);
+          var province = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
+          if (!fieldItem.element.querySelector('[value="' + province + '"]')) province = w.AF.CountryMappings.findProvinceFieldValueAlias(f.activeWidget.country.iso, province);
+          fieldItem.setValue(province);
           return;
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);

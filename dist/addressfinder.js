@@ -44,7 +44,9 @@
           fieldItem.setValue(selected[fieldAPIMapping.name]());
           return;
         } else if (fieldAPIMapping.type == 'lookup') {
-          fieldItem.setValue(f.activeWidget.country.provinces[metaData[fieldAPIMapping.name]]);
+          var province = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
+          if (!fieldItem.element.querySelector('[value="' + province + '"]')) province = w.AF.CountryMappings.findProvinceFieldValueAlias(f.activeWidget.country.iso, province);
+          fieldItem.setValue(province);
           return;
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);
@@ -113,7 +115,7 @@
       au: {
         iso: 'AU',
         title: 'Australia',
-        provinces: {
+        provinceAPIMappings: {
           'ACT': 'Australian Capital Territory',
           'NSW': 'New South Wales',
           'NT' : 'Northern Territory',
@@ -149,7 +151,25 @@
       nz: {
         iso: 'NZ',
         title: 'New Zealand',
-        provinces: {
+        provinceFieldAliases: {
+          'Auckland': 'AUK',
+          'Bay of Plenty': 'BOP',
+          'Canterbury': 'CAN',
+          'Gisborne': 'GIS',
+          'Hawke\'s Bay': 'HKB',
+          'Manawatu-Wanganui': 'MWT',
+          'Marlborough': 'MBH',
+          'Nelson': 'NSN',
+          'Northland': 'NTL',
+          'Otago': 'OTA',
+          'Southland': 'STL',
+          'Taranaki': 'TKI',
+          'Tasman': 'TAS',
+          'Waikato': 'WKO',
+          'Wellington': 'WGN',
+          'West Coast': 'WTC'
+        },
+        provinceAPIMappings: {
           'Auckland Region': 'Auckland',
           'Bay of Plenty Region': 'Bay of Plenty',
           'Canterbury Region': 'Canterbury',
@@ -190,6 +210,12 @@
           }
         }
       }
+    },
+    findProvinceFieldValueAlias: function(countryISO, provinceString){
+      return this.list[countryISO.toLowerCase()].provinceFieldAliases[provinceString];
+    },
+    findProvinceValueByAPI: function(countryISO, provinceString){
+      return this.list[countryISO.toLowerCase()].provinceAPIMappings[provinceString];
     },
     findMappingByValue: function(countryString){
       var list = this.list;

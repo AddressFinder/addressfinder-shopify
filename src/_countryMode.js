@@ -11,7 +11,7 @@
       au: {
         iso: 'AU',
         title: 'Australia',
-        provinces: {
+        provinceAPIMappings: {
           'ACT': 'Australian Capital Territory',
           'NSW': 'New South Wales',
           'NT' : 'Northern Territory',
@@ -47,7 +47,25 @@
       nz: {
         iso: 'NZ',
         title: 'New Zealand',
-        provinces: {
+        provinceFieldAliases: {
+          'Auckland': 'AUK',
+          'Bay of Plenty': 'BOP',
+          'Canterbury': 'CAN',
+          'Gisborne': 'GIS',
+          'Hawke\'s Bay': 'HKB',
+          'Manawatu-Wanganui': 'MWT',
+          'Marlborough': 'MBH',
+          'Nelson': 'NSN',
+          'Northland': 'NTL',
+          'Otago': 'OTA',
+          'Southland': 'STL',
+          'Taranaki': 'TKI',
+          'Tasman': 'TAS',
+          'Waikato': 'WKO',
+          'Wellington': 'WGN',
+          'West Coast': 'WTC'
+        },
+        provinceAPIMappings: {
           'Auckland Region': 'Auckland',
           'Bay of Plenty Region': 'Bay of Plenty',
           'Canterbury Region': 'Canterbury',
@@ -88,6 +106,12 @@
           }
         }
       }
+    },
+    findProvinceFieldValueAlias: function(countryISO, provinceString){
+      return this.list[countryISO.toLowerCase()].provinceFieldAliases[provinceString];
+    },
+    findProvinceValueByAPI: function(countryISO, provinceString){
+      return this.list[countryISO.toLowerCase()].provinceAPIMappings[provinceString];
     },
     findMappingByValue: function(countryString){
       var list = this.list;
