@@ -11,8 +11,8 @@ var eslintConfig = JSON.parse(fs.readFileSync('./.eslintrc.json'));
 var srcFolder = './src';
 var distFolder = './dist';
 var jsFiles = srcFolder + '/*.js';
-var bundleFileName = 'addressfinder.js';
-var outputFileName = 'addressfinder.min.js';
+var bundleFileName = 'boot_concat.js';
+var outputFileName = 'boot.js';
 
 gulp.task('default', ['lint'], function () {
   // place code for your default task here
