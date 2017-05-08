@@ -1,5 +1,5 @@
 /**
- * Shopify address forms can be run in many differnt situations:
+ * Shopify address forms can be run in many different situations:
  *  - Billing or Shipping mode
  *  - Situations: Shopify Plus Checkout, Standard Shopify Checkout, and Shopify User Registration
  *
