@@ -59,7 +59,7 @@
     ],
     selector = {
       prefix: '[name="',
-      suffix: '"]'
+      suffix: '"]:not(.visually-hidden)'
     };
 
   function mappings(){
