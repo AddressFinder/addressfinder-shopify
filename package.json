@@ -1,19 +1,21 @@
 {
   "name": "addressfinder-shopify",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A JavaScript Shopify plugin for AddressFinder",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "gulp": "gulp",
-    "build": "gulp build"
+    "develop": "gulp develop",
+    "build": "gulp production"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AbleTech/addressfinder-shopify.git"
   },
   "keywords": [
+    "es5",
     "address-verification",
-    "shopify"
+    "shopify",
+    "plugin"
   ],
   "author": "Abletech",
   "license": "MIT",
