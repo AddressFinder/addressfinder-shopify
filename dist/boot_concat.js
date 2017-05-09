@@ -45,12 +45,14 @@
         } else if (fieldAPIMapping.type == 'lookup') {
           var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
           var province = null;
-          provinceLookups.forEach(function(item){
-            if (fieldItem.element().querySelector('[value="' + item + '"]')) {
-              province = item;
-              return;
-            }
-          });
+          if (provinceLookups) {
+            provinceLookups.forEach(function(item){
+              if (fieldItem.element().querySelector('[value="' + item + '"]')) {
+                province = item;
+                return;
+              }
+            });
+          }
           fieldItem.setValue(province);
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);
@@ -127,7 +129,8 @@
           'SA' : ['South Australia', 'SA'],
           'TAS': ['Tasmania', 'TAS'],
           'VIC': ['Victoria', 'VIC'],
-          'WA' : ['Western Australia', 'WA']
+          'WA' : ['Western Australia', 'WA'],
+          'OT' : [null]
         },
         fieldAPIMappings: {
           address1: {
@@ -171,7 +174,8 @@
           'Tasman Region':            ['Tasman', 'TAS'],
           'Waikato Region':           ['Waikato', 'WKO'],
           'Wellington Region':        ['Wellington', 'WGN'],
-          'West Coast Region':        ['West Coast', 'WTC']
+          'West Coast Region':        ['West Coast', 'WTC'],
+          'Other Region':             [null]
         },
         fieldAPIMappings: {
           address1: {
@@ -253,7 +257,7 @@
 })(window);
 
 /**
- * Shopify address forms can be run in many differnt situations:
+ * Shopify address forms can be run in many different situations:
  *  - Billing or Shipping mode
  *  - Situations: Shopify Plus Checkout, Standard Shopify Checkout, and Shopify User Registration
  *
@@ -365,36 +369,12 @@
  */
 (function(d, w){
 
-  function _traditionalLoad(f) {
+  function _addScript(f) {
     var s = d.createElement('script');
     s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
     s.async = 1;
     if (f !== undefined) s.onload = f;
     d.body.appendChild(s);
-  }
-
-  function _requireLoad(f) {
-    var af = w.require.config({
-      context: 'af',
-      baseUrl: '',
-      paths: {
-        addressfinder: 'https://api.addressfinder.io/assets/v3/core',
-        reqwest:       'https://files-abletech-nz.s3.amazonaws.com/addressfinder/reqwest',
-        neat_complete: 'https://files-abletech-nz.s3.amazonaws.com/addressfinder/neat-complete'
-      }
-    });
-    af(w.require(['addressfinder'], function(AddressFinder){
-      if (f !== undefined) f(AddressFinder);
-      w.console.log('AddressFinder', AddressFinder);
-    }));
-  }
-
-  function _addScript(f) {
-    if (w.define && w.define.amd && typeof w.define == 'function') {
-      _requireLoad(f);
-    } else {
-      _traditionalLoad(f);
-    }
   }
 
   function _checkIfAFIsLoaded() {

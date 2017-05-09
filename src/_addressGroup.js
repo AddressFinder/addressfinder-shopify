@@ -45,12 +45,14 @@
         } else if (fieldAPIMapping.type == 'lookup') {
           var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
           var province = null;
-          provinceLookups.forEach(function(item){
-            if (fieldItem.element().querySelector('[value="' + item + '"]')) {
-              province = item;
-              return;
-            }
-          });
+          if (provinceLookups) {
+            provinceLookups.forEach(function(item){
+              if (fieldItem.element().querySelector('[value="' + item + '"]')) {
+                province = item;
+                return;
+              }
+            });
+          }
           fieldItem.setValue(province);
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);

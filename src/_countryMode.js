@@ -19,7 +19,8 @@
           'SA' : ['South Australia', 'SA'],
           'TAS': ['Tasmania', 'TAS'],
           'VIC': ['Victoria', 'VIC'],
-          'WA' : ['Western Australia', 'WA']
+          'WA' : ['Western Australia', 'WA'],
+          'OT' : [null]
         },
         fieldAPIMappings: {
           address1: {
@@ -63,7 +64,8 @@
           'Tasman Region':            ['Tasman', 'TAS'],
           'Waikato Region':           ['Waikato', 'WKO'],
           'Wellington Region':        ['Wellington', 'WGN'],
-          'West Coast Region':        ['West Coast', 'WTC']
+          'West Coast Region':        ['West Coast', 'WTC'],
+          'Other Region':             [null]
         },
         fieldAPIMappings: {
           address1: {
