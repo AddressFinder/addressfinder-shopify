@@ -94,3 +94,24 @@ Here in Australia, we have different rules and regulations when it comes to the 
 ## Software License
 
 The AddressFinder plugin for Shopify is released under the permissive free software [MIT License](https://github.com/AbleTech/addressfinder-shopify/blob/master/LICENCE.md).
+
+# Development
+
+## Installation
+
+This project requires:
+
+- Node
+- NPM
+- Gulp
+
+1. First, install dependencies by using `npm install` or `yarn`.
+2. Make sure you have `gulp-cli` installed globally: `npm install gulp-cli -g`
+
+### Building
+
+`gulp production`
+
+### Developing
+
+`gulp develop`
