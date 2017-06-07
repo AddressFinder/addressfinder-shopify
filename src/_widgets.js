@@ -18,9 +18,10 @@
     widget.field = null;
     widget.country = null;
     widget.instance = null;
+    widget.options = null;
 
     function _create(){
-      widget.instance = new w.AddressFinder.Widget(widget.field, widget.AFKey, widget.country.iso);
+      widget.instance = new w.AddressFinder.Widget(widget.field, widget.AFKey, widget.country.iso, widget.options);
     }
 
     widget.setStateByCountry = function(countryISO){
@@ -31,6 +32,7 @@
 
     widget.init = function(targetField, countryISO){
       widget.AFKey = w.AddressFinderPlugin.key;
+      widget.options = w.AddressFinderPlugin.options
       if (targetField) widget.field = targetField;
       if (countryISO) widget.country = w.AF.CountryMappings.findMappingByValue(countryISO);
       if (w.AddressFinder && w.AddressFinder.Widget) _create();

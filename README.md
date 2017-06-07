@@ -31,16 +31,19 @@ If you already have Google Analytics installed, please start at Step 4.
   ```
   (function(d,w){
     w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY"
-    };
+      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      options: {
+        byline: true   
+      };
       var s = d.createElement("script");
       s.src = "https://api.addressfinder.io/assets/shopify/v1/boot.js";
       s.async = 1;
       d.body.appendChild(s);
   })(document, window);
   ```
-6. Tick the "Use Enhanced Ecommerce" checkbox at the bottom of the Google Analytics section.
-7. Replace the `ADDRESSFINDER_NZ_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
+6. If you are a paying user and you would like to remove the byline you can do so in the 'options' inside the script block. Set byline to false.
+7. Tick the "Use Enhanced Ecommerce" checkbox at the bottom of the Google Analytics section.
+8. Replace the `ADDRESSFINDER_NZ_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
 
   ![Shopify Install](/assets/shopify-install.png)
 
