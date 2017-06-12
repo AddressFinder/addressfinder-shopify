@@ -30,9 +30,22 @@
       return isCurrentCountry;
     };
 
+    var getCountrySpecificOptions = function(country){
+      var widgetOptions = '';
+      switch(country) {
+      case 'NZ':
+        widgetOptions = w.AddressFinderPlugin.nzWidgetOptions || w.AddressFinderPlugin.widgetOptions;
+        break;
+      case 'AU':
+        widgetOptions = w.AddressFinderPlugin.auWidgetOptions || w.AddressFinderPlugin.widgetOptions;
+        break;
+      }
+      return widgetOptions;
+    };
+
     widget.init = function(targetField, countryISO){
       widget.AFKey = w.AddressFinderPlugin.key;
-      widget.options = w.AddressFinderPlugin.options
+      widget.options = getCountrySpecificOptions(countryISO);
       if (targetField) widget.field = targetField;
       if (countryISO) widget.country = w.AF.CountryMappings.findMappingByValue(countryISO);
       if (w.AddressFinder && w.AddressFinder.Widget) _create();
