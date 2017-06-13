@@ -1,3 +1,7 @@
+## [1.2.0] - 2017-09-13
+### Added
+- Support for specifying advanced widget options
+
 ## [1.1.1] - 2017-05-10
 ### Added
 - Handling of "Other Territories" in Australia such as Christmas Island
