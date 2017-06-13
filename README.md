@@ -129,21 +129,6 @@ The AddressFinder plugin for Shopify is released under the permissive free softw
 
 # Development
 
-## Installation
+## Building the plugin
 
-This project requires:
-
-- Node
-- NPM
-- Gulp
-
-1. First, install dependencies by using `npm install` or `yarn`.
-2. Make sure you have `gulp-cli` installed globally: `npm install gulp-cli -g`
-
-### Building
-
-`gulp production`
-
-### Developing
-
-`gulp develop`
+See [BUILD.md](BUILD.md) for instructions on how to build this plugin from source.

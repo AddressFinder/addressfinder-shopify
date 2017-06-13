@@ -31,7 +31,7 @@
     };
 
     var getCountrySpecificOptions = function(country){
-      var widgetOptions = '';
+      var widgetOptions = null;
       switch(country) {
       case 'NZ':
         widgetOptions = w.AddressFinderPlugin.nzWidgetOptions || w.AddressFinderPlugin.widgetOptions;

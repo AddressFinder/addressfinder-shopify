@@ -3,33 +3,21 @@
   "version": "1.1.0",
   "description": "A JavaScript Shopify plugin for AddressFinder",
   "main": "src/index.js",
-  "scripts": {
-    "develop": "gulp develop",
-    "build": "gulp production"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AbleTech/addressfinder-shopify.git"
-  },
-  "keywords": [
-    "es5",
-    "address-verification",
-    "shopify",
-    "plugin"
-  ],
-  "author": "Abletech",
+  "repository": "git@github.com:AbleTech/addressfinder-shopify.git",
+  "author": "@Abletech",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/AbleTech/addressfinder-shopify/issues"
-  },
-  "homepage": "https://github.com/AbleTech/addressfinder-shopify#readme",
   "devDependencies": {
-    "eslint": "^3.18.0",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.1.2",
-    "gulp-watch": "^4.3.11"
+  "concat": "^1.0.3",
+  "eslint": "^3.19.0",
+  "uglify-js": "^3.0.1",
+  "watch": "^1.0.2"
+},
+"scripts": {
+  "lint": "eslint src/*.js",
+  "concat": "concat src/*.js -o dist/shopify-v1-boot.js",
+  "minify": "uglifyjs dist/shopify-v1-boot.js -m -o dist/shopify-v1-boot.min.js",
+  "build": "npm run lint && npm run concat",
+  "build:production": "npm run build && npm run minify",
+  "watch": "watch 'npm run build' src/"
   }
 }
