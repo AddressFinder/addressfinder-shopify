@@ -13,8 +13,8 @@ and Australian Shopify Stores.
 
 #### Supported Countries
 
-* [Australia](https://addressfinder.com.au/)
-* [New Zealand](https://addressfinder.nz/)
+* [Australia](https://addressfinder.com.au/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Australia&utm_content=Supported%20Countries)
+* [New Zealand](https://addressfinder.nz/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=New%20Zealand&utm_content=Supported%20Countries)
 
 #### Compatibility
 AddressFinder-Shopify supports all modern browsers. Versions of Internet Explorer are supported from version 9 to current.
@@ -47,11 +47,11 @@ If you already have Google Analytics installed, please start at Step 4.
 #### Obtaining a licence key
 
 New users can register for a free AddressFinder account at one of these links:
-* [Free Account for Australia](https://portal.addressfinder.io/signup/au/free)
-* [Free Account for New Zealand](https://portal.addressfinder.io/signup/nz/free)
+* [Free Account for Australia](https://portal.addressfinder.io/signup/au/free?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Free%20Account%20for%20Australia&utm_content=Obtaining%20a%20licence%20key)
+* [Free Account for New Zealand](https://portal.addressfinder.io/signup/nz/free?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Free%20Account%20for%20New%20Zealand&utm_content=Obtaining%20a%20licence%20key)
 
 Existing users can obtain their API key from the
-[AddressFinder Portal](https://portal.addressfinder.io/).
+[AddressFinder Portal](https://portal.addressfinder.io/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=AddressFinder%20Portal&utm_content=Obtaining%20a%20licence%20key).
 
 ### Adjustments to comply with NZ specific Address Formatting
 Here in New Zealand we have different rules and regulations when it comes to the way we set out our addresses. In order to capture all of the correct address information we suggest you make a couple of adjustments to the billing/shipping page layout. These adjustments are 1) inclusion of the 'Address Line 2' field and 2) renaming of the 'Address line 2' and 'City' fields.
@@ -102,7 +102,25 @@ You can add advanced options by adding key-value pairs to AddressFinderPlugin, i
       }
     };
   ```
-  For a full list of possible options visit our widget documentation page: https://addressfinder.nz/docs/widget_docs/
+  For a full list of possible options visit our [Widget Documentation](https://addressfinder.nz/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Widget%20Documentation&utm_content=Advanced%20Usage)
+
+### Country Specific Options
+  If you need to add different options for each country you can enter them in objects with the keys 'nzWidgetOptions' and 'auWidgetOptions'.
+
+  ```
+    w.AddressFinderPlugin = {
+      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      nzWidgetOptions: {
+        byline: false
+      },
+      auWidgetOptions: {
+        byline: true
+      }
+    };
+  ```
+
+  For the full list of [NZ specific options](https://addressfinder.nz/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=NZ%20specific%20options&utm_content=Country%20Specific%20Options)
+  For the full list of [AU specific options](https://addressfinder.com.au/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=AU%20specific%20options&utm_content=Country%20Specific%20Options)
 
 ## Software License
 
