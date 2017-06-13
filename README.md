@@ -44,6 +44,38 @@ If you already have Google Analytics installed, please start at Step 4.
 
   ![Shopify Install](/assets/shopify-install.png)
 
+
+### Advanced Usage
+You can add advanced options by adding key-value pairs to AddressFinderPlugin, inside a 'widgetOptions' object. For example, to hide the addressfinder byline:
+
+  ```
+    w.AddressFinderPlugin = {
+      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      widgetOptions: {
+        byline: false
+      }
+    };
+  ```
+  For a full list of possible options visit our [Widget Documentation](https://addressfinder.nz/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Widget%20Documentation&utm_content=Advanced%20Usage)
+
+### Country Specific Options
+  If you need to add different options for each country you can enter them in objects with the keys 'nzWidgetOptions' and 'auWidgetOptions'.
+
+  ```
+    w.AddressFinderPlugin = {
+      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      nzWidgetOptions: {
+        byline: false
+      },
+      auWidgetOptions: {
+        byline: true
+      }
+    };
+  ```
+
+  For the full list of [NZ specific options](https://addressfinder.nz/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=NZ%20specific%20options&utm_content=Country%20Specific%20Options)
+  For the full list of [AU specific options](https://addressfinder.com.au/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=AU%20specific%20options&utm_content=Country%20Specific%20Options)
+
 #### Obtaining a licence key
 
 New users can register for a free AddressFinder account at one of these links:
@@ -90,37 +122,6 @@ Here in Australia, we have different rules and regulations when it comes to the 
    Depending on your theme, your checkout page should look something like this...
 
     ![Complete Shipping Page - AU](/assets/au-complete-shipping-page.png)
-
-### Advanced Usage
-You can add advanced options by adding key-value pairs to AddressFinderPlugin, inside a 'widgetOptions' object. For example, to hide the addressfinder byline:
-
-  ```
-    w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY",
-      widgetOptions: {
-        byline: false
-      }
-    };
-  ```
-  For a full list of possible options visit our [Widget Documentation](https://addressfinder.nz/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Widget%20Documentation&utm_content=Advanced%20Usage)
-
-### Country Specific Options
-  If you need to add different options for each country you can enter them in objects with the keys 'nzWidgetOptions' and 'auWidgetOptions'.
-
-  ```
-    w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY",
-      nzWidgetOptions: {
-        byline: false
-      },
-      auWidgetOptions: {
-        byline: true
-      }
-    };
-  ```
-
-  For the full list of [NZ specific options](https://addressfinder.nz/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=NZ%20specific%20options&utm_content=Country%20Specific%20Options)
-  For the full list of [AU specific options](https://addressfinder.com.au/docs/widget_docs/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=AU%20specific%20options&utm_content=Country%20Specific%20Options)
 
 ## Software License
 
