@@ -18,8 +18,8 @@ and Australian Shopify Stores.
 
 Register for a free AddressFinder account at one of these links:
 
-* [Free Account for Australia](https://portal.addressfinder.io/signup/au?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Australia&utm_content=Free%20account%20for%20Australia)
-* [Free Account for New Zealand](https://portal.addressfinder.io/signup/nz?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=New%20Zealand&utm_content=Free%20account%20for%20New%20Zealand)
+* [Free Account for Australia](https://portal.addressfinder.io/signup/au/free?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Australia&utm_content=Free%20account%20for%20Australia)
+* [Free Account for New Zealand](https://portal.addressfinder.io/signup/nz/free?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=New%20Zealand&utm_content=Free%20account%20for%20New%20Zealand)
 
 Existing users can obtain their API key from the [AddressFinder Portal](https://portal.addressfinder.io/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=AddressFinder%20Portal&utm_content=existing%20users).
 
