@@ -1,4 +1,8 @@
-## [1.2.0] - 2017-09-13
+## [1.2.1] - 2017-08-24
+### Added
+- Support for specifying advanced widget options
+
+## [1.2.0] - 2017-06-13
 ### Added
 - Support for specifying advanced widget options
 

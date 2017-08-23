@@ -16,6 +16,15 @@ and Australian Shopify Stores.
 * [Australia](https://addressfinder.com.au/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Australia&utm_content=Supported%20Countries)
 * [New Zealand](https://addressfinder.nz/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=New%20Zealand&utm_content=Supported%20Countries)
 
+Register for a free AddressFinder account at one of these links:
+
+* [Free Account for Australia](https://portal.addressfinder.io/signup/au/free?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Australia&utm_content=Free%20account%20for%20Australia)
+* [Free Account for New Zealand](https://portal.addressfinder.io/signup/nz/free?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=New%20Zealand&utm_content=Free%20account%20for%20New%20Zealand)
+
+Existing users can obtain their API key from the [AddressFinder Portal](https://portal.addressfinder.io/?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=AddressFinder%20Portal&utm_content=existing%20users).
+
+Read more on the AddressFinder [Shopify Plugin](https://addressfinder.nz/docs/shopify?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Shopify%20Plugin&utm_content=Read%20more%20on%20AddressFinder) page.
+
 #### Compatibility
 AddressFinder-Shopify supports all modern browsers. Versions of Internet Explorer are supported from version 9 to current.
 
@@ -31,7 +40,7 @@ If you already have Google Analytics installed, please start at Step 4.
   ```
   (function(d,w){
     w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY"
+      key: "ADDRESSFINDER_DEMO_KEY"
     };
       var s = d.createElement("script");
       s.src = "https://api.addressfinder.io/assets/shopify/v1/boot.js";
@@ -40,7 +49,7 @@ If you already have Google Analytics installed, please start at Step 4.
   })(document, window);
   ```
 6. Tick the "Use Enhanced Ecommerce" checkbox at the bottom of the Google Analytics section.
-7. Replace the `ADDRESSFINDER_NZ_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
+7. Replace the `ADDRESSFINDER_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
 
   ![Shopify Install](/assets/shopify-install.png)
 
@@ -50,7 +59,7 @@ You can add advanced options by adding key-value pairs to AddressFinderPlugin, i
 
   ```
     w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      key: "ADDRESSFINDER_DEMO_KEY",
       widgetOptions: {
         byline: false
       }
@@ -63,7 +72,7 @@ You can add advanced options by adding key-value pairs to AddressFinderPlugin, i
 
   ```
     w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      key: "ADDRESSFINDER_DEMO_KEY",
       nzWidgetOptions: {
         byline: false
       },
