@@ -40,7 +40,7 @@ If you already have Google Analytics installed, please start at Step 4.
   ```
   (function(d,w){
     w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY"
+      key: "ADDRESSFINDER_DEMO_KEY"
     };
       var s = d.createElement("script");
       s.src = "https://api.addressfinder.io/assets/shopify/v1/boot.js";
@@ -49,7 +49,7 @@ If you already have Google Analytics installed, please start at Step 4.
   })(document, window);
   ```
 6. Tick the "Use Enhanced Ecommerce" checkbox at the bottom of the Google Analytics section.
-7. Replace the `ADDRESSFINDER_NZ_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
+7. Replace the `ADDRESSFINDER_DEMO_KEY` placeholder in the snippet you added in step 5 with your own AddressFinder key
 
   ![Shopify Install](/assets/shopify-install.png)
 
@@ -59,7 +59,7 @@ You can add advanced options by adding key-value pairs to AddressFinderPlugin, i
 
   ```
     w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      key: "ADDRESSFINDER_DEMO_KEY",
       widgetOptions: {
         byline: false
       }
@@ -72,7 +72,7 @@ You can add advanced options by adding key-value pairs to AddressFinderPlugin, i
 
   ```
     w.AddressFinderPlugin = {
-      key: "ADDRESSFINDER_NZ_DEMO_KEY",
+      key: "ADDRESSFINDER_DEMO_KEY",
       nzWidgetOptions: {
         byline: false
       },
