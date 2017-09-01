@@ -36,15 +36,12 @@
     }
 
     function _setFieldValues(address, metaData){
-      console.log(f.activeAddressGroup.fields,'fields');
       Object.keys(f.activeAddressGroup.fields).forEach(function(fieldKeyName){
         var fieldItem = f.activeAddressGroup.fields[fieldKeyName];
         var fieldAPIMapping = f.activeWidget.country.fieldAPIMappings[fieldItem.mappingId];
         if (f.activeWidget.country.iso == 'NZ' && fieldAPIMapping.type == 'function') {
           var selected = new w.AddressFinder.NZSelectedAddress(address, metaData);
-          var myObj = {}
-          myObj[fieldAPIMapping.name] = selected[fieldAPIMapping.name]()
-          fieldItem.setValue(myObj);
+          fieldItem.setValue(selected[fieldAPIMapping.name]());
         } else if (fieldAPIMapping.type == 'lookup') {
           var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
           var province = null;

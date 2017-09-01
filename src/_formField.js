@@ -11,24 +11,20 @@
     var f = this;
     f.mappingId = mappingId;
     f.selector = selector;
-    console.log(f.selector)
     f.element = function(){
       return document.querySelector(f.selector);
     };
     f.setValue = function(value) {
-      for (key in value) {
-        
-        if ( value[key] !== undefined && !f.element() ) {
-          var el = document.getElementById("checkout_shipping_address_address1")
-          var newValue = ', ' + value[key]
-          el.value += newValue
-        } else if (value[key] === undefined) {
-            value[key] = '';
+      if (value === undefined || value === null ) value = '';
+      if ( value !== '' && f.element() === null ) {
+        var addressLine1 = document.getElementById("checkout_shipping_address_address1")
+        var formattedValue = ', ' + value
+        addressLine1.value += formattedValue
+        } else if (f.element() === null) {
+          return;
         } else {
-          console.log(key, value, value[key])
-          f.element().value = value[key];
+          f.element().value = value
         }
-      }
     };
 
     return f;
