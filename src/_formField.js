@@ -11,15 +11,23 @@
     var f = this;
     f.mappingId = mappingId;
     f.selector = selector;
+    console.log(f.selector)
     f.element = function(){
       return document.querySelector(f.selector);
     };
     f.setValue = function(value) {
-      if (value === undefined) value = '';
-      if (!f.element()) {
-        return;
-      } else {
-        f.element().value = value;
+      for (key in value) {
+        
+        if ( value[key] !== undefined && !f.element() ) {
+          var el = document.getElementById("checkout_shipping_address_address1")
+          var newValue = ', ' + value[key]
+          el.value += newValue
+        } else if (value[key] === undefined) {
+            value[key] = '';
+        } else {
+          console.log(key, value, value[key])
+          f.element().value = value[key];
+        }
       }
     };
 

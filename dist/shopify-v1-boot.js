@@ -36,12 +36,15 @@
     }
 
     function _setFieldValues(address, metaData){
+      console.log(f.activeAddressGroup.fields,'fields');
       Object.keys(f.activeAddressGroup.fields).forEach(function(fieldKeyName){
         var fieldItem = f.activeAddressGroup.fields[fieldKeyName];
         var fieldAPIMapping = f.activeWidget.country.fieldAPIMappings[fieldItem.mappingId];
         if (f.activeWidget.country.iso == 'NZ' && fieldAPIMapping.type == 'function') {
           var selected = new w.AddressFinder.NZSelectedAddress(address, metaData);
-          fieldItem.setValue(selected[fieldAPIMapping.name]());
+          var myObj = {}
+          myObj[fieldAPIMapping.name] = selected[fieldAPIMapping.name]()
+          fieldItem.setValue(myObj);
         } else if (fieldAPIMapping.type == 'lookup') {
           var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
           var province = null;
@@ -243,15 +246,23 @@
     var f = this;
     f.mappingId = mappingId;
     f.selector = selector;
+    console.log(f.selector)
     f.element = function(){
       return document.querySelector(f.selector);
     };
     f.setValue = function(value) {
-      if (value === undefined) value = '';
-      if (!f.element()) {
-        return;
-      } else {
-        f.element().value = value;
+      for (key in value) {
+        
+        if ( value[key] !== undefined && !f.element() ) {
+          var el = document.getElementById("checkout_shipping_address_address1")
+          var newValue = ', ' + value[key]
+          el.value += newValue
+        } else if (value[key] === undefined) {
+            value[key] = '';
+        } else {
+          console.log(key, value, value[key])
+          f.element().value = value[key];
+        }
       }
     };
 
