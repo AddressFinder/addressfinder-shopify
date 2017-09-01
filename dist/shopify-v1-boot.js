@@ -248,7 +248,11 @@
     };
     f.setValue = function(value) {
       if (value === undefined) value = '';
-      f.element().value = value;
+      if (!f.element()) {
+        return;
+      } else {
+        f.element().value = value;
+      }
     };
 
     return f;
