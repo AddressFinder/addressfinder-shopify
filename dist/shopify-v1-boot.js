@@ -246,17 +246,28 @@
     f.element = function(){
       return document.querySelector(f.selector);
     };
+
+    f.addressLine1 = function() {
+      var checkoutTypes = ['shipping', 'billing'];
+      for (var i = 0; i < checkoutTypes.length; i++) {
+        var element = document.getElementById('checkout_' + checkoutTypes[i] + '_address_address1');
+        if (element) return element;
+      }
+    };
+
     f.setValue = function(value) {
-      if (value === undefined || value === null ) value = '';
-      if ( value !== '' && f.element() === null ) {
-        var addressLine1 = document.getElementById("checkout_shipping_address_address1")
-        var formattedValue = ', ' + value
-        addressLine1.value += formattedValue
-        } else if (f.element() === null) {
-          return;
-        } else {
-          f.element().value = value
-        }
+      if (value === undefined || value === null) {
+        value = '';
+      }
+
+      if (value !== '' && f.element() === null) {
+        var formattedValue = ', ' + value;
+        f.addressLine1().value += formattedValue;
+      } else if (f.element() === null) {
+        return;
+      } else {
+        f.element().value = value;
+      }
     };
 
     return f;
