@@ -38,12 +38,12 @@
     function _setFieldValues(address, metaData){
       Object.keys(f.activeAddressGroup.fields).forEach(function(fieldKeyName){
         var fieldItem = f.activeAddressGroup.fields[fieldKeyName];
-        var addressLine2 = addressLineTwoExists(fieldItem)
+        var addressLine2 = addressLineTwoExists();
         var fieldAPIMapping = f.activeWidget.country.fieldAPIMappings[fieldItem.mappingId];
         if (f.activeWidget.country.iso == 'NZ' && fieldAPIMapping.type == 'function') {
           var selected = new w.AddressFinder.NZSelectedAddress(address, metaData);
           fieldItem.setValue(selected[fieldAPIMapping.name]());
-          if (!addressLine2) concatAddressLines1and2(fieldItem, selected[fieldAPIMapping.name](), selected['suburb']())
+          if (!addressLine2) concatAddressLines1and2(fieldItem, selected[fieldAPIMapping.name](), selected['suburb']());
         } else if (fieldAPIMapping.type == 'lookup') {
           var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(f.activeWidget.country.iso, metaData[fieldAPIMapping.name]);
           var province = null;
@@ -58,16 +58,19 @@
           fieldItem.setValue(province);
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);
-          if (!addressLine2) concatAddressLines1and2(fieldItem, metaData[fieldAPIMapping.name], metaData['address_line_2'])
+          if (!addressLine2) concatAddressLines1and2(fieldItem, metaData[fieldAPIMapping.name], metaData['address_line_2']);
         }
       });
     }
 
-    function addressLineTwoExists(fieldItem) {
-      if (fieldItem.mappingId === 'address2') {
-        if (document.querySelector(fieldItem.selector)) return true;
-        return false;
+    function addressLineTwoExists() {
+      var checkoutTypes = ['shipping_', 'billing_'];
+      for ( var i = 0; i < checkoutTypes.length; i ++) {
+        if (document.querySelector('[name="checkout[' + checkoutTypes[i] + 'address][address2]"]:not(.visually-hidden)')) {
+          return true;
+        }
       }
+      return false;
     }
 
     function concatAddressLines1and2(fieldItem, addressLine1Value, addressLine2Value) {
@@ -276,44 +279,6 @@
    }
    w.AF ? w.AF.FormField = FormField : w.AF = {FormField: FormField};
  })(window);
-
-// (function(w){
-//
-//   function FormField(selector, mappingId){
-//     var f = this;
-//     f.mappingId = mappingId;
-//     f.selector = selector;
-//     f.element = function(){
-//       return document.querySelector(f.selector);
-//     };
-//
-//     f.addressLine1 = function() {
-//       var checkoutTypes = ['shipping', 'billing'];
-//       for (var i = 0; i < checkoutTypes.length; i++) {
-//         var element = document.getElementById('checkout_' + checkoutTypes[i] + '_address_address1');
-//         if (element) return element;
-//       }
-//     };
-//
-//     f.setValue = function(value) {
-//       if (value === undefined || value === null) {
-//         value = '';
-//       }
-//
-//       if (value !== '' && f.element() === null) {
-//         var formattedValue = ', ' + value;
-//         f.addressLine1().value += formattedValue;
-//       } else if (f.element() === null) {
-//         return;
-//       } else {
-//         f.element().value = value;
-//       }
-//     };
-//
-//     return f;
-//   }
-//   w.AF ? w.AF.FormField = FormField : w.AF = {FormField: FormField};
-// })(window);
 
 /**
  * Shopify address forms can be run in many different situations:
