@@ -45,7 +45,7 @@
           fieldItem.setValue(selected[fieldAPIMapping.name]());
           if (!addressLine2) concatAddressLines1and2(fieldItem, selected[fieldAPIMapping.name](), selected['suburb']());
         } else if (fieldAPIMapping.type == 'lookup') {
-          findProvinceFieldValue(f.activeWidget.country.iso, metaData[fieldAPIMapping.name], fieldItem)
+          findProvinceFieldValue(f.activeWidget.country.iso, metaData[fieldAPIMapping.name], fieldItem);
         } else {
           fieldItem.setValue(metaData[fieldAPIMapping.name]);
           if (!addressLine2) concatAddressLines1and2(fieldItem, metaData[fieldAPIMapping.name], metaData['address_line_2']);
@@ -54,19 +54,19 @@
     }
 
     function findProvinceFieldValue(countryISO, provinceString, fieldItem) {
-      if( fieldItem.element().nodeName == 'SELECT') {
-        var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(countryISO, provinceString, 'provinceSelectAPIMappings');
-      } else {
-        var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(countryISO, provinceString, 'provinceInputAPIMappings');
-      }
       var province = null;
-      if (provinceLookups) {
-        provinceLookups.forEach(function(item){
-          if (fieldItem.element().querySelector('[value="' + item + '"]')) {
-            province = item;
-            return;
-          }
-        });
+      if( fieldItem.element().nodeName == 'SELECT') {
+        var provinceLookups = w.AF.CountryMappings.findSelectProvinceValueByAPI(countryISO, provinceString);
+        if (provinceLookups) {
+          provinceLookups.forEach(function(item){
+            if (fieldItem.element().querySelector('[value="' + item + '"]')) {
+              province = item;
+              return;
+            }
+          });
+        }
+      } else {
+        province = w.AF.CountryMappings.findInputProvinceValueByAPI(countryISO, provinceString);
       }
       fieldItem.setValue(province);
     }

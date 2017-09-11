@@ -32,7 +32,7 @@
           'VIC': 'Victoria',
           'WA' : 'Western Australia',
           'OT' : null
-        }
+        },
         fieldAPIMappings: {
           address1: {
             name: 'address_line_1',
@@ -96,7 +96,7 @@
           'Wellington Region':        'Wellington',
           'West Coast Region':        'West Coast',
           'Other Region':             null
-        }
+        },
         fieldAPIMappings: {
           address1: {
             name: 'address_line_1_and_2',
@@ -124,8 +124,11 @@
     findProvinceFieldValueAlias: function(countryISO, provinceString){
       return this.list[countryISO.toLowerCase()].provinceFieldAliases[provinceString];
     },
-    findSelectProvinceValueByAPI: function(countryISO, provinceString, mapping){
-      return this.list[countryISO.toLowerCase()].mapping[provinceString];
+    findSelectProvinceValueByAPI: function(countryISO, provinceString){
+      return this.list[countryISO.toLowerCase()].provinceSelectAPIMappings[provinceString];
+    },
+    findInputProvinceValueByAPI: function(countryISO, provinceString){
+      return this.list[countryISO.toLowerCase()].provinceInputAPIMappings[provinceString];
     },
     findMappingByValue: function(countryString){
       var list = this.list;
