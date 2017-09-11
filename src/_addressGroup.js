@@ -55,20 +55,20 @@
 
     function findProvinceFieldValue(countryISO, provinceString, fieldItem) {
       if( fieldItem.element().nodeName == 'SELECT') {
-        var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(countryISO, provinceString);
-        var province = null;
-        if (provinceLookups) {
-          provinceLookups.forEach(function(item){
-            if (fieldItem.element().querySelector('[value="' + item + '"]')) {
-              province = item;
-              return;
-            }
-          });
-        }
-        fieldItem.setValue(province);
-        } else {
-          fieldItem.setValue(provinceString);
-        }
+        var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(countryISO, provinceString, 'provinceSelectAPIMappings');
+      } else {
+        var provinceLookups = w.AF.CountryMappings.findProvinceValueByAPI(countryISO, provinceString, 'provinceInputAPIMappings');
+      }
+      var province = null;
+      if (provinceLookups) {
+        provinceLookups.forEach(function(item){
+          if (fieldItem.element().querySelector('[value="' + item + '"]')) {
+            province = item;
+            return;
+          }
+        });
+      }
+      fieldItem.setValue(province);
     }
 
     function addressLineTwoExists() {

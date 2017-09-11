@@ -11,7 +11,7 @@
       au: {
         iso: 'AU',
         title: 'Australia',
-        provinceAPIMappings: {
+        provinceSelectAPIMappings: {
           'ACT': ['Australian Capital Territory', 'ACT'],
           'NSW': ['New South Wales', 'NSW'],
           'NT' : ['Northern Territory', 'NT'],
@@ -22,6 +22,17 @@
           'WA' : ['Western Australia', 'WA'],
           'OT' : [null]
         },
+        provinceInputAPIMappings: {
+          'ACT': 'Australian Capital Territory',
+          'NSW': 'New South Wales',
+          'NT' : 'Northern Territory',
+          'QLD': 'Queensland',
+          'SA' : 'South Australia',
+          'TAS': 'Tasmania',
+          'VIC': 'Victoria',
+          'WA' : 'Western Australia',
+          'OT' : null
+        }
         fieldAPIMappings: {
           address1: {
             name: 'address_line_1',
@@ -48,7 +59,7 @@
       nz: {
         iso: 'NZ',
         title: 'New Zealand',
-        provinceAPIMappings: {
+        provinceSelectAPIMappings: {
           'Auckland Region':          ['Auckland', 'AUK'],
           'Bay of Plenty Region':     ['Bay of Plenty', 'BOP'],
           'Canterbury Region':        ['Canterbury', 'CAN'],
@@ -67,6 +78,25 @@
           'West Coast Region':        ['West Coast', 'WTC'],
           'Other Region':             [null]
         },
+        provinceInputAPIMappings: {
+          'Auckland Region':          'Auckland',
+          'Bay of Plenty Region':     'Bay of Plenty',
+          'Canterbury Region':        'Canterbury',
+          'Gisborne Region':          'Gisborne',
+          'Hawke\'s Bay Region':      'Hawke\'s Bay',
+          'Manawatu-Wanganui Region': 'Manawatu-Wanganui',
+          'Marlborough Region':       'Marlborough',
+          'Nelson Region':            'Nelson',
+          'Northland Region':         'Northland',
+          'Otago Region':             'Otago',
+          'Southland Region':         'Southland',
+          'Taranaki Region':          'Taranaki',
+          'Tasman Region':            'Tasman',
+          'Waikato Region':           'Waikato',
+          'Wellington Region':        'Wellington',
+          'West Coast Region':        'West Coast',
+          'Other Region':             null
+        }
         fieldAPIMappings: {
           address1: {
             name: 'address_line_1_and_2',
@@ -94,8 +124,8 @@
     findProvinceFieldValueAlias: function(countryISO, provinceString){
       return this.list[countryISO.toLowerCase()].provinceFieldAliases[provinceString];
     },
-    findProvinceValueByAPI: function(countryISO, provinceString){
-      return this.list[countryISO.toLowerCase()].provinceAPIMappings[provinceString];
+    findSelectProvinceValueByAPI: function(countryISO, provinceString, mapping){
+      return this.list[countryISO.toLowerCase()].mapping[provinceString];
     },
     findMappingByValue: function(countryString){
       var list = this.list;
