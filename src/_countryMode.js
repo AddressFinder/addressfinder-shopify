@@ -94,8 +94,11 @@
     findProvinceFieldValueAlias: function(countryISO, provinceString){
       return this.list[countryISO.toLowerCase()].provinceFieldAliases[provinceString];
     },
-    findProvinceValueByAPI: function(countryISO, provinceString){
+    findSelectProvinceValueByAPI: function(countryISO, provinceString){
       return this.list[countryISO.toLowerCase()].provinceAPIMappings[provinceString];
+    },
+    findInputProvinceValueByAPI: function(countryISO, provinceString){
+      return this.list[countryISO.toLowerCase()].provinceAPIMappings[provinceString][0];
     },
     findMappingByValue: function(countryString){
       var list = this.list;
