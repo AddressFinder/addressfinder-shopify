@@ -1,3 +1,11 @@
+##[1.2.3] - 2017-09-15
+###Added
+- Fix for province field on IE9
+
+##[1.2.2] - 2017-09-08
+###Added
+- Handles address formatting if address line 2 is not present
+
 ## [1.2.1] - 2017-08-24
 ### Added
 - Support for specifying advanced widget options
