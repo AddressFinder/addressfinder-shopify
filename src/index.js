@@ -23,6 +23,13 @@
     });
   }
 
+  function disableGoogleAutocomplete(){
+    var iframe = document.querySelector('#google-autocomplete-iframe');
+    if(iframe){
+      iframe.src = '';
+    }
+  }
+
   function testForReadiness(){
     var errorOccured = false,
       checkArray = [
@@ -37,7 +44,10 @@
         return;
       }
     });
-    if (!errorOccured) bootUp();
+    if (!errorOccured){
+      disableGoogleAutocomplete();
+      bootUp();
+    }
   }
 
   var scriptLoader = new w.AF.ScriptLoader();

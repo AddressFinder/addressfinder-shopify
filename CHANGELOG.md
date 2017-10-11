@@ -1,3 +1,7 @@
+##[1.2.4] - 2017-10-12
+###Added
+- If the Google Maps Autocomplete library (provided by Shopify) is present, then disable it
+
 ##[1.2.3] - 2017-09-15
 ###Added
 - Fix for province field on IE9
