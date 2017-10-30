@@ -4,6 +4,7 @@
  * Once all the necessary libraries are loaded, and a matching address-group is found, the AF Shopify Plugin will `bootUp`.
  */
 (function(w){
+  w.AF.VERSION = '1.2.5';
 
   function _warn(message){
     if (w.console && w.console.warn) {
@@ -23,10 +24,13 @@
     });
   }
 
-  function disableGoogleAutocomplete(){
+  function disableGoogleAutocomplete(retries){
     var iframe = document.querySelector('#google-autocomplete-iframe');
-    if(iframe){
+    if (iframe){
       iframe.src = '';
+    }
+    else if (retries > 0){
+      setTimeout(disableGoogleAutocomplete, 1000, retries - 1);
     }
   }
 
@@ -45,7 +49,7 @@
       }
     });
     if (!errorOccured){
-      disableGoogleAutocomplete();
+      disableGoogleAutocomplete(5);
       bootUp();
     }
   }
