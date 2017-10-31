@@ -1,3 +1,7 @@
+##[1.2.6] - 2017-10-12
+###Fixed
+- Handle a slow loading Google Maps library
+
 ##[1.2.4] - 2017-10-12
 ###Added
 - If the Google Maps Autocomplete library (provided by Shopify) is present, then disable it
