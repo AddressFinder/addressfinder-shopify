@@ -1,4 +1,4 @@
-##[1.2.5] - 2017-10-12
+##[1.2.6] - 2017-10-12
 ###Fixed
 - Handle a slow loading Google Maps library
 
