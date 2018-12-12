@@ -1,3 +1,7 @@
+##[1.2.7] - 2017-10-12
+###Fixed
+- Handle new Google Places iframe identifier
+
 ##[1.2.6] - 2017-10-12
 ###Fixed
 - Handle a slow loading Google Maps library
