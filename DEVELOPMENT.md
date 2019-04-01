@@ -12,7 +12,13 @@ This will open up a browser window (https://127.0.0.1:8080) with the `dist` dire
 
 To develop and test this plugin, you should:
 
-1. Visit the Abletech Shopify test server. You can find url and the credentials [here](https://sites.google.com/a/abletech.co.nz/wiki/addressfinder/plugins)
+1. Visit the abletech wiki to find credentials to our Shopify test account
+1. Follow the installation instructions from the [README.md](README.md) file
+1. Adjust the path of the script to the live server version. It is probably at: https://127.0.0.1:8080/shopify-v1-boot.js
+1. Save
+
+Now you can visit the store and trial your plugin changes by selecting an item to purchase and
+visiting the checkout.
 
 # Live reload
 
@@ -21,16 +27,3 @@ In a separate window, run:
 1. `npm run watch`
 
 Then whenever a file is edited, it will be re-compiled and available for reloading.
-
-# Developing PHP or JS
-Another way to test changes is to login to the WooCommerce server and copy and paste your local files into their WooCommerce counterparts. You will need to do this if you want to make changes the the php code.
-
-1. To login to the WooCommerce server your public ssh key has to be added. Ask Nigel about this.
-
-2. If you are using the Woocommerce 2 test server, Run ssh root@45.55.11.166 in the terminal. For WooCommerce 3 run ssh root@45.77.50.98
-
-3. Find the file that you want to update. From the root the path to WooCommerce files is: /var/www/html/wp-content/plugins/addressfinder-woo
-
-4. To update the files you'll need to use vim in the terminal. Beginners Guide to Vim may be helpful: https://sites.google.com/a/abletech.co.nz/wiki/technology-tips/beginners-guide-to-vim
-
-5. When you save the files they update on the WooCommerce store.
