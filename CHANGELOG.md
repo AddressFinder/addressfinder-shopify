@@ -1,3 +1,7 @@
+##[1.2.8] - 2019-14-02
+###Fixed
+- Dispatch an input event when address fields are populated
+
 ##[1.2.7] - 2017-10-12
 ###Fixed
 - Handle new Google Places iframe identifier
