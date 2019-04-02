@@ -1,3 +1,11 @@
+##[1.2.9] - 2017-10-12
+###Fixed
+- Correct version number in code
+
+##[1.2.8] - 2017-10-12
+###Fixed
+- Dispatch input event on address field change
+
 ##[1.2.7] - 2017-10-12
 ###Fixed
 - Handle new Google Places iframe identifier
