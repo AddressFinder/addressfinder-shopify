@@ -27,7 +27,8 @@
      // It is also important to set 'bubbles' to true, as Shopify is listening for an 'input' event on the document, rather than
      // the input field itself. This allows the event to move up the tree, triggering the event on both the input element and the document.
      function _dispatchInputEvent() {
-      // document.createEvent is deprecated in most modern browsers, with the exception of IE
+      // document.createEvent is deprecated in most modern browsers, with the exception of IE. This plugin does not explicitly support IE,
+      // but we still want to avoid throwing errors.
        var event;
        switch (typeof (Event)) {
        case 'function':
