@@ -18,6 +18,6 @@
     "minify": "uglifyjs dist/shopify-v1-boot.js -m -o dist/shopify-v1-boot.min.js",
     "build": "npm run lint && npm run concat",
     "build:production": "npm run build && npm run minify",
-    "watch": "watch 'npm run build' src/"
+    "watch": "watch 'npm run concat' src/"
   }
 }

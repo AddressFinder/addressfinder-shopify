@@ -26,7 +26,9 @@ Existing users can obtain their API key from the [AddressFinder Portal](https://
 Read more on the AddressFinder [Shopify Plugin](https://addressfinder.nz/docs/shopify?utm_source=shopify%20plugin&utm_medium=plugin&utm_campaign=plugin&utm_term=Shopify%20Plugin&utm_content=Read%20more%20on%20AddressFinder) page.
 
 #### Compatibility
-AddressFinder-Shopify supports all modern browsers. Versions of Internet Explorer are supported from version 9 to current.
+AddressFinder-Shopify provides support for the same browsers that Shopify support. See the list of [Shopify supported browsers](https://help.shopify.com/en/manual/intro-to-shopify/shopify-admin/supported-browsers). 
+
+Presently, this includes the latest two versions of all browsers: Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, Opera, Apple Safari for iOS and Google Chrome for Android.
 
 ## Installation
 If you already have Google Analytics installed, please start at Step 4.
