@@ -4,7 +4,7 @@
  * Once all the necessary libraries are loaded, and a matching address-group is found, the AF Shopify Plugin will `bootUp`.
  */
 (function (w) {
-  w.AF.VERSION = '1.2.7';
+  w.AF.VERSION = '1.2.9';
 
   function _warn(message) {
     if (w.console && w.console.warn) {

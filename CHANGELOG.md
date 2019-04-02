@@ -1,6 +1,10 @@
-##[1.2.8] - 2019-14-02
+##[1.2.9] - 2019-04-02
 ###Fixed
-- Dispatch an input event when address fields are populated
+- Correct version number in code
+
+##[1.2.8] - 2019-04-02
+###Fixed
+- Dispatch input event on address field change
 
 ##[1.2.7] - 2017-10-12
 ###Fixed
