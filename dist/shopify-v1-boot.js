@@ -300,7 +300,7 @@
          break;
        default:
          event = document.createEvent('Event');
-         event.initEvent('input', true);
+         event.initEvent('input', true, false);
        }
 
        f.element().dispatchEvent(event);
@@ -515,7 +515,7 @@
 })(window);
 
 /**
- * This script is responsible for invoking and loading AddressFinder within a Spotify form instance.
+ * This script is responsible for invoking and loading AddressFinder within a Shopify form instance.
  * It starts by identifying all the possible address-groups in Shopify forms, such as Checkout and Account: add new address.
  * Once all the necessary libraries are loaded, and a matching address-group is found, the AF Shopify Plugin will `bootUp`.
  */

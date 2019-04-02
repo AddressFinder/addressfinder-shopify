@@ -35,7 +35,7 @@
          break;
        default:
          event = document.createEvent('Event');
-         event.initEvent('input', true);
+         event.initEvent('input', true, false);
        }
 
        f.element().dispatchEvent(event);
