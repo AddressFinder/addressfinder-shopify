@@ -1,4 +1,4 @@
-##[1.2.7] - 2019-14-02
+##[1.2.8] - 2019-14-02
 ###Fixed
 - Dispatch an input event when address fields are populated
 
