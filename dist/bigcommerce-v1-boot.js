@@ -112,11 +112,11 @@ var _initPlugin = function _initPlugin() {
   var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default];
 
   var widgetConfig = {
-    nzKey: window.AddressFinderPlugin.key,
-    auKey: window.AddressFinderPlugin.key,
-    nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-    auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-    debug: window.AddressFinderPlugin.debug || false
+    nzKey: w.AddressFinderPlugin.key,
+    auKey: w.AddressFinderPlugin.key,
+    nzWidgetOptions: w.AddressFinderPlugin.nzWidgetOptions || w.AddressFinderPlugin.widgetOptions || {},
+    auWidgetOptions: w.AddressFinderPlugin.auWidgetOptions || w.AddressFinderPlugin.widgetOptions || {},
+    debug: w.AddressFinderPlugin.debug || false
   };
 
   window.AF._shopifyPlugin = new _plugin_manager2.default(addressFormConfigurations, widgetConfig);
@@ -674,4 +674,4 @@ exports.default = MutationsHelper;
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=shopify-v1-boot.js.map
+//# sourceMappingURL=bigcommerce-v1-boot.js.map

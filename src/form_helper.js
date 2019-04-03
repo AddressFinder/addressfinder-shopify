@@ -1,8 +1,3 @@
-import "core-js/fn/array/map"
-import "core-js/fn/array/filter"
-import "core-js/fn/array/find"
-import "core-js/fn/array/from"
-import "core-js/fn/object/values"
 export default class FormHelper {
   constructor(widgetConfig, formHelperConfig){
     this.widgetConfig = widgetConfig
