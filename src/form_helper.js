@@ -82,15 +82,19 @@ export default class FormHelper {
     let elements = this.formHelperConfig.nz.elements
     let selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
 
-    if(elements.address_line_1_and_2){
+    if (elements.address_line_1_and_2 && !elements.suburb) {
+      const addressIsPresent = array => array != null
+      const combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ")
+      this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2")
+    } else if (elements.address_line_1_and_2 && elements.suburb) {
       this._setElementValue(elements.address_line_1_and_2, selected.address_line_1_and_2(), "address_line_1_and_2")
-    }
-    else {
+      this._setElementValue(elements.suburb, selected.suburb(), "suburb")
+    } else {
       this._setElementValue(elements.address_line_1, selected.address_line_1(), "address_line_1")
       this._setElementValue(elements.address_line_2, selected.address_line_2(), "address_line_2")
+      this._setElementValue(elements.suburb, selected.suburb(), "suburb")
     }
 
-    this._setElementValue(elements.suburb, selected.suburb(), "suburb")
     this._setElementValue(elements.city, selected.city(), "city")
     this._setElementValue(elements.postcode, selected.postcode(), "postcode")
 

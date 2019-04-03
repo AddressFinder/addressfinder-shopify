@@ -46,11 +46,11 @@ export default class PluginManager {
         layoutSelector: addressFormConfig.layoutSelector,
         nz: {
           countryValue: addressFormConfig.nz.countryValue,
-          searchElement: document.getElementById(addressFormConfig.nz.elements.address1),
+          searchElement: document.getElementById(addressFormConfig.nz.elements.search),
           elements: {
-            address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1),
-            address_line_1: null,
-            address_line_2: null,
+            address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
+            address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
+            address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
             suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
             city: document.getElementById(addressFormConfig.nz.elements.city),
             region: document.getElementById(addressFormConfig.nz.elements.region),
@@ -60,9 +60,9 @@ export default class PluginManager {
         },
         au: {
           countryValue: addressFormConfig.au.countryValue,
-          searchElement: document.getElementById(addressFormConfig.au.elements.address1),
+          searchElement: document.getElementById(addressFormConfig.au.elements.search),
           elements: {
-            address_line_1_and_2: null,
+            address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
             address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
             address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
             locality_name: document.getElementById(addressFormConfig.au.elements.suburb),

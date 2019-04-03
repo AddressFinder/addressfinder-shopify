@@ -6,7 +6,10 @@ export default {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1: 'checkout_billing_address_address1',
+      search:'checkout_billing_address_address1',
+      address1and2: 'checkout_billing_address_address1',
+      address1: null,
+      address2: null,
       suburb: null,
       city: 'checkout_billing_address_city',
       region: 'checkout_billing_address_province',
@@ -17,7 +20,9 @@ export default {
   au: {
     countryValue: "Australia",
     elements: {
-      address1: 'checkout_billing_address_address1',
+      search: 'checkout_billing_address_address1',
+      address1and2: 'checkout_billing_address_address1',
+      address1: null,
       address2: null,
       suburb: 'checkout_billing_address_city',
       state: 'checkout_billing_address_province',
