@@ -1,7 +1,8 @@
 export default class FormHelper {
-  constructor(widgetConfig, formHelperConfig){
+  constructor(widgetConfig, formHelperConfig, eventToDispatch){
     this.widgetConfig = widgetConfig
     this.formHelperConfig = formHelperConfig
+    this.eventToDispatch = eventToDispatch
     this.widgets = {}
     this.countryCodes = ["au", "nz"]
 
@@ -155,11 +156,11 @@ export default class FormHelper {
     var event;
     switch (typeof (Event)) {
     case 'function':
-      event = new Event('change', {'bubbles':true, "cancelable": false});
+      event = new Event(this.eventToDispatch, {'bubbles':true, "cancelable": false});
       break;
     default:
       event = document.createEvent('Event');
-      event.initEvent('change', true, false);
+      event.initEvent(this.eventToDispatch, true, false);
     }
     element.dispatchEvent(event);
   }

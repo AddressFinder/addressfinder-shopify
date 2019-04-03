@@ -4,21 +4,9 @@ import PluginManager from "./plugin_manager";
 
 window.AF = window.AF || {}
 
-let _disableGoogleAutocomplete = function(repetitions) {
-  var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
-
-  if (iframe) {
-    iframe.src = '';
-  }
-
-  if (repetitions > 0) {
-    setTimeout(disableGoogleAutocomplete, 1000, repetitions - 1);
-  }
-}
-
 let _initPlugin = function(){
 
-  _disableGoogleAutocomplete()
+  _disableGoogleAutocomplete(5);
 
   const addressFormConfigurations = [
     standardBillingCheckout,
@@ -33,14 +21,39 @@ let _initPlugin = function(){
     debug: window.AddressFinderPlugin.debug || false
   }
 
-  window.AF._shopifyPlugin = new PluginManager(
+  window.AF._shopifyPlugin = new PluginManager({
     addressFormConfigurations,
-    widgetConfig
-  )
+    widgetConfig,
+    eventToDispatch: 'input'
+  })
 }
 
-let s = document.createElement('script')
-s.src = 'https://api.addressfinder.io/assets/v3/widget.js'
-s.async = 1
-s.onload = _initPlugin
-document.body.appendChild(s)
+let _disableGoogleAutocomplete = function(repetitions) {
+  var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
+
+  if (iframe) {
+    iframe.src = '';
+  }
+
+  if (repetitions > 0) {
+    setTimeout(_disableGoogleAutocomplete, 1000, repetitions - 1);
+  }
+}
+
+function _addScript() {
+  var s = document.createElement('script');
+  s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
+  s.async = 1;
+  s.onload = _initPlugin;
+  document.body.appendChild(s);
+}
+
+function loadAF(){
+  if ( window.AF && window.AF.Widget ) {
+    _initPlugin();
+  } else {
+    _addScript();
+  }
+};
+
+loadAF()

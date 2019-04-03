@@ -1,3 +1,5 @@
+import defaultRegionMappings from './default_region_mappings'
+
 export default {
   label: "Standard Shipping Checkout",
   layoutSelector: ".section--shipping-address",
@@ -14,7 +16,7 @@ export default {
       region: 'checkout_shipping_address_province',
       postcode: 'checkout_shipping_address_zip',
     },
-    regionMappings: null
+    regionMappings: defaultRegionMappings
   },
   au: {
     countryValue: "Australia",

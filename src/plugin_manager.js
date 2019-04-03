@@ -2,10 +2,11 @@ import FormHelper from "./form_helper"
 import MutationHelper from "./mutation_helper"
 
 export default class PluginManager {
-  constructor(addressFormConfigurations, widgetConfig) {
+  constructor({addressFormConfigurations, widgetConfig, eventToDispatch}) {
     this.formHelpers = []
     this.addressFormConfigurations = addressFormConfigurations
     this.widgetConfig = widgetConfig
+    this.eventToDispatch = eventToDispatch
     this.loadFormHelpers()
 
     new MutationHelper({
@@ -55,7 +56,7 @@ export default class PluginManager {
             region: document.getElementById(addressFormConfig.nz.elements.region),
             postcode: document.getElementById(addressFormConfig.nz.elements.postcode)
           },
-          regionMappings: null
+          regionMappings: addressFormConfig.nz.regionMappings
         },
         au: {
           countryValue: addressFormConfig.au.countryValue,
@@ -72,7 +73,7 @@ export default class PluginManager {
         }
       }
 
-      let helper = new FormHelper(this.widgetConfig, formHelperConfig)
+      let helper = new FormHelper(this.widgetConfig, formHelperConfig, this.eventToDispatch)
       this.formHelpers.push(helper)
     }
   }

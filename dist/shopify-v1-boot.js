@@ -93,21 +93,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 window.AF = window.AF || {};
 
-var _disableGoogleAutocomplete = function _disableGoogleAutocomplete(repetitions) {
-  var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
-
-  if (iframe) {
-    iframe.src = '';
-  }
-
-  if (repetitions > 0) {
-    setTimeout(disableGoogleAutocomplete, 1000, repetitions - 1);
-  }
-};
-
 var _initPlugin = function _initPlugin() {
 
-  _disableGoogleAutocomplete();
+  _disableGoogleAutocomplete(5);
 
   var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default];
 
@@ -119,14 +107,42 @@ var _initPlugin = function _initPlugin() {
     debug: window.AddressFinderPlugin.debug || false
   };
 
-  window.AF._shopifyPlugin = new _plugin_manager2.default(addressFormConfigurations, widgetConfig);
+  window.AF._shopifyPlugin = new _plugin_manager2.default({
+    addressFormConfigurations: addressFormConfigurations,
+    widgetConfig: widgetConfig,
+    eventToDispatch: 'input'
+  });
 };
 
-var s = document.createElement('script');
-s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
-s.async = 1;
-s.onload = _initPlugin;
-document.body.appendChild(s);
+var _disableGoogleAutocomplete = function _disableGoogleAutocomplete(repetitions) {
+  var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
+
+  if (iframe) {
+    iframe.src = '';
+  }
+
+  if (repetitions > 0) {
+    setTimeout(_disableGoogleAutocomplete, 1000, repetitions - 1);
+  }
+};
+
+function _addScript() {
+  var s = document.createElement('script');
+  s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
+  s.async = 1;
+  s.onload = _initPlugin;
+  document.body.appendChild(s);
+}
+
+function loadAF() {
+  if (window.AF && window.AF.Widget) {
+    _initPlugin();
+  } else {
+    _addScript();
+  }
+};
+
+loadAF();
 
 /***/ }),
 /* 2 */
@@ -138,6 +154,13 @@ document.body.appendChild(s);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _default_region_mappings = __webpack_require__(7);
+
+var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 exports.default = {
   label: "Standard Billing Checkout",
   layoutSelector: "#section--billing-address__different",
@@ -154,7 +177,7 @@ exports.default = {
       region: 'checkout_billing_address_province',
       postcode: 'checkout_billing_address_zip'
     },
-    regionMappings: null
+    regionMappings: _default_region_mappings2.default
   },
   au: {
     countryValue: "Australia",
@@ -180,6 +203,13 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _default_region_mappings = __webpack_require__(7);
+
+var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 exports.default = {
   label: "Standard Shipping Checkout",
   layoutSelector: ".section--shipping-address",
@@ -196,7 +226,7 @@ exports.default = {
       region: 'checkout_shipping_address_province',
       postcode: 'checkout_shipping_address_zip'
     },
-    regionMappings: null
+    regionMappings: _default_region_mappings2.default
   },
   au: {
     countryValue: "Australia",
@@ -238,12 +268,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var PluginManager = function () {
-  function PluginManager(addressFormConfigurations, widgetConfig) {
+  function PluginManager(_ref) {
+    var addressFormConfigurations = _ref.addressFormConfigurations,
+        widgetConfig = _ref.widgetConfig,
+        eventToDispatch = _ref.eventToDispatch;
+
     _classCallCheck(this, PluginManager);
 
     this.formHelpers = [];
     this.addressFormConfigurations = addressFormConfigurations;
     this.widgetConfig = widgetConfig;
+    this.eventToDispatch = eventToDispatch;
     this.loadFormHelpers();
 
     new _mutation_helper2.default({
@@ -320,7 +355,7 @@ var PluginManager = function () {
               region: document.getElementById(addressFormConfig.nz.elements.region),
               postcode: document.getElementById(addressFormConfig.nz.elements.postcode)
             },
-            regionMappings: null
+            regionMappings: addressFormConfig.nz.regionMappings
           },
           au: {
             countryValue: addressFormConfig.au.countryValue,
@@ -337,7 +372,7 @@ var PluginManager = function () {
           }
         };
 
-        var helper = new _form_helper2.default(this.widgetConfig, formHelperConfig);
+        var helper = new _form_helper2.default(this.widgetConfig, formHelperConfig, this.eventToDispatch);
         this.formHelpers.push(helper);
       }
     }
@@ -381,11 +416,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var FormHelper = function () {
-  function FormHelper(widgetConfig, formHelperConfig) {
+  function FormHelper(widgetConfig, formHelperConfig, eventToDispatch) {
     _classCallCheck(this, FormHelper);
 
     this.widgetConfig = widgetConfig;
     this.formHelperConfig = formHelperConfig;
+    this.eventToDispatch = eventToDispatch;
     this.widgets = {};
     this.countryCodes = ["au", "nz"];
 
@@ -558,11 +594,11 @@ var FormHelper = function () {
       var event;
       switch (typeof Event === "undefined" ? "undefined" : _typeof(Event)) {
         case 'function':
-          event = new Event('change', { 'bubbles': true, "cancelable": false });
+          event = new Event(this.eventToDispatch, { 'bubbles': true, "cancelable": false });
           break;
         default:
           event = document.createEvent('Event');
-          event.initEvent('change', true, false);
+          event.initEvent(this.eventToDispatch, true, false);
       }
       element.dispatchEvent(event);
     }
@@ -682,6 +718,35 @@ var MutationsHelper = function () {
 }();
 
 exports.default = MutationsHelper;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  "Auckland Region": "AUK",
+  "Bay Of Plenty Region": "BOP",
+  "Canterbury Region": "CAN",
+  "Gisborne Region": "GIS",
+  "Hawke's Bay Region": "HKB",
+  "Manawatu-Wanganui Region": "MWT",
+  "Marlborough Region": "MBH",
+  "Nelson Region": "NSN",
+  "Northland Region": "NTL",
+  "Otago Region": "OTA",
+  "Southland Region": "STL",
+  "Taranaki Region": "TKI",
+  "Tasman Region": "TAS",
+  "Waikato Region": "WKO",
+  "Wellington Region": "WGN",
+  "West Coast Region": "WTC"
+};
 
 /***/ })
 /******/ ]);
