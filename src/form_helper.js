@@ -26,11 +26,11 @@ export default class FormHelper {
     this.boundCountryChangedListener = this._countryChanged.bind(this) // save this so we can unbind in the destroy() method
     this.formHelperConfig.countryElement.addEventListener("change", this.boundCountryChangedListener);
 
-    let nzWidget = new window.AddressFinder.Widget(this.formHelperConfig.nz.searchElement, this.widgetConfig.nzKey, "nz", this.widgetConfig.nzWidgetOptions);
+    let nzWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.nzKey, "nz", this.widgetConfig.nzWidgetOptions);
     nzWidget.on("result:select", this._nzAddressSelected.bind(this))
     this.widgets["nz"] = nzWidget
 
-    let auWidget = new window.AddressFinder.Widget(this.formHelperConfig.au.searchElement, this.widgetConfig.auKey, "au", this.widgetConfig.auWidgetOptions);
+    let auWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.auKey, "au", this.widgetConfig.auWidgetOptions);
     auWidget.on("result:select", this._auAddressSelected.bind(this))
     this.widgets["au"] = auWidget
 

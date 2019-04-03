@@ -146,7 +146,9 @@ exports.default = {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1: 'checkout_billing_address_address1',
+      address1and2: 'checkout_billing_address_address1',
+      address1: null,
+      address2: null,
       suburb: null,
       city: 'checkout_billing_address_city',
       region: 'checkout_billing_address_province',
@@ -157,7 +159,8 @@ exports.default = {
   au: {
     countryValue: "Australia",
     elements: {
-      address1: 'checkout_billing_address_address1',
+      address1and2: 'checkout_billing_address_address1',
+      address1: null,
       address2: null,
       suburb: 'checkout_billing_address_city',
       state: 'checkout_billing_address_province',
@@ -179,13 +182,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   label: "Standard Shipping Checkout",
-  layoutSelector: ".section section--shipping-address",
+  layoutSelector: ".section--shipping-address",
   countryIdentifier: 'checkout_shipping_address_country',
   searchIdentifier: "checkout_shipping_address_address1",
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1: 'checkout_shipping_address_address1',
+      address1and2: 'checkout_shipping_address_address1',
+      address1: null,
+      address2: null,
       suburb: null,
       city: 'checkout_shipping_address_city',
       region: 'checkout_shipping_address_province',
@@ -196,7 +201,8 @@ exports.default = {
   au: {
     countryValue: "Australia",
     elements: {
-      address1: 'checkout_shipping_address_address1',
+      address1and2: 'checkout_shipping_address_address1',
+      address1: null,
       address2: null,
       suburb: 'checkout_shipping_address_city',
       state: 'checkout_shipping_address_province',
@@ -238,7 +244,6 @@ var PluginManager = function () {
     this.formHelpers = [];
     this.addressFormConfigurations = addressFormConfigurations;
     this.widgetConfig = widgetConfig;
-
     this.loadFormHelpers();
 
     new _mutation_helper2.default({
@@ -301,15 +306,15 @@ var PluginManager = function () {
       if (searchElement) {
         var formHelperConfig = {
           countryElement: document.getElementById(addressFormConfig.countryIdentifier),
+          searchElement: document.getElementById(addressFormConfig.searchIdentifier),
           label: addressFormConfig.label,
           layoutSelector: addressFormConfig.layoutSelector,
           nz: {
             countryValue: addressFormConfig.nz.countryValue,
-            searchElement: document.getElementById(addressFormConfig.nz.elements.address1),
             elements: {
-              address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1),
-              address_line_1: null,
-              address_line_2: null,
+              address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
+              address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
+              address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
               suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
               city: document.getElementById(addressFormConfig.nz.elements.city),
               region: document.getElementById(addressFormConfig.nz.elements.region),
@@ -319,9 +324,8 @@ var PluginManager = function () {
           },
           au: {
             countryValue: addressFormConfig.au.countryValue,
-            searchElement: document.getElementById(addressFormConfig.au.elements.address1),
             elements: {
-              address_line_1_and_2: null,
+              address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
               address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
               address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
               locality_name: document.getElementById(addressFormConfig.au.elements.suburb),
@@ -411,11 +415,11 @@ var FormHelper = function () {
       this.boundCountryChangedListener = this._countryChanged.bind(this); // save this so we can unbind in the destroy() method
       this.formHelperConfig.countryElement.addEventListener("change", this.boundCountryChangedListener);
 
-      var nzWidget = new window.AddressFinder.Widget(this.formHelperConfig.nz.searchElement, this.widgetConfig.nzKey, "nz", this.widgetConfig.nzWidgetOptions);
+      var nzWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.nzKey, "nz", this.widgetConfig.nzWidgetOptions);
       nzWidget.on("result:select", this._nzAddressSelected.bind(this));
       this.widgets["nz"] = nzWidget;
 
-      var auWidget = new window.AddressFinder.Widget(this.formHelperConfig.au.searchElement, this.widgetConfig.auKey, "au", this.widgetConfig.auWidgetOptions);
+      var auWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.auKey, "au", this.widgetConfig.auWidgetOptions);
       auWidget.on("result:select", this._auAddressSelected.bind(this));
       this.widgets["au"] = auWidget;
 
@@ -480,14 +484,21 @@ var FormHelper = function () {
       var elements = this.formHelperConfig.nz.elements;
       var selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
 
-      if (elements.address_line_1_and_2) {
+      if (elements.address_line_1_and_2 && !elements.suburb) {
+        var addressIsPresent = function addressIsPresent(array) {
+          return array != null;
+        };
+        var combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ");
+        this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2");
+      } else if (elements.address_line_1_and_2 && elements.suburb) {
         this._setElementValue(elements.address_line_1_and_2, selected.address_line_1_and_2(), "address_line_1_and_2");
+        this._setElementValue(elements.suburb, selected.suburb(), "suburb");
       } else {
         this._setElementValue(elements.address_line_1, selected.address_line_1(), "address_line_1");
         this._setElementValue(elements.address_line_2, selected.address_line_2(), "address_line_2");
+        this._setElementValue(elements.suburb, selected.suburb(), "suburb");
       }
 
-      this._setElementValue(elements.suburb, selected.suburb(), "suburb");
       this._setElementValue(elements.city, selected.city(), "city");
       this._setElementValue(elements.postcode, selected.postcode(), "postcode");
 

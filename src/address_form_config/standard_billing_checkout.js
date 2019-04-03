@@ -6,7 +6,6 @@ export default {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      search:'checkout_billing_address_address1',
       address1and2: 'checkout_billing_address_address1',
       address1: null,
       address2: null,
@@ -20,7 +19,6 @@ export default {
   au: {
     countryValue: "Australia",
     elements: {
-      search: 'checkout_billing_address_address1',
       address1and2: 'checkout_billing_address_address1',
       address1: null,
       address2: null,

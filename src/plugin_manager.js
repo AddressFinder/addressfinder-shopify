@@ -6,7 +6,6 @@ export default class PluginManager {
     this.formHelpers = []
     this.addressFormConfigurations = addressFormConfigurations
     this.widgetConfig = widgetConfig
-
     this.loadFormHelpers()
 
     new MutationHelper({
@@ -37,16 +36,16 @@ export default class PluginManager {
   }
 
   _initialiseFormHelper(addressFormConfig){
-    let searchElement = document.getElementById(addressFormConfig.searchIdentifier)
+    let searchElement = document.getElementById(addressFormConfig.searchIdentifier)    
 
     if (searchElement) {
       let formHelperConfig = {
         countryElement: document.getElementById(addressFormConfig.countryIdentifier),
+        searchElement: document.getElementById(addressFormConfig.searchIdentifier),
         label: addressFormConfig.label,
         layoutSelector: addressFormConfig.layoutSelector,
         nz: {
           countryValue: addressFormConfig.nz.countryValue,
-          searchElement: document.getElementById(addressFormConfig.nz.elements.search),
           elements: {
             address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
             address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
@@ -60,7 +59,6 @@ export default class PluginManager {
         },
         au: {
           countryValue: addressFormConfig.au.countryValue,
-          searchElement: document.getElementById(addressFormConfig.au.elements.search),
           elements: {
             address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
             address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
