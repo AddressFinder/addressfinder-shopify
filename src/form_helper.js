@@ -79,17 +79,21 @@ export default class FormHelper {
     this.widgets[countryCode].enable()
   }
 
+  _combineAddressElements(elements) {
+    const addressIsPresent = element => element != null && element != ""
+    const combined = elements.filter(addressIsPresent)
+    return combined.length > 1 ? combined.join(", ") : combined[0]
+  }
+
   _nzAddressSelected(fullAddress, metaData){
     let elements = this.formHelperConfig.nz.elements
     let selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
 
-    // only add the comma if both are defined
     if (!elements.address_line_2 && !elements.suburb) {
-      const addressIsPresent = array => array != null
-      const combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ")
-      this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2")
+      const combined = this._combineAddressElements([selected.address_line_1_and_2(), selected.suburb()])
+      this._setElementValue(elements.address_line_1, combined, "address_line_1")
     } else if (!elements.address_line_2 && elements.suburb) {
-      this._setElementValue(elements.address_line_1_and_2, selected.address_line_1_and_2(), "address_line_1_and_2")
+      this._setElementValue(elements.address_line_1, selected.address_line_1_and_2(), "address_line_1")
       this._setElementValue(elements.suburb, selected.suburb(), "suburb")
     } else {
       this._setElementValue(elements.address_line_1, selected.address_line_1(), "address_line_1")
@@ -112,12 +116,10 @@ export default class FormHelper {
   _auAddressSelected(fullAddress, metaData){
     let elements = this.formHelperConfig.au.elements
 
-    if(elements.address_line_1_and_2){
-      const addressIsPresent = array => array != null
-      const combined = [metaData.address_line_1, metaData.address_line_2].filter(addressIsPresent).join(", ")
-      this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2")
-    }
-    else {
+    if (!elements.address_line_2) {
+      const combined = this._combineAddressElements([metaData.address_line_1, metaData.address_line_2])
+      this._setElementValue(elements.address_line_1, combined, "address_line_1")
+    } else {
       this._setElementValue(elements.address_line_1, metaData.address_line_1, "address_line_1")
       const address_line_2 = metaData.address_line_2 || ""
       this._setElementValue(elements.address_line_2, address_line_2, "address_line_2")

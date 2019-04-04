@@ -550,20 +550,25 @@ var FormHelper = function () {
       this.widgets[countryCode].enable();
     }
   }, {
+    key: "_combineAddressElements",
+    value: function _combineAddressElements(elements) {
+      var addressIsPresent = function addressIsPresent(element) {
+        return element != null && element != "";
+      };
+      var combined = elements.filter(addressIsPresent);
+      return combined.length > 1 ? combined.join(", ") : combined[0];
+    }
+  }, {
     key: "_nzAddressSelected",
     value: function _nzAddressSelected(fullAddress, metaData) {
       var elements = this.formHelperConfig.nz.elements;
       var selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
 
-      // only add the comma if both are defined
       if (!elements.address_line_2 && !elements.suburb) {
-        var addressIsPresent = function addressIsPresent(array) {
-          return array != null;
-        };
-        var combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ");
-        this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2");
+        var combined = this._combineAddressElements([selected.address_line_1_and_2(), selected.suburb()]);
+        this._setElementValue(elements.address_line_1, combined, "address_line_1");
       } else if (!elements.address_line_2 && elements.suburb) {
-        this._setElementValue(elements.address_line_1_and_2, selected.address_line_1_and_2(), "address_line_1_and_2");
+        this._setElementValue(elements.address_line_1, selected.address_line_1_and_2(), "address_line_1");
         this._setElementValue(elements.suburb, selected.suburb(), "suburb");
       } else {
         this._setElementValue(elements.address_line_1, selected.address_line_1(), "address_line_1");
@@ -586,12 +591,9 @@ var FormHelper = function () {
     value: function _auAddressSelected(fullAddress, metaData) {
       var elements = this.formHelperConfig.au.elements;
 
-      if (elements.address_line_1_and_2) {
-        var addressIsPresent = function addressIsPresent(array) {
-          return array != null;
-        };
-        var combined = [metaData.address_line_1, metaData.address_line_2].filter(addressIsPresent).join(", ");
-        this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2");
+      if (!elements.address_line_2) {
+        var combined = this._combineAddressElements([metaData.address_line_1, metaData.address_line_2]);
+        this._setElementValue(elements.address_line_1, combined, "address_line_1");
       } else {
         this._setElementValue(elements.address_line_1, metaData.address_line_1, "address_line_1");
         var address_line_2 = metaData.address_line_2 || "";
