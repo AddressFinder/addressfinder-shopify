@@ -1,4 +1,4 @@
-export default class MutationsHelper {
+export default class MutationManager {
   constructor({mutationEventHandler, ignoredClass}) {
     this.mutationEventHandler = mutationEventHandler
     // Mutation events emitted by elements with this class are ignored.

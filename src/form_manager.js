@@ -1,4 +1,4 @@
-export default class FormHelper {
+export default class FormManager {
   constructor(widgetConfig, formHelperConfig, eventToDispatch){
     this.widgetConfig = widgetConfig
     this.formHelperConfig = formHelperConfig

@@ -1,5 +1,5 @@
-import PluginManager from "./plugin_manager";
-import MutationHelper from "./mutation_helper"
+import PageManager from "./page_manager";
+import MutationManager from "./mutation_manager"
 import ConfigManager from "./config_manager"
 
 (function(d, w) {
@@ -11,7 +11,7 @@ import ConfigManager from "./config_manager"
       this.PluginManager = null
       this.ConfigManager = new ConfigManager()
 
-      new MutationHelper({
+      new MutationManager({
         mutationEventHandler: this.mutationEventHandler.bind(this),
         ignoredClass: "af_list"
       })
@@ -47,13 +47,13 @@ import ConfigManager from "./config_manager"
         debug: window.AddressFinderPlugin.debug || false
       }
 
-      this.PluginManager = new PluginManager({
+      this.PageManager = new PageManager({
         addressFormConfigurations: this.ConfigManager.load(),
         widgetConfig,
         eventToDispatch: 'input' 
       })
     
-      window.AF._shopifyPlugin = this.PluginManager
+      window.AF._shopifyPlugin = this.PageManager
     }
 
     _addScript() {
