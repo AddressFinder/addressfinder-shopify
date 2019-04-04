@@ -1,5 +1,6 @@
 import standardBillingCheckout from './address_form_config/standard_billing_checkout'
 import standardShippingCheckout from './address_form_config/standard_shipping_checkout'
+import userRegistration from './address_form_config/user_registration'
 import PluginManager from "./plugin_manager";
 
 window.AF = window.AF || {}
@@ -10,7 +11,8 @@ let _initPlugin = function(){
 
   const addressFormConfigurations = [
     standardBillingCheckout,
-    standardShippingCheckout
+    standardShippingCheckout,
+    userRegistration
   ]
 
   const widgetConfig = {

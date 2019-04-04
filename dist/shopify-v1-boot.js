@@ -85,6 +85,10 @@ var _standard_shipping_checkout = __webpack_require__(3);
 
 var _standard_shipping_checkout2 = _interopRequireDefault(_standard_shipping_checkout);
 
+var _user_registration = __webpack_require__(9);
+
+var _user_registration2 = _interopRequireDefault(_user_registration);
+
 var _plugin_manager = __webpack_require__(4);
 
 var _plugin_manager2 = _interopRequireDefault(_plugin_manager);
@@ -97,7 +101,7 @@ var _initPlugin = function _initPlugin() {
 
   _disableGoogleAutocomplete(5);
 
-  var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default];
+  var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default, _user_registration2.default];
 
   var widgetConfig = {
     nzKey: window.AddressFinderPlugin.key,
@@ -746,6 +750,70 @@ exports.default = {
   "Waikato Region": "WKO",
   "Wellington Region": "WGN",
   "West Coast Region": "WTC"
+};
+
+/***/ }),
+/* 8 */,
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  label: "You Addresses",
+  layoutSelector: "#address_form_new",
+  countryIdentifier: 'AddressCountryNew',
+  searchIdentifier: "AddressAddress1New",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1and2: 'AddressAddress1New',
+      address1: null,
+      address2: null,
+      suburb: 'AddressAddress2New',
+      city: 'AddressCityNew',
+      region: 'AddressProvinceNew',
+      postcode: 'AddressZipNew'
+    },
+    regionMappings: {
+      "Auckland Region": "Auckland Region",
+      "Bay Of Plenty Region": "Bay of Plenty",
+      "Canterbury Region": "Canterbury",
+      "Gisborne Region": "Gisborne Region",
+      "Hawke's Bay Region": "Hawke's Bay",
+      "Manawatu-Wanganui Region": "Manawatu-Wanganui Region",
+      "Marlborough Region": "Marlborough",
+      "Nelson Region": "Nelson Region",
+      "Northland Region": "Northland",
+      "Otago Region": "Otago",
+      "Southland Region": "Southland",
+      "Taranaki Region": "Taranaki",
+      "Tasman Region": "Tasman",
+      "Waikato Region": "Waikato",
+      "Wellington Region": "Wellington Region",
+      "West Coast Region": "West Coast",
+      "No Region": "Chatham Islands"
+    }
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1and2: null,
+      address1: 'AddressAddress1New',
+      address2: 'AddressAddress2New',
+      suburb: 'AddressCityNew',
+      state: 'AddressProvinceNew',
+      postcode: 'AddressZipNew'
+    },
+    stateMappings: null
+  }
+
+  // edit user registration adds an id to these fields.
+
 };
 
 /***/ })
