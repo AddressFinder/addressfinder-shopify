@@ -4,19 +4,19 @@ import defaultStateMappings from './default_state_mappings'
 
 export default {
   label: "User Registration Address Form",
-  layoutSelector: "AddressNewForm",
-  countryIdentifier: '[name="address[country]"]',
-  searchIdentifier: '[name="address[address1]"]',
+  layoutSelector: "#AddressNewForm",
+  countryIdentifier: 'AddressCountryNew',
+  searchIdentifier: 'AddressAddress1New',
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: '[name="address[address1]"]',
+      address1and2: 'AddressAddress1New',
       address1: null,
       address2: null,
-      suburb: '[name="address[address2]"]',
-      city: '[name="address[city]"]',
-      region: '[name="address[province]"]',
-      postcode: '[name="address[zip]"]',
+      suburb: 'AddressAddress2New',
+      city: 'AddressCityNew',
+      region: 'AddressProvinceNew',
+      postcode: 'AddressZipNew',
     },
     regionMappings: defaultRegionMappings
   },
@@ -24,14 +24,12 @@ export default {
     countryValue: "Australia",
     elements: {
       address1and2: null,
-      address1: '[name="address[address1]"]',
-      address2: '[name="address[address2]"]',
-      suburb: '[name="address[city]"]',
-      state: '[name="address[province]"]',
-      postcode: '[name="address[zip]"]',
+      address1: 'AddressAddress1New',
+      address2: 'AddressAddress2New',
+      suburb: 'AddressCityNew',
+      state: 'AddressProvinceNew',
+      postcode: 'AddressZipNew',
     },
     stateMappings: defaultStateMappings
   }
 }
-
-// edit user registration adds an id to these fields.

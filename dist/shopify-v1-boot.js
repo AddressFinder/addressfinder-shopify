@@ -77,136 +77,113 @@ module.exports = __webpack_require__(1);
 "use strict";
 
 
-var _standard_billing_checkout = __webpack_require__(2);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var _standard_billing_checkout2 = _interopRequireDefault(_standard_billing_checkout);
-
-var _standard_shipping_checkout = __webpack_require__(3);
-
-var _standard_shipping_checkout2 = _interopRequireDefault(_standard_shipping_checkout);
-
-var _user_registration_new_address = __webpack_require__(10);
-
-var _user_registration_new_address2 = _interopRequireDefault(_user_registration_new_address);
-
-var _user_registration_edit_address = __webpack_require__(11);
-
-var _user_registration_edit_address2 = _interopRequireDefault(_user_registration_edit_address);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _plugin_manager = __webpack_require__(4);
 
 var _plugin_manager2 = _interopRequireDefault(_plugin_manager);
 
+var _mutation_helper = __webpack_require__(6);
+
+var _mutation_helper2 = _interopRequireDefault(_mutation_helper);
+
+var _config_manager = __webpack_require__(14);
+
+var _config_manager2 = _interopRequireDefault(_config_manager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-window.AF = window.AF || {};
+var ShopifyPlugin = function () {
+  function ShopifyPlugin() {
+    _classCallCheck(this, ShopifyPlugin);
 
-function _configureDynamicForms(dynamicFormConfig) {
-  var dynamicForms = [];
-  var identifyingElements = document.querySelectorAll('[id^="' + dynamicFormConfig.layoutSelector + '"]');
+    this.loadAF();
 
-  identifyingElements.forEach(function (identifyingElement) {
-    dynamicForms.push(configureDynamicForm(identifyingElement));
-  });
+    window.AF = window.AF || {};
+    this.PluginManager = null;
+    this.ConfigManager = new _config_manager2.default();
 
-  debugger;
-  return dynamicForms;
-}
+    new _mutation_helper2.default({
+      mutationEventHandler: this.mutationEventHandler.bind(this),
+      ignoredClass: "af_list"
+    });
+  }
 
-function configureDynamicForm(identifyingElement) {
-  console.log('configureDynamicForm');
-  if (identifyingElement) {
-    var id = identifyingElement['id'].split('_')[1];
-    var formConfig = {
-      label: "Edit Address Form",
-      layoutSelector: 'EditAddress_' + id,
-      countryIdentifier: '#AddressCountry_' + id,
-      searchIdentifier: '#AddressAddress1_' + id,
-      nz: {
-        countryValue: "New Zealand",
-        elements: {
-          address1and2: '#AddressAddress1_' + id,
-          address1: null,
-          address2: null,
-          suburb: '#AddressAddress2_' + id,
-          city: '#AddressCity_' + id,
-          region: '#AddressProvince_' + id,
-          postcode: '#AddressZip_' + id
-        },
-        regionMappings: null
-      },
-      au: {
-        countryValue: "Australia",
-        elements: {
-          address1and2: null,
-          address1: '#AddressAddress1_' + id,
-          address2: '#AddressAddress2_' + id,
-          suburb: '#AddressCity_' + id,
-          state: '#AddressProvince_' + id,
-          postcode: '#AddressZip_' + id
-        },
-        stateMappings: null
+  _createClass(ShopifyPlugin, [{
+    key: "mutationEventHandler",
+    value: function mutationEventHandler() {
+      var addressFormConfigurations = this.ConfigManager.load();
+      if (this.PluginManager) {
+        this.PluginManager.reload(addressFormConfigurations);
       }
-    };
-    return formConfig;
-  }
-}
+    }
+  }, {
+    key: "_disableGoogleAutocomplete",
+    value: function _disableGoogleAutocomplete(repetitions) {
+      var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
 
-var _initPlugin = function _initPlugin() {
+      if (iframe) {
+        iframe.src = '';
+      }
 
-  _disableGoogleAutocomplete(5);
-  var dynamicForms = _configureDynamicForms(_user_registration_edit_address2.default);
+      if (repetitions > 0) {
+        setTimeout(this._disableGoogleAutocomplete, 1000, repetitions - 1);
+      }
+    }
+  }, {
+    key: "_initPlugin",
+    value: function _initPlugin() {
+      this._disableGoogleAutocomplete(5);
 
-  var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default, _user_registration_new_address2.default].concat(_toConsumableArray(dynamicForms));
+      var widgetConfig = {
+        nzKey: window.AddressFinderPlugin.key,
+        auKey: window.AddressFinderPlugin.key,
+        nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
+        auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
+        debug: window.AddressFinderPlugin.debug || false
+      };
 
-  console.log(dynamicForms);
+      this.PluginManager = new _plugin_manager2.default({
+        addressFormConfigurations: this.ConfigManager.load(),
+        widgetConfig: widgetConfig,
+        eventToDispatch: 'input'
+      });
 
-  var widgetConfig = {
-    nzKey: window.AddressFinderPlugin.key,
-    auKey: window.AddressFinderPlugin.key,
-    nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-    auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-    debug: window.AddressFinderPlugin.debug || false
-  };
+      window.AF._shopifyPlugin = this.PluginManager;
+    }
+  }, {
+    key: "_addScript",
+    value: function _addScript() {
+      var s = document.createElement('script');
+      s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
+      s.async = 1;
+      s.onload = this._initPlugin.bind(this);
+      document.body.appendChild(s);
+    }
+  }, {
+    key: "loadAF",
+    value: function loadAF() {
+      if (window.AF && window.AF.Widget) {
+        this._initPlugin();
+      } else {
+        this._addScript();
+      }
+    }
+  }]);
 
-  window.AF._shopifyPlugin = new _plugin_manager2.default({
-    addressFormConfigurations: addressFormConfigurations,
-    widgetConfig: widgetConfig,
-    eventToDispatch: 'input'
-  });
-};
+  return ShopifyPlugin;
+}();
 
-var _disableGoogleAutocomplete = function _disableGoogleAutocomplete(repetitions) {
-  var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
+exports.default = ShopifyPlugin;
 
-  if (iframe) {
-    iframe.src = '';
-  }
 
-  if (repetitions > 0) {
-    setTimeout(_disableGoogleAutocomplete, 1000, repetitions - 1);
-  }
-};
-
-function _addScript() {
-  var s = document.createElement('script');
-  s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
-  s.async = 1;
-  s.onload = _initPlugin;
-  document.body.appendChild(s);
-}
-
-function loadAF() {
-  if (window.AF && window.AF.Widget) {
-    _initPlugin();
-  } else {
-    _addScript();
-  }
-};
-
-loadAF();
+new ShopifyPlugin();
 
 /***/ }),
 /* 2 */
@@ -232,30 +209,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   label: "Standard Billing Checkout",
   layoutSelector: "#section--billing-address__different",
-  countryIdentifier: '#checkout_billing_address_country',
-  searchIdentifier: "#checkout_billing_address_address1",
+  countryIdentifier: 'checkout_billing_address_country',
+  searchIdentifier: "checkout_billing_address_address1",
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: '#checkout_billing_address_address1',
+      address1and2: 'checkout_billing_address_address1',
       address1: null,
       address2: null,
       suburb: null,
-      city: '#checkout_billing_address_city',
-      region: '#checkout_billing_address_province',
-      postcode: '#checkout_billing_address_zip'
+      city: 'checkout_billing_address_city',
+      region: 'checkout_billing_address_province',
+      postcode: 'checkout_billing_address_zip'
     },
     regionMappings: _default_region_mappings2.default
   },
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: '#checkout_billing_address_address1',
+      address1and2: 'checkout_billing_address_address1',
       address1: null,
       address2: null,
-      suburb: '#checkout_billing_address_city',
-      state: '#checkout_billing_address_province',
-      postcode: '#checkout_billing_address_zip'
+      suburb: 'checkout_billing_address_city',
+      state: 'checkout_billing_address_province',
+      postcode: 'checkout_billing_address_zip'
     },
     stateMappings: _default_state_mappings2.default
   }
@@ -285,30 +262,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   label: "Standard Shipping Checkout",
   layoutSelector: ".section--shipping-address",
-  countryIdentifier: '#checkout_shipping_address_country',
-  searchIdentifier: "#checkout_shipping_address_address1",
+  countryIdentifier: 'checkout_shipping_address_country',
+  searchIdentifier: "checkout_shipping_address_address1",
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: '#checkout_shipping_address_address1',
+      address1and2: 'checkout_shipping_address_address1',
       address1: null,
       address2: null,
       suburb: null,
-      city: '#checkout_shipping_address_city',
-      region: '#checkout_shipping_address_province',
-      postcode: '#checkout_shipping_address_zip'
+      city: 'checkout_shipping_address_city',
+      region: 'checkout_shipping_address_province',
+      postcode: 'checkout_shipping_address_zip'
     },
     regionMappings: _default_region_mappings2.default
   },
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: '#checkout_shipping_address_address1',
+      address1and2: 'checkout_shipping_address_address1',
       address1: null,
       address2: null,
-      suburb: '#checkout_shipping_address_city',
-      state: '#checkout_shipping_address_province',
-      postcode: '#checkout_shipping_address_zip'
+      suburb: 'checkout_shipping_address_city',
+      state: 'checkout_shipping_address_province',
+      postcode: 'checkout_shipping_address_zip'
     },
     stateMappings: _default_state_mappings2.default
   }
@@ -331,10 +308,6 @@ var _form_helper = __webpack_require__(5);
 
 var _form_helper2 = _interopRequireDefault(_form_helper);
 
-var _mutation_helper = __webpack_require__(6);
-
-var _mutation_helper2 = _interopRequireDefault(_mutation_helper);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -351,15 +324,19 @@ var PluginManager = function () {
     this.addressFormConfigurations = addressFormConfigurations;
     this.widgetConfig = widgetConfig;
     this.eventToDispatch = eventToDispatch;
-    this.loadFormHelpers();
 
-    new _mutation_helper2.default({
-      mutationEventHandler: this.loadFormHelpers.bind(this),
-      ignoredClass: "af_list"
-    });
+    this.reload = this.reload.bind(this);
+
+    this.loadFormHelpers();
   }
 
   _createClass(PluginManager, [{
+    key: "reload",
+    value: function reload(addressFormConfigurations) {
+      this.addressFormConfigurations = addressFormConfigurations;
+      this.loadFormHelpers();
+    }
+  }, {
     key: "loadFormHelpers",
     value: function loadFormHelpers() {
       this.formHelpers.forEach(function (formHelper) {
@@ -369,8 +346,6 @@ var PluginManager = function () {
       this.formHelpers = [];
 
       this._identifyAddressForms();
-
-      console.log('loading form helpers');
       this.identifiedAddressFormConfigurations.forEach(this._initialiseFormHelper.bind(this));
     }
   }, {
@@ -384,7 +359,8 @@ var PluginManager = function () {
         for (var _iterator = this.addressFormConfigurations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var addressFormConfig = _step.value;
 
-          var identifyingElement = document.querySelector("[id^=\"" + addressFormConfig.layoutSelector + "\"]");
+          var identifyingElement = document.querySelector(addressFormConfig.layoutSelector);
+          debugger;
 
           if (identifyingElement) {
             this.log("Identified layout named: " + addressFormConfig.label);
@@ -410,38 +386,37 @@ var PluginManager = function () {
   }, {
     key: "_initialiseFormHelper",
     value: function _initialiseFormHelper(addressFormConfig) {
-      console.log('init', addressFormConfig);
-      var searchElement = document.querySelector(addressFormConfig.searchIdentifier);
+      var searchElement = document.getElementById(addressFormConfig.searchIdentifier);
 
       if (searchElement) {
         var formHelperConfig = {
-          countryElement: document.querySelector(addressFormConfig.countryIdentifier),
-          searchElement: document.querySelector(addressFormConfig.searchIdentifier),
+          countryElement: document.getElementById(addressFormConfig.countryIdentifier),
+          searchElement: document.getElementById(addressFormConfig.searchIdentifier),
           label: addressFormConfig.label,
           layoutSelector: addressFormConfig.layoutSelector,
           nz: {
             countryValue: addressFormConfig.nz.countryValue,
             elements: {
-              address_line_1_and_2: document.querySelector(addressFormConfig.nz.elements.address1and2),
-              address_line_1: document.querySelector(addressFormConfig.nz.elements.address1),
-              address_line_2: document.querySelector(addressFormConfig.nz.elements.address2),
-              suburb: document.querySelector(addressFormConfig.nz.elements.suburb),
-              city: document.querySelector(addressFormConfig.nz.elements.city),
-              region: document.querySelector(addressFormConfig.nz.elements.region),
-              postcode: document.querySelector(addressFormConfig.nz.elements.postcode)
+              address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
+              address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
+              address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
+              suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
+              city: document.getElementById(addressFormConfig.nz.elements.city),
+              region: document.getElementById(addressFormConfig.nz.elements.region),
+              postcode: document.getElementById(addressFormConfig.nz.elements.postcode)
             },
             regionMappings: addressFormConfig.nz.regionMappings
           },
           au: {
             countryValue: addressFormConfig.au.countryValue,
             elements: {
-              address_line_1_and_2: document.querySelector(addressFormConfig.au.elements.address1and2),
-              address_line_1: document.querySelector(addressFormConfig.au.elements.address1),
-              address_line_2: document.querySelector(addressFormConfig.au.elements.address2),
-              locality_name: document.querySelector(addressFormConfig.au.elements.suburb),
+              address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
+              address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
+              address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
+              locality_name: document.getElementById(addressFormConfig.au.elements.suburb),
               city: null,
-              state_territory: document.querySelector(addressFormConfig.au.elements.state),
-              postcode: document.querySelector(addressFormConfig.au.elements.postcode)
+              state_territory: document.getElementById(addressFormConfig.au.elements.state),
+              postcode: document.getElementById(addressFormConfig.au.elements.postcode)
             },
             stateMappings: addressFormConfig.au.stateMappings
           }
@@ -449,6 +424,7 @@ var PluginManager = function () {
 
         var helper = new _form_helper2.default(this.widgetConfig, formHelperConfig, this.eventToDispatch);
         this.formHelpers.push(helper);
+        debugger;
       }
     }
   }, {
@@ -870,19 +846,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
   label: "User Registration Address Form",
-  layoutSelector: "AddressNewForm",
-  countryIdentifier: '[name="address[country]"]',
-  searchIdentifier: '[name="address[address1]"]',
+  layoutSelector: "#AddressNewForm",
+  countryIdentifier: 'AddressCountryNew',
+  searchIdentifier: 'AddressAddress1New',
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: '[name="address[address1]"]',
+      address1and2: 'AddressAddress1New',
       address1: null,
       address2: null,
-      suburb: '[name="address[address2]"]',
-      city: '[name="address[city]"]',
-      region: '[name="address[province]"]',
-      postcode: '[name="address[zip]"]'
+      suburb: 'AddressAddress2New',
+      city: 'AddressCityNew',
+      region: 'AddressProvinceNew',
+      postcode: 'AddressZipNew'
     },
     regionMappings: _default_region_mappings2.default
   },
@@ -890,21 +866,130 @@ exports.default = {
     countryValue: "Australia",
     elements: {
       address1and2: null,
-      address1: '[name="address[address1]"]',
-      address2: '[name="address[address2]"]',
-      suburb: '[name="address[city]"]',
-      state: '[name="address[province]"]',
-      postcode: '[name="address[zip]"]'
+      address1: 'AddressAddress1New',
+      address2: 'AddressAddress2New',
+      suburb: 'AddressCityNew',
+      state: 'AddressProvinceNew',
+      postcode: 'AddressZipNew'
     },
     stateMappings: _default_state_mappings2.default
   }
-
-  // edit user registration adds an id to these fields.
-
 };
 
 /***/ }),
-/* 11 */
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _standard_billing_checkout = __webpack_require__(2);
+
+var _standard_billing_checkout2 = _interopRequireDefault(_standard_billing_checkout);
+
+var _standard_shipping_checkout = __webpack_require__(3);
+
+var _standard_shipping_checkout2 = _interopRequireDefault(_standard_shipping_checkout);
+
+var _user_registration_new_address = __webpack_require__(10);
+
+var _user_registration_new_address2 = _interopRequireDefault(_user_registration_new_address);
+
+var _dynamic_edit_address = __webpack_require__(15);
+
+var _dynamic_edit_address2 = _interopRequireDefault(_dynamic_edit_address);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ShopifyConfigurationManager = function () {
+  function ShopifyConfigurationManager() {
+    _classCallCheck(this, ShopifyConfigurationManager);
+  }
+
+  _createClass(ShopifyConfigurationManager, [{
+    key: 'load',
+    value: function load() {
+      var dynamicForms = this.generateDynamicForms();
+
+      var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default, _user_registration_new_address2.default].concat(_toConsumableArray(dynamicForms));
+
+      return addressFormConfigurations;
+    }
+  }, {
+    key: 'generateDynamicForms',
+    value: function generateDynamicForms() {
+      var _this = this;
+
+      var dynamicForms = [];
+      var identifyingElements = document.querySelectorAll('[id^="' + _dynamic_edit_address2.default.layoutSelector + '"]');
+
+      identifyingElements.forEach(function (identifyingElement, index) {
+        dynamicForms.push(_this._configureDynamicForm(identifyingElement, index));
+      });
+
+      return dynamicForms;
+    }
+  }, {
+    key: '_configureDynamicForm',
+    value: function _configureDynamicForm(identifyingElement, index) {
+      if (identifyingElement) {
+        var id = identifyingElement['id'].split('_')[1];
+        var formConfig = {
+          label: 'Edit Address Form ' + index,
+          layoutSelector: '#EditAddress_' + id,
+          countryIdentifier: 'AddressCountry_' + id,
+          searchIdentifier: 'AddressAddress1_' + id,
+          nz: {
+            countryValue: "New Zealand",
+            elements: {
+              address1and2: 'AddressAddress1_' + id,
+              address1: null,
+              address2: null,
+              suburb: 'AddressAddress2_' + id,
+              city: 'AddressCity_' + id,
+              region: 'AddressProvince_' + id,
+              postcode: 'AddressZip_' + id
+            },
+            regionMappings: null
+          },
+          au: {
+            countryValue: "Australia",
+            elements: {
+              address1and2: null,
+              address1: 'AddressAddress1_' + id,
+              address2: 'AddressAddress2_' + id,
+              suburb: 'AddressCity_' + id,
+              state: 'AddressProvince_' + id,
+              postcode: 'AddressZip_' + id
+            },
+            stateMappings: null
+          }
+        };
+        return formConfig;
+      }
+    }
+  }]);
+
+  return ShopifyConfigurationManager;
+}();
+
+exports.default = ShopifyConfigurationManager;
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -914,9 +999,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  label: "Dynamic Address Form",
-  layoutSelector: "EditAddress",
-  dynamic: true
+  layoutSelector: "EditAddress"
 };
 
 /***/ })
