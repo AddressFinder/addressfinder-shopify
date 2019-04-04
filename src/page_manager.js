@@ -8,15 +8,13 @@ export default class PageManager {
     this.addressFormConfigurations = addressFormConfigurations
     // Configuration provided by the user, such as keys and widget options
     this.widgetConfig = widgetConfig
-    // The event type to trigger when a field value is changed by address finder 
+    // The event type to trigger when a field value is changed by AddressFinder 
     this.eventToDispatch = eventToDispatch
-
-    this.reload = this.reload.bind(this)
 
     this.loadFormHelpers()
   }
 
-  reload(addressFormConfigurations) {
+  reload = (addressFormConfigurations) => {
     // Takes the addressFormConfigurations (static and dynamic) provided by the ConfigManager and loads our formHelpers
     this.addressFormConfigurations = addressFormConfigurations
     this.loadFormHelpers()
