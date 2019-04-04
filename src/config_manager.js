@@ -2,7 +2,7 @@ import BillingCheckout from './address_form_config/billing_checkout'
 import ShippingCheckout from './address_form_config/shipping_checkout'
 import userRegistrationNewAddress from './address_form_config/user_registration_new_address'
 import dynamicFormConfig from './address_form_config/dynamic_edit_address'
-import defaultRegionMappings from './address_form_config/default_region_mappings'
+import regionMappings from './address_form_config/region_mappings'
 
 export default class ConfigManager {
 
@@ -49,7 +49,7 @@ export default class ConfigManager {
             region: `AddressProvince_${id}`,
             postcode: `AddressZip_${id}`,
           },
-          regionMappings: defaultRegionMappings
+          regionMappings: regionMappings
         },
         au: {
           countryValue: "Australia",
