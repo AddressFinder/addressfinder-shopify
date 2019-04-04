@@ -77,10 +77,6 @@ module.exports = __webpack_require__(1);
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _plugin_manager = __webpack_require__(4);
@@ -99,91 +95,90 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ShopifyPlugin = function () {
-  function ShopifyPlugin() {
-    _classCallCheck(this, ShopifyPlugin);
+(function (d, w) {
+  var ShopifyPlugin = function () {
+    function ShopifyPlugin() {
+      _classCallCheck(this, ShopifyPlugin);
 
-    this.loadAF();
+      this.loadAF();
 
-    window.AF = window.AF || {};
-    this.PluginManager = null;
-    this.ConfigManager = new _config_manager2.default();
+      window.AF = window.AF || {};
+      this.PluginManager = null;
+      this.ConfigManager = new _config_manager2.default();
 
-    new _mutation_helper2.default({
-      mutationEventHandler: this.mutationEventHandler.bind(this),
-      ignoredClass: "af_list"
-    });
-  }
-
-  _createClass(ShopifyPlugin, [{
-    key: "mutationEventHandler",
-    value: function mutationEventHandler() {
-      var addressFormConfigurations = this.ConfigManager.load();
-      if (this.PluginManager) {
-        this.PluginManager.reload(addressFormConfigurations);
-      }
-    }
-  }, {
-    key: "_disableGoogleAutocomplete",
-    value: function _disableGoogleAutocomplete(repetitions) {
-      var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
-
-      if (iframe) {
-        iframe.src = '';
-      }
-
-      if (repetitions > 0) {
-        setTimeout(this._disableGoogleAutocomplete, 1000, repetitions - 1);
-      }
-    }
-  }, {
-    key: "_initPlugin",
-    value: function _initPlugin() {
-      this._disableGoogleAutocomplete(5);
-
-      var widgetConfig = {
-        nzKey: window.AddressFinderPlugin.key,
-        auKey: window.AddressFinderPlugin.key,
-        nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-        auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-        debug: window.AddressFinderPlugin.debug || false
-      };
-
-      this.PluginManager = new _plugin_manager2.default({
-        addressFormConfigurations: this.ConfigManager.load(),
-        widgetConfig: widgetConfig,
-        eventToDispatch: 'input'
+      new _mutation_helper2.default({
+        mutationEventHandler: this.mutationEventHandler.bind(this),
+        ignoredClass: "af_list"
       });
+    }
 
-      window.AF._shopifyPlugin = this.PluginManager;
-    }
-  }, {
-    key: "_addScript",
-    value: function _addScript() {
-      var s = document.createElement('script');
-      s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
-      s.async = 1;
-      s.onload = this._initPlugin.bind(this);
-      document.body.appendChild(s);
-    }
-  }, {
-    key: "loadAF",
-    value: function loadAF() {
-      if (window.AF && window.AF.Widget) {
-        this._initPlugin();
-      } else {
-        this._addScript();
+    _createClass(ShopifyPlugin, [{
+      key: "mutationEventHandler",
+      value: function mutationEventHandler() {
+        var addressFormConfigurations = this.ConfigManager.load();
+        if (this.PluginManager) {
+          this.PluginManager.reload(addressFormConfigurations);
+        }
       }
-    }
-  }]);
+    }, {
+      key: "_disableGoogleAutocomplete",
+      value: function _disableGoogleAutocomplete(repetitions) {
+        var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
 
-  return ShopifyPlugin;
-}();
+        if (iframe) {
+          iframe.src = '';
+        }
 
-exports.default = ShopifyPlugin;
+        if (repetitions > 0) {
+          setTimeout(this._disableGoogleAutocomplete, 1000, repetitions - 1);
+        }
+      }
+    }, {
+      key: "_initPlugin",
+      value: function _initPlugin() {
+        this._disableGoogleAutocomplete(5);
 
+        var widgetConfig = {
+          nzKey: window.AddressFinderPlugin.key,
+          auKey: window.AddressFinderPlugin.key,
+          nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
+          auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
+          debug: window.AddressFinderPlugin.debug || false
+        };
 
-new ShopifyPlugin();
+        this.PluginManager = new _plugin_manager2.default({
+          addressFormConfigurations: this.ConfigManager.load(),
+          widgetConfig: widgetConfig,
+          eventToDispatch: 'input'
+        });
+
+        window.AF._shopifyPlugin = this.PluginManager;
+      }
+    }, {
+      key: "_addScript",
+      value: function _addScript() {
+        var s = document.createElement('script');
+        s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
+        s.async = 1;
+        s.onload = this._initPlugin.bind(this);
+        document.body.appendChild(s);
+      }
+    }, {
+      key: "loadAF",
+      value: function loadAF() {
+        if (window.AF && window.AF.Widget) {
+          this._initPlugin();
+        } else {
+          this._addScript();
+        }
+      }
+    }]);
+
+    return ShopifyPlugin;
+  }();
+
+  new ShopifyPlugin();
+})(document, window);
 
 /***/ }),
 /* 2 */,
