@@ -85,9 +85,13 @@ var _standard_shipping_checkout = __webpack_require__(3);
 
 var _standard_shipping_checkout2 = _interopRequireDefault(_standard_shipping_checkout);
 
-var _user_registration = __webpack_require__(9);
+var _user_registration_new_address = __webpack_require__(10);
 
-var _user_registration2 = _interopRequireDefault(_user_registration);
+var _user_registration_new_address2 = _interopRequireDefault(_user_registration_new_address);
+
+var _user_registration_edit_address = __webpack_require__(11);
+
+var _user_registration_edit_address2 = _interopRequireDefault(_user_registration_edit_address);
 
 var _plugin_manager = __webpack_require__(4);
 
@@ -95,13 +99,69 @@ var _plugin_manager2 = _interopRequireDefault(_plugin_manager);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 window.AF = window.AF || {};
+
+function _configureDynamicForms(dynamicFormConfig) {
+  var dynamicForms = [];
+  var identifyingElements = document.querySelectorAll('[id^="' + dynamicFormConfig.layoutSelector + '"]');
+
+  identifyingElements.forEach(function (identifyingElement) {
+    dynamicForms.push(configureDynamicForm(identifyingElement));
+  });
+
+  debugger;
+  return dynamicForms;
+}
+
+function configureDynamicForm(identifyingElement) {
+  console.log('configureDynamicForm');
+  if (identifyingElement) {
+    var id = identifyingElement['id'].split('_')[1];
+    var formConfig = {
+      label: "Edit Address Form",
+      layoutSelector: 'EditAddress_' + id,
+      countryIdentifier: '#AddressCountry_' + id,
+      searchIdentifier: '#AddressAddress1_' + id,
+      nz: {
+        countryValue: "New Zealand",
+        elements: {
+          address1and2: '#AddressAddress1_' + id,
+          address1: null,
+          address2: null,
+          suburb: '#AddressAddress2_' + id,
+          city: '#AddressCity_' + id,
+          region: '#AddressProvince_' + id,
+          postcode: '#AddressZip_' + id
+        },
+        regionMappings: null
+      },
+      au: {
+        countryValue: "Australia",
+        elements: {
+          address1and2: null,
+          address1: '#AddressAddress1_' + id,
+          address2: '#AddressAddress2_' + id,
+          suburb: '#AddressCity_' + id,
+          state: '#AddressProvince_' + id,
+          postcode: '#AddressZip_' + id
+        },
+        stateMappings: null
+      }
+    };
+    return formConfig;
+  }
+}
 
 var _initPlugin = function _initPlugin() {
 
   _disableGoogleAutocomplete(5);
+  var dynamicForms = _configureDynamicForms(_user_registration_edit_address2.default);
 
-  var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default, _user_registration2.default];
+  var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default, _user_registration_new_address2.default].concat(_toConsumableArray(dynamicForms));
+
+  console.log(dynamicForms);
 
   var widgetConfig = {
     nzKey: window.AddressFinderPlugin.key,
@@ -163,37 +223,41 @@ var _default_region_mappings = __webpack_require__(7);
 
 var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
 
+var _default_state_mappings = __webpack_require__(8);
+
+var _default_state_mappings2 = _interopRequireDefault(_default_state_mappings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
   label: "Standard Billing Checkout",
   layoutSelector: "#section--billing-address__different",
-  countryIdentifier: 'checkout_billing_address_country',
-  searchIdentifier: "checkout_billing_address_address1",
+  countryIdentifier: '#checkout_billing_address_country',
+  searchIdentifier: "#checkout_billing_address_address1",
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'checkout_billing_address_address1',
+      address1and2: '#checkout_billing_address_address1',
       address1: null,
       address2: null,
       suburb: null,
-      city: 'checkout_billing_address_city',
-      region: 'checkout_billing_address_province',
-      postcode: 'checkout_billing_address_zip'
+      city: '#checkout_billing_address_city',
+      region: '#checkout_billing_address_province',
+      postcode: '#checkout_billing_address_zip'
     },
     regionMappings: _default_region_mappings2.default
   },
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: 'checkout_billing_address_address1',
+      address1and2: '#checkout_billing_address_address1',
       address1: null,
       address2: null,
-      suburb: 'checkout_billing_address_city',
-      state: 'checkout_billing_address_province',
-      postcode: 'checkout_billing_address_zip'
+      suburb: '#checkout_billing_address_city',
+      state: '#checkout_billing_address_province',
+      postcode: '#checkout_billing_address_zip'
     },
-    stateMappings: null
+    stateMappings: _default_state_mappings2.default
   }
 };
 
@@ -212,37 +276,41 @@ var _default_region_mappings = __webpack_require__(7);
 
 var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
 
+var _default_state_mappings = __webpack_require__(8);
+
+var _default_state_mappings2 = _interopRequireDefault(_default_state_mappings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
   label: "Standard Shipping Checkout",
   layoutSelector: ".section--shipping-address",
-  countryIdentifier: 'checkout_shipping_address_country',
-  searchIdentifier: "checkout_shipping_address_address1",
+  countryIdentifier: '#checkout_shipping_address_country',
+  searchIdentifier: "#checkout_shipping_address_address1",
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'checkout_shipping_address_address1',
+      address1and2: '#checkout_shipping_address_address1',
       address1: null,
       address2: null,
       suburb: null,
-      city: 'checkout_shipping_address_city',
-      region: 'checkout_shipping_address_province',
-      postcode: 'checkout_shipping_address_zip'
+      city: '#checkout_shipping_address_city',
+      region: '#checkout_shipping_address_province',
+      postcode: '#checkout_shipping_address_zip'
     },
     regionMappings: _default_region_mappings2.default
   },
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: 'checkout_shipping_address_address1',
+      address1and2: '#checkout_shipping_address_address1',
       address1: null,
       address2: null,
-      suburb: 'checkout_shipping_address_city',
-      state: 'checkout_shipping_address_province',
-      postcode: 'checkout_shipping_address_zip'
+      suburb: '#checkout_shipping_address_city',
+      state: '#checkout_shipping_address_province',
+      postcode: '#checkout_shipping_address_zip'
     },
-    stateMappings: null
+    stateMappings: _default_state_mappings2.default
   }
 };
 
@@ -302,6 +370,7 @@ var PluginManager = function () {
 
       this._identifyAddressForms();
 
+      console.log('loading form helpers');
       this.identifiedAddressFormConfigurations.forEach(this._initialiseFormHelper.bind(this));
     }
   }, {
@@ -315,10 +384,11 @@ var PluginManager = function () {
         for (var _iterator = this.addressFormConfigurations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var addressFormConfig = _step.value;
 
-          var identifyingElement = document.querySelector(addressFormConfig.layoutSelector);
+          var identifyingElement = document.querySelector("[id^=\"" + addressFormConfig.layoutSelector + "\"]");
 
           if (identifyingElement) {
             this.log("Identified layout named: " + addressFormConfig.label);
+
             this.identifiedAddressFormConfigurations.push(addressFormConfig);
           }
         }
@@ -340,37 +410,38 @@ var PluginManager = function () {
   }, {
     key: "_initialiseFormHelper",
     value: function _initialiseFormHelper(addressFormConfig) {
-      var searchElement = document.getElementById(addressFormConfig.searchIdentifier);
+      console.log('init', addressFormConfig);
+      var searchElement = document.querySelector(addressFormConfig.searchIdentifier);
 
       if (searchElement) {
         var formHelperConfig = {
-          countryElement: document.getElementById(addressFormConfig.countryIdentifier),
-          searchElement: document.getElementById(addressFormConfig.searchIdentifier),
+          countryElement: document.querySelector(addressFormConfig.countryIdentifier),
+          searchElement: document.querySelector(addressFormConfig.searchIdentifier),
           label: addressFormConfig.label,
           layoutSelector: addressFormConfig.layoutSelector,
           nz: {
             countryValue: addressFormConfig.nz.countryValue,
             elements: {
-              address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
-              address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
-              address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
-              suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
-              city: document.getElementById(addressFormConfig.nz.elements.city),
-              region: document.getElementById(addressFormConfig.nz.elements.region),
-              postcode: document.getElementById(addressFormConfig.nz.elements.postcode)
+              address_line_1_and_2: document.querySelector(addressFormConfig.nz.elements.address1and2),
+              address_line_1: document.querySelector(addressFormConfig.nz.elements.address1),
+              address_line_2: document.querySelector(addressFormConfig.nz.elements.address2),
+              suburb: document.querySelector(addressFormConfig.nz.elements.suburb),
+              city: document.querySelector(addressFormConfig.nz.elements.city),
+              region: document.querySelector(addressFormConfig.nz.elements.region),
+              postcode: document.querySelector(addressFormConfig.nz.elements.postcode)
             },
             regionMappings: addressFormConfig.nz.regionMappings
           },
           au: {
             countryValue: addressFormConfig.au.countryValue,
             elements: {
-              address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
-              address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
-              address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
-              locality_name: document.getElementById(addressFormConfig.au.elements.suburb),
+              address_line_1_and_2: document.querySelector(addressFormConfig.au.elements.address1and2),
+              address_line_1: document.querySelector(addressFormConfig.au.elements.address1),
+              address_line_2: document.querySelector(addressFormConfig.au.elements.address2),
+              locality_name: document.querySelector(addressFormConfig.au.elements.suburb),
               city: null,
-              state_territory: document.getElementById(addressFormConfig.au.elements.state),
-              postcode: document.getElementById(addressFormConfig.au.elements.postcode)
+              state_territory: document.querySelector(addressFormConfig.au.elements.state),
+              postcode: document.querySelector(addressFormConfig.au.elements.postcode)
             },
             stateMappings: addressFormConfig.au.stateMappings
           }
@@ -734,27 +805,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  "Auckland Region": "AUK",
-  "Bay Of Plenty Region": "BOP",
-  "Canterbury Region": "CAN",
-  "Gisborne Region": "GIS",
-  "Hawke's Bay Region": "HKB",
-  "Manawatu-Wanganui Region": "MWT",
-  "Marlborough Region": "MBH",
-  "Nelson Region": "NSN",
-  "Northland Region": "NTL",
-  "Otago Region": "OTA",
-  "Southland Region": "STL",
-  "Taranaki Region": "TKI",
-  "Tasman Region": "TAS",
-  "Waikato Region": "WKO",
-  "Wellington Region": "WGN",
-  "West Coast Region": "WTC"
+  'Auckland Region': ['Auckland', 'AUK'],
+  'Bay of Plenty Region': ['Bay of Plenty', 'BOP'],
+  'Canterbury Region': ['Canterbury', 'CAN'],
+  'Gisborne Region': ['Gisborne', 'GIS'],
+  'Hawke\'s Bay Region': ['Hawke\'s Bay', 'HKB'],
+  'Manawatu-Wanganui Region': ['Manawatu-Wanganui', 'MWT'],
+  'Marlborough Region': ['Marlborough', 'MBH'],
+  'Nelson Region': ['Nelson', 'NSN'],
+  'Northland Region': ['Northland', 'NTL'],
+  'Otago Region': ['Otago', 'OTA'],
+  'Southland Region': ['Southland', 'STL'],
+  'Taranaki Region': ['Taranaki', 'TKI'],
+  'Tasman Region': ['Tasman', 'TAS'],
+  'Waikato Region': ['Waikato', 'WKO'],
+  'Wellington Region': ['Wellington', 'WGN'],
+  'West Coast Region': ['West Coast', 'WTC'],
+  'Other Region': [null]
 };
 
 /***/ }),
-/* 8 */,
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -764,56 +835,88 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  label: "You Addresses",
-  layoutSelector: "#address_form_new",
-  countryIdentifier: 'AddressCountryNew',
-  searchIdentifier: "AddressAddress1New",
+  'ACT': ['Australian Capital Territory', 'ACT'],
+  'NSW': ['New South Wales', 'NSW'],
+  'NT': ['Northern Territory', 'NT'],
+  'QLD': ['Queensland', 'QLD'],
+  'SA': ['South Australia', 'SA'],
+  'TAS': ['Tasmania', 'TAS'],
+  'VIC': ['Victoria', 'VIC'],
+  'WA': ['Western Australia', 'WA'],
+  'OT': [null]
+};
+
+/***/ }),
+/* 9 */,
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _default_region_mappings = __webpack_require__(7);
+
+var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
+
+var _default_state_mappings = __webpack_require__(8);
+
+var _default_state_mappings2 = _interopRequireDefault(_default_state_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  label: "User Registration Address Form",
+  layoutSelector: "AddressNewForm",
+  countryIdentifier: '[name="address[country]"]',
+  searchIdentifier: '[name="address[address1]"]',
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'AddressAddress1New',
+      address1and2: '[name="address[address1]"]',
       address1: null,
       address2: null,
-      suburb: 'AddressAddress2New',
-      city: 'AddressCityNew',
-      region: 'AddressProvinceNew',
-      postcode: 'AddressZipNew'
+      suburb: '[name="address[address2]"]',
+      city: '[name="address[city]"]',
+      region: '[name="address[province]"]',
+      postcode: '[name="address[zip]"]'
     },
-    regionMappings: {
-      "Auckland Region": "Auckland Region",
-      "Bay Of Plenty Region": "Bay of Plenty",
-      "Canterbury Region": "Canterbury",
-      "Gisborne Region": "Gisborne Region",
-      "Hawke's Bay Region": "Hawke's Bay",
-      "Manawatu-Wanganui Region": "Manawatu-Wanganui Region",
-      "Marlborough Region": "Marlborough",
-      "Nelson Region": "Nelson Region",
-      "Northland Region": "Northland",
-      "Otago Region": "Otago",
-      "Southland Region": "Southland",
-      "Taranaki Region": "Taranaki",
-      "Tasman Region": "Tasman",
-      "Waikato Region": "Waikato",
-      "Wellington Region": "Wellington Region",
-      "West Coast Region": "West Coast",
-      "No Region": "Chatham Islands"
-    }
+    regionMappings: _default_region_mappings2.default
   },
   au: {
     countryValue: "Australia",
     elements: {
       address1and2: null,
-      address1: 'AddressAddress1New',
-      address2: 'AddressAddress2New',
-      suburb: 'AddressCityNew',
-      state: 'AddressProvinceNew',
-      postcode: 'AddressZipNew'
+      address1: '[name="address[address1]"]',
+      address2: '[name="address[address2]"]',
+      suburb: '[name="address[city]"]',
+      state: '[name="address[province]"]',
+      postcode: '[name="address[zip]"]'
     },
-    stateMappings: null
+    stateMappings: _default_state_mappings2.default
   }
 
   // edit user registration adds an id to these fields.
 
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  label: "Dynamic Address Form",
+  layoutSelector: "EditAddress",
+  dynamic: true
 };
 
 /***/ })

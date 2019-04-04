@@ -22,52 +22,55 @@ export default class PluginManager {
     
     this._identifyAddressForms()
 
+    console.log('loading form helpers')
     this.identifiedAddressFormConfigurations.forEach(this._initialiseFormHelper.bind(this))
   }
 
   _identifyAddressForms(){
     for (const addressFormConfig of this.addressFormConfigurations) {
-      let identifyingElement = document.querySelector(addressFormConfig.layoutSelector)
+      let identifyingElement = document.querySelector(`[id^="${addressFormConfig.layoutSelector}"]`)
 
       if (identifyingElement) {
         this.log(`Identified layout named: ${addressFormConfig.label}`)
+
         this.identifiedAddressFormConfigurations.push(addressFormConfig)
       }
     }
   }
 
   _initialiseFormHelper(addressFormConfig){
-    let searchElement = document.getElementById(addressFormConfig.searchIdentifier)    
+    console.log('init', addressFormConfig)
+    let searchElement = document.querySelector(addressFormConfig.searchIdentifier) 
 
     if (searchElement) {
       let formHelperConfig = {
-        countryElement: document.getElementById(addressFormConfig.countryIdentifier),
-        searchElement: document.getElementById(addressFormConfig.searchIdentifier),
+        countryElement: document.querySelector(addressFormConfig.countryIdentifier),
+        searchElement: document.querySelector(addressFormConfig.searchIdentifier),
         label: addressFormConfig.label,
         layoutSelector: addressFormConfig.layoutSelector,
         nz: {
           countryValue: addressFormConfig.nz.countryValue,
           elements: {
-            address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
-            address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
-            address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
-            suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
-            city: document.getElementById(addressFormConfig.nz.elements.city),
-            region: document.getElementById(addressFormConfig.nz.elements.region),
-            postcode: document.getElementById(addressFormConfig.nz.elements.postcode)
+            address_line_1_and_2: document.querySelector(addressFormConfig.nz.elements.address1and2),
+            address_line_1: document.querySelector(addressFormConfig.nz.elements.address1),
+            address_line_2: document.querySelector(addressFormConfig.nz.elements.address2),
+            suburb: document.querySelector(addressFormConfig.nz.elements.suburb),
+            city: document.querySelector(addressFormConfig.nz.elements.city),
+            region: document.querySelector(addressFormConfig.nz.elements.region),
+            postcode: document.querySelector(addressFormConfig.nz.elements.postcode)
           },
           regionMappings: addressFormConfig.nz.regionMappings
         },
         au: {
           countryValue: addressFormConfig.au.countryValue,
           elements: {
-            address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
-            address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
-            address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
-            locality_name: document.getElementById(addressFormConfig.au.elements.suburb),
+            address_line_1_and_2: document.querySelector(addressFormConfig.au.elements.address1and2),
+            address_line_1: document.querySelector(addressFormConfig.au.elements.address1),
+            address_line_2: document.querySelector(addressFormConfig.au.elements.address2),
+            locality_name: document.querySelector(addressFormConfig.au.elements.suburb),
             city: null,
-            state_territory: document.getElementById(addressFormConfig.au.elements.state),
-            postcode: document.getElementById(addressFormConfig.au.elements.postcode)
+            state_territory: document.querySelector(addressFormConfig.au.elements.state),
+            postcode: document.querySelector(addressFormConfig.au.elements.postcode)
           },
           stateMappings: addressFormConfig.au.stateMappings
         }
