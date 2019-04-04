@@ -1,5 +1,5 @@
-import standardBillingCheckout from './address_form_config/standard_billing_checkout'
-import standardShippingCheckout from './address_form_config/standard_shipping_checkout'
+import BillingCheckout from './address_form_config/billing_checkout'
+import ShippingCheckout from './address_form_config/shipping_checkout'
 import userRegistrationNewAddress from './address_form_config/user_registration_new_address'
 import dynamicFormConfig from './address_form_config/dynamic_edit_address'
 import defaultRegionMappings from './address_form_config/default_region_mappings'
@@ -10,8 +10,8 @@ export default class ConfigManager {
     let dynamicForms = this.generateDynamicForms()
 
     const addressFormConfigurations = [
-      standardBillingCheckout,
-      standardShippingCheckout,
+      BillingCheckout,
+      ShippingCheckout,
       userRegistrationNewAddress,
       ...dynamicForms
     ]

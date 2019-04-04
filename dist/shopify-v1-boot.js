@@ -186,100 +186,8 @@ exports.default = ShopifyPlugin;
 new ShopifyPlugin();
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _default_region_mappings = __webpack_require__(7);
-
-var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  label: "Standard Billing Checkout",
-  layoutSelector: "#section--billing-address__different",
-  countryIdentifier: 'checkout_billing_address_country',
-  searchIdentifier: "checkout_billing_address_address1",
-  nz: {
-    countryValue: "New Zealand",
-    elements: {
-      address1: 'checkout_billing_address_address1',
-      address2: 'checkout_billing_address_address2',
-      suburb: null,
-      city: 'checkout_billing_address_city',
-      region: 'checkout_billing_address_province',
-      postcode: 'checkout_billing_address_zip'
-    },
-    regionMappings: _default_region_mappings2.default
-  },
-  au: {
-    countryValue: "Australia",
-    elements: {
-      address1: 'checkout_billing_address_address1',
-      address2: 'checkout_billing_address_address2',
-      suburb: 'checkout_billing_address_city',
-      state: 'checkout_billing_address_province',
-      postcode: 'checkout_billing_address_zip'
-    },
-    stateMappings: null
-  }
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _default_region_mappings = __webpack_require__(7);
-
-var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  label: "Standard Shipping Checkout",
-  layoutSelector: ".section--shipping-address",
-  countryIdentifier: 'checkout_shipping_address_country',
-  searchIdentifier: "checkout_shipping_address_address1",
-  nz: {
-    countryValue: "New Zealand",
-    elements: {
-      address1: 'checkout_shipping_address_address1',
-      address2: 'checkout_shipping_address_address2',
-      suburb: null,
-      city: 'checkout_shipping_address_city',
-      region: 'checkout_shipping_address_province',
-      postcode: 'checkout_shipping_address_zip'
-    },
-    regionMappings: _default_region_mappings2.default
-  },
-  au: {
-    countryValue: "Australia",
-    elements: {
-      address1: 'checkout_shipping_address_address1',
-      address2: 'checkout_shipping_address_address2',
-      suburb: 'checkout_shipping_address_city',
-      state: 'checkout_shipping_address_province',
-      postcode: 'checkout_shipping_address_zip'
-    },
-    stateMappings: null
-  }
-};
-
-/***/ }),
+/* 2 */,
+/* 3 */,
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -852,13 +760,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _standard_billing_checkout = __webpack_require__(2);
+var _billing_checkout = __webpack_require__(16);
 
-var _standard_billing_checkout2 = _interopRequireDefault(_standard_billing_checkout);
+var _billing_checkout2 = _interopRequireDefault(_billing_checkout);
 
-var _standard_shipping_checkout = __webpack_require__(3);
+var _shipping_checkout = __webpack_require__(17);
 
-var _standard_shipping_checkout2 = _interopRequireDefault(_standard_shipping_checkout);
+var _shipping_checkout2 = _interopRequireDefault(_shipping_checkout);
 
 var _user_registration_new_address = __webpack_require__(10);
 
@@ -888,7 +796,7 @@ var ConfigManager = function () {
     value: function load() {
       var dynamicForms = this.generateDynamicForms();
 
-      var addressFormConfigurations = [_standard_billing_checkout2.default, _standard_shipping_checkout2.default, _user_registration_new_address2.default].concat(_toConsumableArray(dynamicForms));
+      var addressFormConfigurations = [_billing_checkout2.default, _shipping_checkout2.default, _user_registration_new_address2.default].concat(_toConsumableArray(dynamicForms));
 
       return addressFormConfigurations;
     }
@@ -964,6 +872,100 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = {
   layoutSelector: "EditAddress"
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _default_region_mappings = __webpack_require__(7);
+
+var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  label: "Standard Billing Checkout",
+  layoutSelector: "#section--billing-address__different",
+  countryIdentifier: 'checkout_billing_address_country',
+  searchIdentifier: "checkout_billing_address_address1",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: 'checkout_billing_address_address1',
+      address2: 'checkout_billing_address_address2',
+      suburb: null,
+      city: 'checkout_billing_address_city',
+      region: 'checkout_billing_address_province',
+      postcode: 'checkout_billing_address_zip'
+    },
+    regionMappings: _default_region_mappings2.default
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: 'checkout_billing_address_address1',
+      address2: 'checkout_billing_address_address2',
+      suburb: 'checkout_billing_address_city',
+      state: 'checkout_billing_address_province',
+      postcode: 'checkout_billing_address_zip'
+    },
+    stateMappings: null
+  }
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _default_region_mappings = __webpack_require__(7);
+
+var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  label: "Standard Shipping Checkout",
+  layoutSelector: ".section--shipping-address",
+  countryIdentifier: 'checkout_shipping_address_country',
+  searchIdentifier: "checkout_shipping_address_address1",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
+      suburb: null,
+      city: 'checkout_shipping_address_city',
+      region: 'checkout_shipping_address_province',
+      postcode: 'checkout_shipping_address_zip'
+    },
+    regionMappings: _default_region_mappings2.default
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
+      suburb: 'checkout_shipping_address_city',
+      state: 'checkout_shipping_address_province',
+      postcode: 'checkout_shipping_address_zip'
+    },
+    stateMappings: null
+  }
 };
 
 /***/ })
