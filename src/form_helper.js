@@ -85,6 +85,8 @@ export default class FormHelper {
 
     if (elements.address_line_1_and_2 && !elements.suburb) {
       const addressIsPresent = array => array != null
+
+      // only add the comma if both are defined
       const combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ")
       this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2")
     } else if (elements.address_line_1_and_2 && elements.suburb) {

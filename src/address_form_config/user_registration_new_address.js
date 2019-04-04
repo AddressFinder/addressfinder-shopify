@@ -1,6 +1,5 @@
 
 import defaultRegionMappings from './default_region_mappings'
-import defaultStateMappings from './default_state_mappings'
 
 export default {
   label: "User Registration Address Form",
@@ -30,6 +29,6 @@ export default {
       state: 'AddressProvinceNew',
       postcode: 'AddressZipNew',
     },
-    stateMappings: defaultStateMappings
+    stateMappings: null
   }
 }

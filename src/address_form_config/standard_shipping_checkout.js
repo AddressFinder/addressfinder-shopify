@@ -1,5 +1,4 @@
 import defaultRegionMappings from './default_region_mappings'
-import defaultStateMappings from './default_state_mappings'
 
 export default {
   label: "Standard Shipping Checkout",
@@ -29,6 +28,6 @@ export default {
       state: 'checkout_shipping_address_province',
       postcode: 'checkout_shipping_address_zip',
     },
-    stateMappings: defaultStateMappings
+    stateMappings: null
   }
 }

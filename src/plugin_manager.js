@@ -29,7 +29,6 @@ export default class PluginManager {
   _identifyAddressForms(){
     for (const addressFormConfig of this.addressFormConfigurations) {
       let identifyingElement = document.querySelector(addressFormConfig.layoutSelector)
-      debugger
 
       if (identifyingElement) {
         this.log(`Identified layout named: ${addressFormConfig.label}`)
@@ -78,7 +77,6 @@ export default class PluginManager {
 
       let helper = new FormHelper(this.widgetConfig, formHelperConfig, this.eventToDispatch)
       this.formHelpers.push(helper)
-      debugger
     }
   }
 

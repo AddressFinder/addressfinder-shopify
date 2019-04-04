@@ -200,10 +200,6 @@ var _default_region_mappings = __webpack_require__(7);
 
 var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
 
-var _default_state_mappings = __webpack_require__(8);
-
-var _default_state_mappings2 = _interopRequireDefault(_default_state_mappings);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
@@ -234,7 +230,7 @@ exports.default = {
       state: 'checkout_billing_address_province',
       postcode: 'checkout_billing_address_zip'
     },
-    stateMappings: _default_state_mappings2.default
+    stateMappings: null
   }
 };
 
@@ -252,10 +248,6 @@ Object.defineProperty(exports, "__esModule", {
 var _default_region_mappings = __webpack_require__(7);
 
 var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-var _default_state_mappings = __webpack_require__(8);
-
-var _default_state_mappings2 = _interopRequireDefault(_default_state_mappings);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -287,7 +279,7 @@ exports.default = {
       state: 'checkout_shipping_address_province',
       postcode: 'checkout_shipping_address_zip'
     },
-    stateMappings: _default_state_mappings2.default
+    stateMappings: null
   }
 };
 
@@ -360,7 +352,6 @@ var PluginManager = function () {
           var addressFormConfig = _step.value;
 
           var identifyingElement = document.querySelector(addressFormConfig.layoutSelector);
-          debugger;
 
           if (identifyingElement) {
             this.log("Identified layout named: " + addressFormConfig.label);
@@ -424,7 +415,6 @@ var PluginManager = function () {
 
         var helper = new _form_helper2.default(this.widgetConfig, formHelperConfig, this.eventToDispatch);
         this.formHelpers.push(helper);
-        debugger;
       }
     }
   }, {
@@ -575,6 +565,8 @@ var FormHelper = function () {
         var addressIsPresent = function addressIsPresent(array) {
           return array != null;
         };
+
+        // only add the comma if both are defined
         var combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ");
         this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2");
       } else if (elements.address_line_1_and_2 && elements.suburb) {
@@ -781,48 +773,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  'Auckland Region': ['Auckland', 'AUK'],
-  'Bay of Plenty Region': ['Bay of Plenty', 'BOP'],
-  'Canterbury Region': ['Canterbury', 'CAN'],
-  'Gisborne Region': ['Gisborne', 'GIS'],
-  'Hawke\'s Bay Region': ['Hawke\'s Bay', 'HKB'],
-  'Manawatu-Wanganui Region': ['Manawatu-Wanganui', 'MWT'],
-  'Marlborough Region': ['Marlborough', 'MBH'],
-  'Nelson Region': ['Nelson', 'NSN'],
-  'Northland Region': ['Northland', 'NTL'],
-  'Otago Region': ['Otago', 'OTA'],
-  'Southland Region': ['Southland', 'STL'],
-  'Taranaki Region': ['Taranaki', 'TKI'],
-  'Tasman Region': ['Tasman', 'TAS'],
-  'Waikato Region': ['Waikato', 'WKO'],
-  'Wellington Region': ['Wellington', 'WGN'],
-  'West Coast Region': ['West Coast', 'WTC'],
-  'Other Region': [null]
+  'Auckland Region': 'AUK',
+  'Bay of Plenty Region': 'BOP',
+  'Canterbury Region': 'CAN',
+  'Gisborne Region': 'GIS',
+  'Hawke\'s Bay Region': 'HKB',
+  'Manawatu-Wanganui Region': 'MWT',
+  'Marlborough Region': 'MBH',
+  'Nelson Region': 'NSN',
+  'Northland Region': 'NTL',
+  'Otago Region': 'OTA',
+  'Southland Region': 'STL',
+  'Taranaki Region': 'TKI',
+  'Tasman Region': 'TAS',
+  'Waikato Region': 'WKO',
+  'Wellington Region': 'WGN',
+  'West Coast Region': 'WTC',
+  'Other Region': null
 };
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  'ACT': ['Australian Capital Territory', 'ACT'],
-  'NSW': ['New South Wales', 'NSW'],
-  'NT': ['Northern Territory', 'NT'],
-  'QLD': ['Queensland', 'QLD'],
-  'SA': ['South Australia', 'SA'],
-  'TAS': ['Tasmania', 'TAS'],
-  'VIC': ['Victoria', 'VIC'],
-  'WA': ['Western Australia', 'WA'],
-  'OT': [null]
-};
-
-/***/ }),
+/* 8 */,
 /* 9 */,
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -837,10 +808,6 @@ Object.defineProperty(exports, "__esModule", {
 var _default_region_mappings = __webpack_require__(7);
 
 var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-var _default_state_mappings = __webpack_require__(8);
-
-var _default_state_mappings2 = _interopRequireDefault(_default_state_mappings);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -872,7 +839,7 @@ exports.default = {
       state: 'AddressProvinceNew',
       postcode: 'AddressZipNew'
     },
-    stateMappings: _default_state_mappings2.default
+    stateMappings: null
   }
 };
 
@@ -907,6 +874,10 @@ var _user_registration_new_address2 = _interopRequireDefault(_user_registration_
 var _dynamic_edit_address = __webpack_require__(15);
 
 var _dynamic_edit_address2 = _interopRequireDefault(_dynamic_edit_address);
+
+var _default_region_mappings = __webpack_require__(7);
+
+var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -963,7 +934,7 @@ var ShopifyConfigurationManager = function () {
               region: 'AddressProvince_' + id,
               postcode: 'AddressZip_' + id
             },
-            regionMappings: null
+            regionMappings: _default_region_mappings2.default
           },
           au: {
             countryValue: "Australia",

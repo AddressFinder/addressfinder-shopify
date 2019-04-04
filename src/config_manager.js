@@ -2,6 +2,7 @@ import standardBillingCheckout from './address_form_config/standard_billing_chec
 import standardShippingCheckout from './address_form_config/standard_shipping_checkout'
 import userRegistrationNewAddress from './address_form_config/user_registration_new_address'
 import dynamicFormConfig from './address_form_config/dynamic_edit_address'
+import defaultRegionMappings from './address_form_config/default_region_mappings'
 
 export default class ShopifyConfigurationManager {
 
@@ -48,7 +49,7 @@ export default class ShopifyConfigurationManager {
             region: `AddressProvince_${id}`,
             postcode: `AddressZip_${id}`,
           },
-          regionMappings: null
+          regionMappings: defaultRegionMappings
         },
         au: {
           countryValue: "Australia",
