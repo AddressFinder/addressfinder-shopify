@@ -16,12 +16,15 @@ import ConfigManager from "./config_manager"
 (function(d, w) {
   class ShopifyPlugin {
     constructor() {
-      this.loadAF()
+      this._initPlugin()
 
-      window.AF = window.AF || {}
-      this.PluginManager = null
+      // Manages the mapping of the form configurations to the DOM. 
+      this.PageManager = null
+
+      // Manages the form configuraions, and creates any dynamic forms
       this.ConfigManager = new ConfigManager()
 
+      // Watches for any mutations to the DOM, so we can reload our configurations when something changes.
       new MutationManager({
         mutationEventHandler: this.mutationEventHandler.bind(this),
         ignoredClass: "af_list"
@@ -29,13 +32,15 @@ import ConfigManager from "./config_manager"
     }
 
     mutationEventHandler() {
+      // When the form mutates, reload our form configurations, and reload the form helpers in the page manager.
       let addressFormConfigurations = this.ConfigManager.load()
-      if (this.PluginManager) {
-        this.PluginManager.reload(addressFormConfigurations)
+      if (this.PageManager) {
+        this.PageManager.reload(addressFormConfigurations)
       }
     }
 
     _disableGoogleAutocomplete(repetitions) {
+      // Attempt to find the google autocomplete iframe. If it is found disable it, otherwise continue trying for 5 repetitions.
       var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
     
       if (iframe) {
@@ -64,26 +69,14 @@ import ConfigManager from "./config_manager"
         eventToDispatch: 'input' 
       })
     
-      window.AF._shopifyPlugin = this.PageManager
-    }
-
-    _addScript() {
-      var s = document.createElement('script')
-      s.src = 'https://api.addressfinder.io/assets/v3/widget.js'
-      s.async = 1
-      s.onload = this._initPlugin.bind(this)
-      document.body.appendChild(s)
-    }
-
-    loadAF(){
-      if ( window.AF && window.AF.Widget ) {
-        this._initPlugin();
-      } else {
-        this._addScript();
-      }
+      window.AddressFinderPlugin._shopifyPlugin = this.PageManager
     }
   }
 
-  new ShopifyPlugin
+  var s = document.createElement('script')
+  s.src = 'https://api.addressfinder.io/assets/v3/widget.js'
+  s.async = 1
+  s.onload = new ShopifyPlugin
+  document.body.appendChild(s)
 
 })(document, window)

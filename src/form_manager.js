@@ -1,6 +1,7 @@
 export default class FormManager {
   constructor(widgetConfig, formHelperConfig, eventToDispatch){
     this.widgetConfig = widgetConfig
+    // Contains references to the DOM elements that make up this form
     this.formHelperConfig = formHelperConfig
     this.eventToDispatch = eventToDispatch
     this.widgets = {}
