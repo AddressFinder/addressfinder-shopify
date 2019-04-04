@@ -50,7 +50,6 @@ export default class PluginManager {
         nz: {
           countryValue: addressFormConfig.nz.countryValue,
           elements: {
-            address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
             address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
             address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
             suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
@@ -63,7 +62,6 @@ export default class PluginManager {
         au: {
           countryValue: addressFormConfig.au.countryValue,
           elements: {
-            address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
             address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
             address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
             locality_name: document.getElementById(addressFormConfig.au.elements.suburb),

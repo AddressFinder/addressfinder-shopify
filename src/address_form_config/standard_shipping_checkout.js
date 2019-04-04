@@ -8,9 +8,8 @@ export default {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'checkout_shipping_address_address1',
-      address1: null,
-      address2: null,
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
       suburb: null,
       city: 'checkout_shipping_address_city',
       region: 'checkout_shipping_address_province',
@@ -21,9 +20,8 @@ export default {
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: 'checkout_shipping_address_address1',
-      address1: null,
-      address2: null,
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
       suburb: 'checkout_shipping_address_city',
       state: 'checkout_shipping_address_province',
       postcode: 'checkout_shipping_address_zip',

@@ -4,7 +4,7 @@ import userRegistrationNewAddress from './address_form_config/user_registration_
 import dynamicFormConfig from './address_form_config/dynamic_edit_address'
 import defaultRegionMappings from './address_form_config/default_region_mappings'
 
-export default class ShopifyConfigurationManager {
+export default class ConfigManager {
 
    load() {
     let dynamicForms = this.generateDynamicForms()

@@ -83,13 +83,12 @@ export default class FormHelper {
     let elements = this.formHelperConfig.nz.elements
     let selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
 
-    if (elements.address_line_1_and_2 && !elements.suburb) {
+    // only add the comma if both are defined
+    if (!elements.address_line_2 && !elements.suburb) {
       const addressIsPresent = array => array != null
-
-      // only add the comma if both are defined
       const combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ")
       this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2")
-    } else if (elements.address_line_1_and_2 && elements.suburb) {
+    } else if (!elements.address_line_2 && elements.suburb) {
       this._setElementValue(elements.address_line_1_and_2, selected.address_line_1_and_2(), "address_line_1_and_2")
       this._setElementValue(elements.suburb, selected.suburb(), "suburb")
     } else {

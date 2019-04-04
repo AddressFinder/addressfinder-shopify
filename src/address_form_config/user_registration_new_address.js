@@ -9,9 +9,8 @@ export default {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'AddressAddress1New',
-      address1: null,
-      address2: null,
+      address1: 'AddressAddress1New',
+      address2: 'AddressAddress2New',
       suburb: 'AddressAddress2New',
       city: 'AddressCityNew',
       region: 'AddressProvinceNew',
@@ -22,7 +21,6 @@ export default {
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: null,
       address1: 'AddressAddress1New',
       address2: 'AddressAddress2New',
       suburb: 'AddressCityNew',

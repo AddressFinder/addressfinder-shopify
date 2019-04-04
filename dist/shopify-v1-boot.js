@@ -210,9 +210,8 @@ exports.default = {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'checkout_billing_address_address1',
-      address1: null,
-      address2: null,
+      address1: 'checkout_billing_address_address1',
+      address2: 'checkout_billing_address_address2',
       suburb: null,
       city: 'checkout_billing_address_city',
       region: 'checkout_billing_address_province',
@@ -223,9 +222,8 @@ exports.default = {
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: 'checkout_billing_address_address1',
-      address1: null,
-      address2: null,
+      address1: 'checkout_billing_address_address1',
+      address2: 'checkout_billing_address_address2',
       suburb: 'checkout_billing_address_city',
       state: 'checkout_billing_address_province',
       postcode: 'checkout_billing_address_zip'
@@ -259,9 +257,8 @@ exports.default = {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'checkout_shipping_address_address1',
-      address1: null,
-      address2: null,
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
       suburb: null,
       city: 'checkout_shipping_address_city',
       region: 'checkout_shipping_address_province',
@@ -272,9 +269,8 @@ exports.default = {
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: 'checkout_shipping_address_address1',
-      address1: null,
-      address2: null,
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
       suburb: 'checkout_shipping_address_city',
       state: 'checkout_shipping_address_province',
       postcode: 'checkout_shipping_address_zip'
@@ -388,7 +384,6 @@ var PluginManager = function () {
           nz: {
             countryValue: addressFormConfig.nz.countryValue,
             elements: {
-              address_line_1_and_2: document.getElementById(addressFormConfig.nz.elements.address1and2),
               address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
               address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
               suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
@@ -401,7 +396,6 @@ var PluginManager = function () {
           au: {
             countryValue: addressFormConfig.au.countryValue,
             elements: {
-              address_line_1_and_2: document.getElementById(addressFormConfig.au.elements.address1and2),
               address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
               address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
               locality_name: document.getElementById(addressFormConfig.au.elements.suburb),
@@ -561,15 +555,14 @@ var FormHelper = function () {
       var elements = this.formHelperConfig.nz.elements;
       var selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
 
-      if (elements.address_line_1_and_2 && !elements.suburb) {
+      // only add the comma if both are defined
+      if (!elements.address_line_2 && !elements.suburb) {
         var addressIsPresent = function addressIsPresent(array) {
           return array != null;
         };
-
-        // only add the comma if both are defined
         var combined = [selected.address_line_1_and_2(), selected.suburb()].filter(addressIsPresent).join(", ");
         this._setElementValue(elements.address_line_1_and_2, combined, "address_line_1_and_2");
-      } else if (elements.address_line_1_and_2 && elements.suburb) {
+      } else if (!elements.address_line_2 && elements.suburb) {
         this._setElementValue(elements.address_line_1_and_2, selected.address_line_1_and_2(), "address_line_1_and_2");
         this._setElementValue(elements.suburb, selected.suburb(), "suburb");
       } else {
@@ -819,9 +812,8 @@ exports.default = {
   nz: {
     countryValue: "New Zealand",
     elements: {
-      address1and2: 'AddressAddress1New',
-      address1: null,
-      address2: null,
+      address1: 'AddressAddress1New',
+      address2: 'AddressAddress2New',
       suburb: 'AddressAddress2New',
       city: 'AddressCityNew',
       region: 'AddressProvinceNew',
@@ -832,7 +824,6 @@ exports.default = {
   au: {
     countryValue: "Australia",
     elements: {
-      address1and2: null,
       address1: 'AddressAddress1New',
       address2: 'AddressAddress2New',
       suburb: 'AddressCityNew',
@@ -885,12 +876,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ShopifyConfigurationManager = function () {
-  function ShopifyConfigurationManager() {
-    _classCallCheck(this, ShopifyConfigurationManager);
+var ConfigManager = function () {
+  function ConfigManager() {
+    _classCallCheck(this, ConfigManager);
   }
 
-  _createClass(ShopifyConfigurationManager, [{
+  _createClass(ConfigManager, [{
     key: 'load',
     value: function load() {
       var dynamicForms = this.generateDynamicForms();
@@ -954,10 +945,10 @@ var ShopifyConfigurationManager = function () {
     }
   }]);
 
-  return ShopifyConfigurationManager;
+  return ConfigManager;
 }();
 
-exports.default = ShopifyConfigurationManager;
+exports.default = ConfigManager;
 
 /***/ }),
 /* 15 */
