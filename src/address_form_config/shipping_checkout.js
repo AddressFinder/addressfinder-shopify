@@ -1,7 +1,7 @@
 import regionMappings from './region_mappings'
 
 export default {
-  label: "Standard Shipping Checkout",
+  label: "Shipping Checkout",
   layoutSelector: ".section--shipping-address",
   countryIdentifier: 'checkout_shipping_address_country',
   searchIdentifier: "checkout_shipping_address_address1",
