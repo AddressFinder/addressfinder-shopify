@@ -60,938 +60,16 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 48);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(1);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // see https://github.com/zloirock/core-js
-
-
-__webpack_require__(68);
-
-__webpack_require__(82);
-
-__webpack_require__(89);
-
-__webpack_require__(94);
-
-__webpack_require__(97);
-
-__webpack_require__(101);
-
-__webpack_require__(108);
-
-__webpack_require__(110);
-
-__webpack_require__(112);
-
-var _page_manager = __webpack_require__(18);
-
-var _page_manager2 = _interopRequireDefault(_page_manager);
-
-var _mutation_manager = __webpack_require__(19);
-
-var _mutation_manager2 = _interopRequireDefault(_mutation_manager);
-
-var _config_manager = __webpack_require__(14);
-
-var _config_manager2 = _interopRequireDefault(_config_manager);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-(function (d, w) {
-  var ShopifyPlugin = function () {
-    function ShopifyPlugin() {
-      _classCallCheck(this, ShopifyPlugin);
-
-      this.loadAF();
-
-      window.AF = window.AF || {};
-      this.PluginManager = null;
-      this.ConfigManager = new _config_manager2.default();
-
-      new _mutation_manager2.default({
-        mutationEventHandler: this.mutationEventHandler.bind(this),
-        ignoredClass: "af_list"
-      });
-    }
-
-    _createClass(ShopifyPlugin, [{
-      key: "mutationEventHandler",
-      value: function mutationEventHandler() {
-        var addressFormConfigurations = this.ConfigManager.load();
-        if (this.PluginManager) {
-          this.PluginManager.reload(addressFormConfigurations);
-        }
-      }
-    }, {
-      key: "_disableGoogleAutocomplete",
-      value: function _disableGoogleAutocomplete(repetitions) {
-        var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
-
-        if (iframe) {
-          iframe.src = '';
-        }
-
-        if (repetitions > 0) {
-          setTimeout(this._disableGoogleAutocomplete, 1000, repetitions - 1);
-        }
-      }
-    }, {
-      key: "_initPlugin",
-      value: function _initPlugin() {
-        this._disableGoogleAutocomplete(5);
-
-        var widgetConfig = {
-          nzKey: window.AddressFinderPlugin.key,
-          auKey: window.AddressFinderPlugin.key,
-          nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-          auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-          debug: window.AddressFinderPlugin.debug || false
-        };
-
-        this.PageManager = new _page_manager2.default({
-          addressFormConfigurations: this.ConfigManager.load(),
-          widgetConfig: widgetConfig,
-          eventToDispatch: 'input'
-        });
-
-        window.AF._shopifyPlugin = this.PageManager;
-      }
-    }, {
-      key: "_addScript",
-      value: function _addScript() {
-        var s = document.createElement('script');
-        s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
-        s.async = 1;
-        s.onload = this._initPlugin.bind(this);
-        document.body.appendChild(s);
-      }
-    }, {
-      key: "loadAF",
-      value: function loadAF() {
-        if (window.AF && window.AF.Widget) {
-          this._initPlugin();
-        } else {
-          this._addScript();
-        }
-      }
-    }]);
-
-    return ShopifyPlugin;
-  }();
-
-  new ShopifyPlugin();
-})(document, window);
-
-/***/ }),
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  'Auckland Region': 'AUK',
-  'Bay of Plenty Region': 'BOP',
-  'Canterbury Region': 'CAN',
-  'Gisborne Region': 'GIS',
-  'Hawke\'s Bay Region': 'HKB',
-  'Manawatu-Wanganui Region': 'MWT',
-  'Marlborough Region': 'MBH',
-  'Nelson Region': 'NSN',
-  'Northland Region': 'NTL',
-  'Otago Region': 'OTA',
-  'Southland Region': 'STL',
-  'Taranaki Region': 'TKI',
-  'Tasman Region': 'TAS',
-  'Waikato Region': 'WKO',
-  'Wellington Region': 'WGN',
-  'West Coast Region': 'WTC',
-  'Other Region': null
-};
-
-/***/ }),
-/* 8 */,
-/* 9 */,
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _default_region_mappings = __webpack_require__(7);
-
-var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  label: "User Registration Address Form",
-  layoutSelector: "#AddressNewForm",
-  countryIdentifier: 'AddressCountryNew',
-  searchIdentifier: 'AddressAddress1New',
-  nz: {
-    countryValue: "New Zealand",
-    elements: {
-      address1: 'AddressAddress1New',
-      address2: 'AddressAddress2New',
-      suburb: 'AddressAddress2New',
-      city: 'AddressCityNew',
-      region: 'AddressProvinceNew',
-      postcode: 'AddressZipNew'
-    },
-    regionMappings: _default_region_mappings2.default
-  },
-  au: {
-    countryValue: "Australia",
-    elements: {
-      address1: 'AddressAddress1New',
-      address2: 'AddressAddress2New',
-      suburb: 'AddressCityNew',
-      state: 'AddressProvinceNew',
-      postcode: 'AddressZipNew'
-    },
-    stateMappings: null
-  }
-};
-
-/***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _billing_checkout = __webpack_require__(16);
-
-var _billing_checkout2 = _interopRequireDefault(_billing_checkout);
-
-var _shipping_checkout = __webpack_require__(17);
-
-var _shipping_checkout2 = _interopRequireDefault(_shipping_checkout);
-
-var _user_registration_new_address = __webpack_require__(10);
-
-var _user_registration_new_address2 = _interopRequireDefault(_user_registration_new_address);
-
-var _dynamic_edit_address = __webpack_require__(15);
-
-var _dynamic_edit_address2 = _interopRequireDefault(_dynamic_edit_address);
-
-var _default_region_mappings = __webpack_require__(7);
-
-var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ConfigManager = function () {
-  function ConfigManager() {
-    _classCallCheck(this, ConfigManager);
-  }
-
-  _createClass(ConfigManager, [{
-    key: 'load',
-    value: function load() {
-      var dynamicForms = this.generateDynamicForms();
-
-      var addressFormConfigurations = [_billing_checkout2.default, _shipping_checkout2.default, _user_registration_new_address2.default].concat(_toConsumableArray(dynamicForms));
-
-      return addressFormConfigurations;
-    }
-  }, {
-    key: 'generateDynamicForms',
-    value: function generateDynamicForms() {
-      var _this = this;
-
-      var dynamicForms = [];
-      var identifyingElements = document.querySelectorAll('[id^="' + _dynamic_edit_address2.default.layoutSelector + '"]');
-
-      identifyingElements.forEach(function (identifyingElement, index) {
-        dynamicForms.push(_this._configureDynamicForm(identifyingElement, index));
-      });
-
-      return dynamicForms;
-    }
-  }, {
-    key: '_configureDynamicForm',
-    value: function _configureDynamicForm(identifyingElement, index) {
-      if (identifyingElement) {
-        var id = identifyingElement['id'].split('_')[1];
-        var formConfig = {
-          label: 'Edit Address Form ' + index,
-          layoutSelector: '#EditAddress_' + id,
-          countryIdentifier: 'AddressCountry_' + id,
-          searchIdentifier: 'AddressAddress1_' + id,
-          nz: {
-            countryValue: "New Zealand",
-            elements: {
-              address1and2: 'AddressAddress1_' + id,
-              address1: null,
-              address2: null,
-              suburb: 'AddressAddress2_' + id,
-              city: 'AddressCity_' + id,
-              region: 'AddressProvince_' + id,
-              postcode: 'AddressZip_' + id
-            },
-            regionMappings: _default_region_mappings2.default
-          },
-          au: {
-            countryValue: "Australia",
-            elements: {
-              address1and2: null,
-              address1: 'AddressAddress1_' + id,
-              address2: 'AddressAddress2_' + id,
-              suburb: 'AddressCity_' + id,
-              state: 'AddressProvince_' + id,
-              postcode: 'AddressZip_' + id
-            },
-            stateMappings: null
-          }
-        };
-        return formConfig;
-      }
-    }
-  }]);
-
-  return ConfigManager;
-}();
-
-exports.default = ConfigManager;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  layoutSelector: "EditAddress"
-};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _default_region_mappings = __webpack_require__(7);
-
-var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  label: "Standard Billing Checkout",
-  layoutSelector: "#section--billing-address__different",
-  countryIdentifier: 'checkout_billing_address_country',
-  searchIdentifier: "checkout_billing_address_address1",
-  nz: {
-    countryValue: "New Zealand",
-    elements: {
-      address1: 'checkout_billing_address_address1',
-      address2: 'checkout_billing_address_address2',
-      suburb: null,
-      city: 'checkout_billing_address_city',
-      region: 'checkout_billing_address_province',
-      postcode: 'checkout_billing_address_zip'
-    },
-    regionMappings: _default_region_mappings2.default
-  },
-  au: {
-    countryValue: "Australia",
-    elements: {
-      address1: 'checkout_billing_address_address1',
-      address2: 'checkout_billing_address_address2',
-      suburb: 'checkout_billing_address_city',
-      state: 'checkout_billing_address_province',
-      postcode: 'checkout_billing_address_zip'
-    },
-    stateMappings: null
-  }
-};
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _default_region_mappings = __webpack_require__(7);
-
-var _default_region_mappings2 = _interopRequireDefault(_default_region_mappings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  label: "Standard Shipping Checkout",
-  layoutSelector: ".section--shipping-address",
-  countryIdentifier: 'checkout_shipping_address_country',
-  searchIdentifier: "checkout_shipping_address_address1",
-  nz: {
-    countryValue: "New Zealand",
-    elements: {
-      address1: 'checkout_shipping_address_address1',
-      address2: 'checkout_shipping_address_address2',
-      suburb: null,
-      city: 'checkout_shipping_address_city',
-      region: 'checkout_shipping_address_province',
-      postcode: 'checkout_shipping_address_zip'
-    },
-    regionMappings: _default_region_mappings2.default
-  },
-  au: {
-    countryValue: "Australia",
-    elements: {
-      address1: 'checkout_shipping_address_address1',
-      address2: 'checkout_shipping_address_address2',
-      suburb: 'checkout_shipping_address_city',
-      state: 'checkout_shipping_address_province',
-      postcode: 'checkout_shipping_address_zip'
-    },
-    stateMappings: null
-  }
-};
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _form_manager = __webpack_require__(20);
-
-var _form_manager2 = _interopRequireDefault(_form_manager);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var PageManager = function () {
-  function PageManager(_ref) {
-    var addressFormConfigurations = _ref.addressFormConfigurations,
-        widgetConfig = _ref.widgetConfig,
-        eventToDispatch = _ref.eventToDispatch;
-
-    _classCallCheck(this, PageManager);
-
-    this.formHelpers = [];
-    this.addressFormConfigurations = addressFormConfigurations;
-    this.widgetConfig = widgetConfig;
-    this.eventToDispatch = eventToDispatch;
-
-    this.reload = this.reload.bind(this);
-
-    this.loadFormHelpers();
-  }
-
-  _createClass(PageManager, [{
-    key: "reload",
-    value: function reload(addressFormConfigurations) {
-      this.addressFormConfigurations = addressFormConfigurations;
-      this.loadFormHelpers();
-    }
-  }, {
-    key: "loadFormHelpers",
-    value: function loadFormHelpers() {
-      this.formHelpers.forEach(function (formHelper) {
-        return formHelper.destroy();
-      });
-      this.identifiedAddressFormConfigurations = [];
-      this.formHelpers = [];
-
-      this._identifyAddressForms();
-      this.identifiedAddressFormConfigurations.forEach(this._initialiseFormHelper.bind(this));
-    }
-  }, {
-    key: "_identifyAddressForms",
-    value: function _identifyAddressForms() {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = this.addressFormConfigurations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var addressFormConfig = _step.value;
-
-          var identifyingElement = document.querySelector(addressFormConfig.layoutSelector);
-
-          if (identifyingElement) {
-            this.log("Identified layout named: " + addressFormConfig.label);
-
-            this.identifiedAddressFormConfigurations.push(addressFormConfig);
-          }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }
-  }, {
-    key: "_initialiseFormHelper",
-    value: function _initialiseFormHelper(addressFormConfig) {
-      var searchElement = document.getElementById(addressFormConfig.searchIdentifier);
-
-      if (searchElement) {
-        var formHelperConfig = {
-          countryElement: document.getElementById(addressFormConfig.countryIdentifier),
-          searchElement: document.getElementById(addressFormConfig.searchIdentifier),
-          label: addressFormConfig.label,
-          layoutSelector: addressFormConfig.layoutSelector,
-          nz: {
-            countryValue: addressFormConfig.nz.countryValue,
-            elements: {
-              address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
-              address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
-              suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
-              city: document.getElementById(addressFormConfig.nz.elements.city),
-              region: document.getElementById(addressFormConfig.nz.elements.region),
-              postcode: document.getElementById(addressFormConfig.nz.elements.postcode)
-            },
-            regionMappings: addressFormConfig.nz.regionMappings
-          },
-          au: {
-            countryValue: addressFormConfig.au.countryValue,
-            elements: {
-              address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
-              address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
-              locality_name: document.getElementById(addressFormConfig.au.elements.suburb),
-              city: null,
-              state_territory: document.getElementById(addressFormConfig.au.elements.state),
-              postcode: document.getElementById(addressFormConfig.au.elements.postcode)
-            },
-            stateMappings: addressFormConfig.au.stateMappings
-          }
-        };
-
-        var helper = new _form_manager2.default(this.widgetConfig, formHelperConfig, this.eventToDispatch);
-        this.formHelpers.push(helper);
-      }
-    }
-  }, {
-    key: "log",
-    value: function log(message) {
-      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-
-      if (this.widgetConfig.debug && window.console) {
-        if (data != undefined) {
-          console.log("" + message, data);
-        } else {
-          console.log("" + message);
-        }
-      }
-    }
-  }]);
-
-  return PageManager;
-}();
-
-exports.default = PageManager;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var MutationManager = function () {
-  function MutationManager(_ref) {
-    var mutationEventHandler = _ref.mutationEventHandler,
-        ignoredClass = _ref.ignoredClass;
-
-    _classCallCheck(this, MutationManager);
-
-    this.mutationEventHandler = mutationEventHandler;
-    // Mutation events emitted by elements with this class are ignored.
-    this.ignoredClass = ignoredClass;
-    this.monitorMutations();
-  }
-
-  _createClass(MutationManager, [{
-    key: 'monitorMutations',
-    value: function monitorMutations() {
-      if (window.MutationObserver) {
-        /* for modern browsers */
-        var observer = new MutationObserver(this._mutationHandler.bind(this));
-        observer.observe(document.body, { childList: true, subtree: true });
-      } else if (window.addEventListener) {
-        /* for IE 9 and 10 */
-        document.body.addEventListener('DOMNodeInserted', this._domNodeModifiedHandler.bind(this), false);
-        document.body.addEventListener('DOMNodeRemoved', this._domNodeModifiedHandler.bind(this), false);
-      } else {
-        if (window.console) {
-          console.info('AddressFinder Error - please use a more modern browser');
-        }
-      }
-    }
-  }, {
-    key: '_mutationHandler',
-    value: function _mutationHandler(mutations) {
-      var _this = this;
-
-      var changedNodes = mutations.reduce(function (nodes, mutation) {
-        // ignore this mutation if the target is the AddressFinder UL element
-        if (mutation.target && mutation.target.classList && mutation.target.classList.contains(_this.ignoredClass)) {
-          return nodes;
-        }
-
-        return nodes.concat([].concat(_toConsumableArray(mutation.addedNodes))).concat([].concat(_toConsumableArray(mutation.removedNodes)));
-      }, []);
-
-      var anyBigCommerceChanges = changedNodes.find(function (node) {
-        return !(node.classList && node.classList.contains(_this.ignoredClass));
-      });
-
-      if (!anyBigCommerceChanges) {
-        return; // ignore AddressFinder changes
-      }
-
-      this._setMutationTimeout();
-    }
-  }, {
-    key: '_domNodeModifiedHandler',
-    value: function _domNodeModifiedHandler(event) {
-      if (event.target.className && event.target.className.includes(this.ignoredClass) || event.relatedNode && event.relatedNode.className && event.relatedNode.className.includes(this.ignoredClass)) {
-        return; // ignore AddressFinder changes
-      }
-
-      _setMutationTimeout();
-    }
-  }, {
-    key: '_setMutationTimeout',
-    value: function _setMutationTimeout() {
-      if (this._mutationTimeout) {
-        clearTimeout(this._mutationTimeout); // reset previous timeout
-      }
-
-      // ignore any further changes for the next 750 mS
-      this._mutationTimeout = setTimeout(this.mutationEventHandler, 750);
-    }
-  }]);
-
-  return MutationManager;
-}();
-
-exports.default = MutationManager;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var FormManager = function () {
-  function FormManager(widgetConfig, formHelperConfig, eventToDispatch) {
-    _classCallCheck(this, FormManager);
-
-    this.widgetConfig = widgetConfig;
-    this.formHelperConfig = formHelperConfig;
-    this.eventToDispatch = eventToDispatch;
-    this.widgets = {};
-    this.countryCodes = ["au", "nz"];
-
-    this._bindToForm();
-  }
-
-  // Shuts down this form_helper by disabling the widget and any callback handlers.
-
-
-  _createClass(FormManager, [{
-    key: "destroy",
-    value: function destroy() {
-      this._log("Destroying widget", this.formHelperConfig.label);
-
-      for (var widgetCountryCode in this.widgets) {
-        this.widgets[widgetCountryCode].disable();
-        this.widgets[widgetCountryCode].destroy();
-      }
-
-      this.widgets = null;
-
-      this.formHelperConfig.countryElement.removeEventListener("change", this.boundCountryChangedListener);
-    }
-  }, {
-    key: "_bindToForm",
-    value: function _bindToForm() {
-      this.boundCountryChangedListener = this._countryChanged.bind(this); // save this so we can unbind in the destroy() method
-      this.formHelperConfig.countryElement.addEventListener("change", this.boundCountryChangedListener);
-
-      var nzWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.nzKey, "nz", this.widgetConfig.nzWidgetOptions);
-      nzWidget.on("result:select", this._nzAddressSelected.bind(this));
-      this.widgets["nz"] = nzWidget;
-
-      var auWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.auKey, "au", this.widgetConfig.auWidgetOptions);
-      auWidget.on("result:select", this._auAddressSelected.bind(this));
-      this.widgets["au"] = auWidget;
-
-      this.widgets["null"] = {
-        enable: function enable() {},
-        disable: function disable() {},
-        destroy: function destroy() {}
-      };
-
-      this._countryChanged(null, true);
-    }
-  }, {
-    key: "_countryChanged",
-    value: function _countryChanged(event, preserveValues) {
-      var activeCountry;
-      switch (this.formHelperConfig.countryElement.value) {
-        case this.formHelperConfig.nz.countryValue:
-          activeCountry = "nz";
-          break;
-        case this.formHelperConfig.au.countryValue:
-          activeCountry = "au";
-          break;
-        default:
-          activeCountry = "null";
-      }
-
-      this._setActiveCountry(activeCountry);
-      if (!preserveValues) {
-        var isInactiveCountry = function isInactiveCountry(countryCode) {
-          return countryCode != activeCountry;
-        };
-        this.countryCodes.filter(isInactiveCountry).forEach(this._clearElementValues.bind(this));
-      }
-    }
-  }, {
-    key: "_clearElementValues",
-    value: function _clearElementValues(countryCode) {
-      var _this = this;
-
-      var elements = this.formHelperConfig[countryCode].elements;
-      Object.entries(elements).forEach(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-            name = _ref2[0],
-            element = _ref2[1];
-
-        if (element) _this._setElementValue(element, "", name);
-      });
-    }
-  }, {
-    key: "_setActiveCountry",
-    value: function _setActiveCountry(countryCode) {
-      this._log("Setting active country", countryCode);
-
-      Object.values(this.widgets).forEach(function (widget) {
-        return widget.disable();
-      });
-      this.widgets[countryCode].enable();
-    }
-  }, {
-    key: "_combineAddressElements",
-    value: function _combineAddressElements(elements) {
-      var addressIsPresent = function addressIsPresent(element) {
-        return element != null && element != "";
-      };
-      var combined = elements.filter(addressIsPresent);
-      return combined.length > 1 ? combined.join(", ") : combined[0];
-    }
-  }, {
-    key: "_nzAddressSelected",
-    value: function _nzAddressSelected(fullAddress, metaData) {
-      var elements = this.formHelperConfig.nz.elements;
-      var selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
-
-      if (!elements.address_line_2 && !elements.suburb) {
-        var combined = this._combineAddressElements([selected.address_line_1_and_2(), selected.suburb()]);
-        this._setElementValue(elements.address_line_1, combined, "address_line_1");
-      } else if (!elements.address_line_2 && elements.suburb) {
-        this._setElementValue(elements.address_line_1, selected.address_line_1_and_2(), "address_line_1");
-        this._setElementValue(elements.suburb, selected.suburb(), "suburb");
-      } else {
-        this._setElementValue(elements.address_line_1, selected.address_line_1(), "address_line_1");
-        this._setElementValue(elements.address_line_2, selected.address_line_2(), "address_line_2");
-        this._setElementValue(elements.suburb, selected.suburb(), "suburb");
-      }
-
-      this._setElementValue(elements.city, selected.city(), "city");
-      this._setElementValue(elements.postcode, selected.postcode(), "postcode");
-
-      if (this.formHelperConfig.nz.regionMappings) {
-        var translatedRegionValue = this.formHelperConfig.nz.regionMappings[metaData.region];
-        this._setElementValue(elements.region, translatedRegionValue, "region");
-      } else {
-        this._setElementValue(elements.region, metaData.region, "region");
-      }
-    }
-  }, {
-    key: "_auAddressSelected",
-    value: function _auAddressSelected(fullAddress, metaData) {
-      var elements = this.formHelperConfig.au.elements;
-
-      if (!elements.address_line_2) {
-        var combined = this._combineAddressElements([metaData.address_line_1, metaData.address_line_2]);
-        this._setElementValue(elements.address_line_1, combined, "address_line_1");
-      } else {
-        this._setElementValue(elements.address_line_1, metaData.address_line_1, "address_line_1");
-        var address_line_2 = metaData.address_line_2 || "";
-        this._setElementValue(elements.address_line_2, address_line_2, "address_line_2");
-      }
-
-      this._setElementValue(elements.locality_name, metaData.locality_name, "suburb");
-      this._setElementValue(elements.postcode, metaData.postcode, "postcode");
-
-      if (this.formHelperConfig.au.stateMappings) {
-        var translatedStateValue = this.formHelperConfig.au.stateMappings[metaData.state_territory];
-        this._setElementValue(elements.state_territory, translatedStateValue, "state_territory");
-      } else {
-        this._setElementValue(elements.state_territory, metaData.state_territory, "state_territory");
-      }
-    }
-  }, {
-    key: "_setElementValue",
-    value: function _setElementValue(element, value, elementName) {
-      if (!element) {
-        var errorMessage = 'AddressFinder Error: ' + 'Attempted to update value for element that could not be found.\n' + '\nElement: ' + elementName + '\nValue: ' + value;
-
-        if (window.console) {
-          console.warn(errorMessage);
-        }
-
-        return;
-      }
-
-      element.value = value;
-      this._dispatchChangeEvent(element);
-    }
-  }, {
-    key: "_dispatchChangeEvent",
-    value: function _dispatchChangeEvent(element) {
-      var event;
-      switch (typeof Event === "undefined" ? "undefined" : _typeof(Event)) {
-        case 'function':
-          event = new Event(this.eventToDispatch, { 'bubbles': true, "cancelable": false });
-          break;
-        default:
-          event = document.createEvent('Event');
-          event.initEvent(this.eventToDispatch, true, false);
-      }
-      element.dispatchEvent(event);
-    }
-  }, {
-    key: "_log",
-    value: function _log(message) {
-      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-
-      if (this.widgetConfig.debug && window.console) {
-        if (data != undefined) {
-          console.log("FormHelper for layout " + this.formHelperConfig.label + ": " + message, data);
-        } else {
-          console.log("FormHelper for layout " + this.formHelperConfig.label + ": " + message);
-        }
-      }
-    }
-  }]);
-
-  return FormManager;
-}();
-
-exports.default = FormManager;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(38)('wks');
-var uid = __webpack_require__(35);
-var Symbol = __webpack_require__(23).Symbol;
+var store = __webpack_require__(17)('wks');
+var uid = __webpack_require__(14);
+var Symbol = __webpack_require__(2).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
 var $exports = module.exports = function (name) {
@@ -1003,7 +81,7 @@ $exports.store = store;
 
 
 /***/ }),
-/* 22 */
+/* 1 */
 /***/ (function(module, exports) {
 
 var core = module.exports = { version: '2.6.5' };
@@ -1011,7 +89,7 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 23 */
+/* 2 */
 /***/ (function(module, exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -1023,14 +101,14 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 24 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(23);
-var core = __webpack_require__(22);
-var hide = __webpack_require__(26);
-var redefine = __webpack_require__(34);
-var ctx = __webpack_require__(44);
+var global = __webpack_require__(2);
+var core = __webpack_require__(1);
+var hide = __webpack_require__(5);
+var redefine = __webpack_require__(13);
+var ctx = __webpack_require__(24);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -1072,7 +150,7 @@ module.exports = $export;
 
 
 /***/ }),
-/* 25 */
+/* 4 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -1082,12 +160,12 @@ module.exports = function (it, key) {
 
 
 /***/ }),
-/* 26 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(27);
-var createDesc = __webpack_require__(33);
-module.exports = __webpack_require__(30) ? function (object, key, value) {
+var dP = __webpack_require__(6);
+var createDesc = __webpack_require__(12);
+module.exports = __webpack_require__(9) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -1096,15 +174,15 @@ module.exports = __webpack_require__(30) ? function (object, key, value) {
 
 
 /***/ }),
-/* 27 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(32);
-var IE8_DOM_DEFINE = __webpack_require__(55);
-var toPrimitive = __webpack_require__(43);
+var anObject = __webpack_require__(11);
+var IE8_DOM_DEFINE = __webpack_require__(35);
+var toPrimitive = __webpack_require__(23);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(30) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(9) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -1118,7 +196,7 @@ exports.f = __webpack_require__(30) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 28 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -1127,29 +205,29 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 29 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(58);
-var defined = __webpack_require__(41);
+var IObject = __webpack_require__(38);
+var defined = __webpack_require__(20);
 module.exports = function (it) {
   return IObject(defined(it));
 };
 
 
 /***/ }),
-/* 30 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(31)(function () {
+module.exports = !__webpack_require__(10)(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 31 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -1162,10 +240,10 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 32 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(7);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -1173,7 +251,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 33 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -1187,18 +265,18 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 34 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(23);
-var hide = __webpack_require__(26);
-var has = __webpack_require__(25);
-var SRC = __webpack_require__(35)('src');
-var $toString = __webpack_require__(70);
+var global = __webpack_require__(2);
+var hide = __webpack_require__(5);
+var has = __webpack_require__(4);
+var SRC = __webpack_require__(14)('src');
+var $toString = __webpack_require__(52);
 var TO_STRING = 'toString';
 var TPL = ('' + $toString).split(TO_STRING);
 
-__webpack_require__(22).inspectSource = function (it) {
+__webpack_require__(1).inspectSource = function (it) {
   return $toString.call(it);
 };
 
@@ -1224,7 +302,7 @@ __webpack_require__(22).inspectSource = function (it) {
 
 
 /***/ }),
-/* 35 */
+/* 14 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -1235,12 +313,12 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 36 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(57);
-var enumBugKeys = __webpack_require__(51);
+var $keys = __webpack_require__(37);
+var enumBugKeys = __webpack_require__(31);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -1248,18 +326,18 @@ module.exports = Object.keys || function keys(O) {
 
 
 /***/ }),
-/* 37 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
 
 /***/ }),
-/* 38 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var core = __webpack_require__(22);
-var global = __webpack_require__(23);
+var core = __webpack_require__(1);
+var global = __webpack_require__(2);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 
@@ -1267,20 +345,20 @@ var store = global[SHARED] || (global[SHARED] = {});
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
   version: core.version,
-  mode: __webpack_require__(39) ? 'pure' : 'global',
+  mode: __webpack_require__(18) ? 'pure' : 'global',
   copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
 });
 
 
 /***/ }),
-/* 39 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = false;
 
 
 /***/ }),
-/* 40 */
+/* 19 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -1291,7 +369,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 41 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -1302,18 +380,48 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 42 */
+/* 21 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 
 /***/ }),
-/* 43 */
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  'Auckland Region': 'AUK',
+  'Bay of Plenty Region': 'BOP',
+  'Canterbury Region': 'CAN',
+  'Gisborne Region': 'GIS',
+  'Hawke\'s Bay Region': 'HKB',
+  'Manawatu-Wanganui Region': 'MWT',
+  'Marlborough Region': 'MBH',
+  'Nelson Region': 'NSN',
+  'Northland Region': 'NTL',
+  'Otago Region': 'OTA',
+  'Southland Region': 'STL',
+  'Taranaki Region': 'TKI',
+  'Tasman Region': 'TAS',
+  'Waikato Region': 'WKO',
+  'Wellington Region': 'WGN',
+  'West Coast Region': 'WTC',
+  'Other Region': null
+};
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(7);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -1327,11 +435,11 @@ module.exports = function (it, S) {
 
 
 /***/ }),
-/* 44 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(71);
+var aFunction = __webpack_require__(53);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -1353,12 +461,12 @@ module.exports = function (fn, that, length) {
 
 
 /***/ }),
-/* 45 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(27).f;
-var has = __webpack_require__(25);
-var TAG = __webpack_require__(21)('toStringTag');
+var def = __webpack_require__(6).f;
+var has = __webpack_require__(4);
+var TAG = __webpack_require__(0)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -1366,21 +474,21 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 46 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(21);
+exports.f = __webpack_require__(0);
 
 
 /***/ }),
-/* 47 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(23);
-var core = __webpack_require__(22);
-var LIBRARY = __webpack_require__(39);
-var wksExt = __webpack_require__(46);
-var defineProperty = __webpack_require__(27).f;
+var global = __webpack_require__(2);
+var core = __webpack_require__(1);
+var LIBRARY = __webpack_require__(18);
+var wksExt = __webpack_require__(26);
+var defineProperty = __webpack_require__(6).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -1388,11 +496,11 @@ module.exports = function (name) {
 
 
 /***/ }),
-/* 48 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(49);
+var toInteger = __webpack_require__(29);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -1400,7 +508,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 49 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -1412,18 +520,18 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 50 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(38)('keys');
-var uid = __webpack_require__(35);
+var shared = __webpack_require__(17)('keys');
+var uid = __webpack_require__(14);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
 
 
 /***/ }),
-/* 51 */
+/* 31 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -1433,31 +541,31 @@ module.exports = (
 
 
 /***/ }),
-/* 52 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(41);
+var defined = __webpack_require__(20);
 module.exports = function (it) {
   return Object(defined(it));
 };
 
 
 /***/ }),
-/* 53 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.31 Array.prototype[@@unscopables]
-var UNSCOPABLES = __webpack_require__(21)('unscopables');
+var UNSCOPABLES = __webpack_require__(0)('unscopables');
 var ArrayProto = Array.prototype;
-if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(26)(ArrayProto, UNSCOPABLES, {});
+if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(5)(ArrayProto, UNSCOPABLES, {});
 module.exports = function (key) {
   ArrayProto[UNSCOPABLES][key] = true;
 };
 
 
 /***/ }),
-/* 54 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 0 -> Array#forEach
@@ -1467,11 +575,11 @@ module.exports = function (key) {
 // 4 -> Array#every
 // 5 -> Array#find
 // 6 -> Array#findIndex
-var ctx = __webpack_require__(44);
-var IObject = __webpack_require__(58);
-var toObject = __webpack_require__(52);
-var toLength = __webpack_require__(48);
-var asc = __webpack_require__(99);
+var ctx = __webpack_require__(24);
+var IObject = __webpack_require__(38);
+var toObject = __webpack_require__(32);
+var toLength = __webpack_require__(28);
+var asc = __webpack_require__(81);
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1;
   var IS_FILTER = TYPE == 2;
@@ -1507,20 +615,20 @@ module.exports = function (TYPE, $create) {
 
 
 /***/ }),
-/* 55 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(30) && !__webpack_require__(31)(function () {
-  return Object.defineProperty(__webpack_require__(56)('div'), 'a', { get: function () { return 7; } }).a != 7;
+module.exports = !__webpack_require__(9) && !__webpack_require__(10)(function () {
+  return Object.defineProperty(__webpack_require__(36)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
 /***/ }),
-/* 56 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
-var document = __webpack_require__(23).document;
+var isObject = __webpack_require__(7);
+var document = __webpack_require__(2).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -1529,13 +637,13 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 57 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(25);
-var toIObject = __webpack_require__(29);
-var arrayIndexOf = __webpack_require__(59)(false);
-var IE_PROTO = __webpack_require__(50)('IE_PROTO');
+var has = __webpack_require__(4);
+var toIObject = __webpack_require__(8);
+var arrayIndexOf = __webpack_require__(39)(false);
+var IE_PROTO = __webpack_require__(30)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -1552,11 +660,11 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 58 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(40);
+var cof = __webpack_require__(19);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -1564,14 +672,14 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 59 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(29);
-var toLength = __webpack_require__(48);
-var toAbsoluteIndex = __webpack_require__(74);
+var toIObject = __webpack_require__(8);
+var toLength = __webpack_require__(28);
+var toAbsoluteIndex = __webpack_require__(56);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -1593,45 +701,45 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 60 */
+/* 40 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 61 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(40);
+var cof = __webpack_require__(19);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
 
 
 /***/ }),
-/* 62 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(32);
-var dPs = __webpack_require__(75);
-var enumBugKeys = __webpack_require__(51);
-var IE_PROTO = __webpack_require__(50)('IE_PROTO');
+var anObject = __webpack_require__(11);
+var dPs = __webpack_require__(57);
+var enumBugKeys = __webpack_require__(31);
+var IE_PROTO = __webpack_require__(30)('IE_PROTO');
 var Empty = function () { /* empty */ };
 var PROTOTYPE = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(56)('iframe');
+  var iframe = __webpack_require__(36)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(76).appendChild(iframe);
+  __webpack_require__(58).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -1658,12 +766,12 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 63 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(57);
-var hiddenKeys = __webpack_require__(51).concat('length', 'prototype');
+var $keys = __webpack_require__(37);
+var hiddenKeys = __webpack_require__(31).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
@@ -1671,12 +779,12 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 64 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(40);
-var TAG = __webpack_require__(21)('toStringTag');
+var cof = __webpack_require__(19);
+var TAG = __webpack_require__(0)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -1700,15 +808,15 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 65 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(83)(true);
+var $at = __webpack_require__(65)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(66)(String, 'String', function (iterated) {
+__webpack_require__(46)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -1724,20 +832,20 @@ __webpack_require__(66)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 66 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(39);
-var $export = __webpack_require__(24);
-var redefine = __webpack_require__(34);
-var hide = __webpack_require__(26);
-var Iterators = __webpack_require__(37);
-var $iterCreate = __webpack_require__(84);
-var setToStringTag = __webpack_require__(45);
-var getPrototypeOf = __webpack_require__(85);
-var ITERATOR = __webpack_require__(21)('iterator');
+var LIBRARY = __webpack_require__(18);
+var $export = __webpack_require__(3);
+var redefine = __webpack_require__(13);
+var hide = __webpack_require__(5);
+var Iterators = __webpack_require__(16);
+var $iterCreate = __webpack_require__(66);
+var setToStringTag = __webpack_require__(25);
+var getPrototypeOf = __webpack_require__(67);
+var ITERATOR = __webpack_require__(0)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -1800,12 +908,12 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 67 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var fails = __webpack_require__(31);
+var fails = __webpack_require__(10);
 
 module.exports = function (method, arg) {
   return !!method && fails(function () {
@@ -1816,48 +924,175 @@ module.exports = function (method, arg) {
 
 
 /***/ }),
-/* 68 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(69);
-__webpack_require__(79);
-__webpack_require__(80);
-__webpack_require__(81);
-module.exports = __webpack_require__(22).Symbol;
+module.exports = __webpack_require__(49);
 
 
 /***/ }),
-/* 69 */
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // see https://github.com/zloirock/core-js
+
+
+__webpack_require__(50);
+
+__webpack_require__(64);
+
+__webpack_require__(71);
+
+__webpack_require__(76);
+
+__webpack_require__(79);
+
+__webpack_require__(83);
+
+__webpack_require__(90);
+
+__webpack_require__(92);
+
+__webpack_require__(94);
+
+var _page_manager = __webpack_require__(96);
+
+var _page_manager2 = _interopRequireDefault(_page_manager);
+
+var _mutation_manager = __webpack_require__(98);
+
+var _mutation_manager2 = _interopRequireDefault(_mutation_manager);
+
+var _config_manager = __webpack_require__(99);
+
+var _config_manager2 = _interopRequireDefault(_config_manager);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+(function (d, w) {
+  var ShopifyPlugin = function () {
+    function ShopifyPlugin() {
+      _classCallCheck(this, ShopifyPlugin);
+
+      this._initPlugin();
+
+      // Manages the mapping of the form configurations to the DOM. 
+      this.PageManager = null;
+
+      // Manages the form configuraions, and creates any dynamic forms
+      this.ConfigManager = new _config_manager2.default();
+
+      // Watches for any mutations to the DOM, so we can reload our configurations when something changes.
+      new _mutation_manager2.default({
+        mutationEventHandler: this.mutationEventHandler.bind(this),
+        ignoredClass: "af_list"
+      });
+    }
+
+    _createClass(ShopifyPlugin, [{
+      key: "mutationEventHandler",
+      value: function mutationEventHandler() {
+        // When the form mutates, reload our form configurations, and reload the form helpers in the page manager.
+        var addressFormConfigurations = this.ConfigManager.load();
+        if (this.PageManager) {
+          this.PageManager.reload(addressFormConfigurations);
+        }
+      }
+    }, {
+      key: "_disableGoogleAutocomplete",
+      value: function _disableGoogleAutocomplete(repetitions) {
+        // Attempt to find the google autocomplete iframe. If it is found disable it, otherwise continue trying for 5 repetitions.
+        var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
+
+        if (iframe) {
+          iframe.src = '';
+        }
+
+        if (repetitions > 0) {
+          setTimeout(this._disableGoogleAutocomplete, 1000, repetitions - 1);
+        }
+      }
+    }, {
+      key: "_initPlugin",
+      value: function _initPlugin() {
+        this._disableGoogleAutocomplete(5);
+
+        var widgetConfig = {
+          nzKey: window.AddressFinderPlugin.key,
+          auKey: window.AddressFinderPlugin.key,
+          nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
+          auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
+          debug: window.AddressFinderPlugin.debug || false
+        };
+
+        this.PageManager = new _page_manager2.default({
+          addressFormConfigurations: this.ConfigManager.load(),
+          widgetConfig: widgetConfig,
+          eventToDispatch: 'input'
+        });
+
+        window.AddressFinderPlugin._shopifyPlugin = this.PageManager;
+      }
+    }]);
+
+    return ShopifyPlugin;
+  }();
+
+  var s = document.createElement('script');
+  s.src = 'https://api.addressfinder.io/assets/v3/widget.js';
+  s.async = 1;
+  s.onload = new ShopifyPlugin();
+  document.body.appendChild(s);
+})(document, window);
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(51);
+__webpack_require__(61);
+__webpack_require__(62);
+__webpack_require__(63);
+module.exports = __webpack_require__(1).Symbol;
+
+
+/***/ }),
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(23);
-var has = __webpack_require__(25);
-var DESCRIPTORS = __webpack_require__(30);
-var $export = __webpack_require__(24);
-var redefine = __webpack_require__(34);
-var META = __webpack_require__(72).KEY;
-var $fails = __webpack_require__(31);
-var shared = __webpack_require__(38);
-var setToStringTag = __webpack_require__(45);
-var uid = __webpack_require__(35);
-var wks = __webpack_require__(21);
-var wksExt = __webpack_require__(46);
-var wksDefine = __webpack_require__(47);
-var enumKeys = __webpack_require__(73);
-var isArray = __webpack_require__(61);
-var anObject = __webpack_require__(32);
-var isObject = __webpack_require__(28);
-var toIObject = __webpack_require__(29);
-var toPrimitive = __webpack_require__(43);
-var createDesc = __webpack_require__(33);
-var _create = __webpack_require__(62);
-var gOPNExt = __webpack_require__(77);
-var $GOPD = __webpack_require__(78);
-var $DP = __webpack_require__(27);
-var $keys = __webpack_require__(36);
+var global = __webpack_require__(2);
+var has = __webpack_require__(4);
+var DESCRIPTORS = __webpack_require__(9);
+var $export = __webpack_require__(3);
+var redefine = __webpack_require__(13);
+var META = __webpack_require__(54).KEY;
+var $fails = __webpack_require__(10);
+var shared = __webpack_require__(17);
+var setToStringTag = __webpack_require__(25);
+var uid = __webpack_require__(14);
+var wks = __webpack_require__(0);
+var wksExt = __webpack_require__(26);
+var wksDefine = __webpack_require__(27);
+var enumKeys = __webpack_require__(55);
+var isArray = __webpack_require__(41);
+var anObject = __webpack_require__(11);
+var isObject = __webpack_require__(7);
+var toIObject = __webpack_require__(8);
+var toPrimitive = __webpack_require__(23);
+var createDesc = __webpack_require__(12);
+var _create = __webpack_require__(42);
+var gOPNExt = __webpack_require__(59);
+var $GOPD = __webpack_require__(60);
+var $DP = __webpack_require__(6);
+var $keys = __webpack_require__(15);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -1980,11 +1215,11 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(63).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(42).f = $propertyIsEnumerable;
-  __webpack_require__(60).f = $getOwnPropertySymbols;
+  __webpack_require__(43).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(21).f = $propertyIsEnumerable;
+  __webpack_require__(40).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(39)) {
+  if (DESCRIPTORS && !__webpack_require__(18)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -2058,7 +1293,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(26)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(5)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -2068,14 +1303,14 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 70 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(38)('native-function-to-string', Function.toString);
+module.exports = __webpack_require__(17)('native-function-to-string', Function.toString);
 
 
 /***/ }),
-/* 71 */
+/* 53 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -2085,18 +1320,18 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 72 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(35)('meta');
-var isObject = __webpack_require__(28);
-var has = __webpack_require__(25);
-var setDesc = __webpack_require__(27).f;
+var META = __webpack_require__(14)('meta');
+var isObject = __webpack_require__(7);
+var has = __webpack_require__(4);
+var setDesc = __webpack_require__(6).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(31)(function () {
+var FREEZE = !__webpack_require__(10)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function (it) {
@@ -2144,13 +1379,13 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 73 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(36);
-var gOPS = __webpack_require__(60);
-var pIE = __webpack_require__(42);
+var getKeys = __webpack_require__(15);
+var gOPS = __webpack_require__(40);
+var pIE = __webpack_require__(21);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -2165,10 +1400,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 74 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(49);
+var toInteger = __webpack_require__(29);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {
@@ -2178,14 +1413,14 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 75 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(27);
-var anObject = __webpack_require__(32);
-var getKeys = __webpack_require__(36);
+var dP = __webpack_require__(6);
+var anObject = __webpack_require__(11);
+var getKeys = __webpack_require__(15);
 
-module.exports = __webpack_require__(30) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(9) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -2197,20 +1432,20 @@ module.exports = __webpack_require__(30) ? Object.defineProperties : function de
 
 
 /***/ }),
-/* 76 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(23).document;
+var document = __webpack_require__(2).document;
 module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 77 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(29);
-var gOPN = __webpack_require__(63).f;
+var toIObject = __webpack_require__(8);
+var gOPN = __webpack_require__(43).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -2230,18 +1465,18 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 78 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(42);
-var createDesc = __webpack_require__(33);
-var toIObject = __webpack_require__(29);
-var toPrimitive = __webpack_require__(43);
-var has = __webpack_require__(25);
-var IE8_DOM_DEFINE = __webpack_require__(55);
+var pIE = __webpack_require__(21);
+var createDesc = __webpack_require__(12);
+var toIObject = __webpack_require__(8);
+var toPrimitive = __webpack_require__(23);
+var has = __webpack_require__(4);
+var IE8_DOM_DEFINE = __webpack_require__(35);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(30) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(9) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -2252,51 +1487,51 @@ exports.f = __webpack_require__(30) ? gOPD : function getOwnPropertyDescriptor(O
 
 
 /***/ }),
-/* 79 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 19.1.3.6 Object.prototype.toString()
-var classof = __webpack_require__(64);
+var classof = __webpack_require__(44);
 var test = {};
-test[__webpack_require__(21)('toStringTag')] = 'z';
+test[__webpack_require__(0)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
-  __webpack_require__(34)(Object.prototype, 'toString', function toString() {
+  __webpack_require__(13)(Object.prototype, 'toString', function toString() {
     return '[object ' + classof(this) + ']';
   }, true);
 }
 
 
 /***/ }),
-/* 80 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(47)('asyncIterator');
+__webpack_require__(27)('asyncIterator');
 
 
 /***/ }),
-/* 81 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(47)('observable');
+__webpack_require__(27)('observable');
 
 
 /***/ }),
-/* 82 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(65);
-__webpack_require__(86);
-module.exports = __webpack_require__(46).f('iterator');
+__webpack_require__(45);
+__webpack_require__(68);
+module.exports = __webpack_require__(26).f('iterator');
 
 
 /***/ }),
-/* 83 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(49);
-var defined = __webpack_require__(41);
+var toInteger = __webpack_require__(29);
+var defined = __webpack_require__(20);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -2315,18 +1550,18 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 84 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var create = __webpack_require__(62);
-var descriptor = __webpack_require__(33);
-var setToStringTag = __webpack_require__(45);
+var create = __webpack_require__(42);
+var descriptor = __webpack_require__(12);
+var setToStringTag = __webpack_require__(25);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(26)(IteratorPrototype, __webpack_require__(21)('iterator'), function () { return this; });
+__webpack_require__(5)(IteratorPrototype, __webpack_require__(0)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -2335,13 +1570,13 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 85 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(25);
-var toObject = __webpack_require__(52);
-var IE_PROTO = __webpack_require__(50)('IE_PROTO');
+var has = __webpack_require__(4);
+var toObject = __webpack_require__(32);
+var IE_PROTO = __webpack_require__(30)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -2354,16 +1589,16 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 86 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $iterators = __webpack_require__(87);
-var getKeys = __webpack_require__(36);
-var redefine = __webpack_require__(34);
-var global = __webpack_require__(23);
-var hide = __webpack_require__(26);
-var Iterators = __webpack_require__(37);
-var wks = __webpack_require__(21);
+var $iterators = __webpack_require__(69);
+var getKeys = __webpack_require__(15);
+var redefine = __webpack_require__(13);
+var global = __webpack_require__(2);
+var hide = __webpack_require__(5);
+var Iterators = __webpack_require__(16);
+var wks = __webpack_require__(0);
 var ITERATOR = wks('iterator');
 var TO_STRING_TAG = wks('toStringTag');
 var ArrayValues = Iterators.Array;
@@ -2418,21 +1653,21 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 
 /***/ }),
-/* 87 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(53);
-var step = __webpack_require__(88);
-var Iterators = __webpack_require__(37);
-var toIObject = __webpack_require__(29);
+var addToUnscopables = __webpack_require__(33);
+var step = __webpack_require__(70);
+var Iterators = __webpack_require__(16);
+var toIObject = __webpack_require__(8);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(66)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(46)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -2459,7 +1694,7 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 88 */
+/* 70 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -2468,25 +1703,25 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 89 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(90);
-module.exports = __webpack_require__(22).String.includes;
+__webpack_require__(72);
+module.exports = __webpack_require__(1).String.includes;
 
 
 /***/ }),
-/* 90 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // 21.1.3.7 String.prototype.includes(searchString, position = 0)
 
-var $export = __webpack_require__(24);
-var context = __webpack_require__(91);
+var $export = __webpack_require__(3);
+var context = __webpack_require__(73);
 var INCLUDES = 'includes';
 
-$export($export.P + $export.F * __webpack_require__(93)(INCLUDES), 'String', {
+$export($export.P + $export.F * __webpack_require__(75)(INCLUDES), 'String', {
   includes: function includes(searchString /* , position = 0 */) {
     return !!~context(this, searchString, INCLUDES)
       .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
@@ -2495,12 +1730,12 @@ $export($export.P + $export.F * __webpack_require__(93)(INCLUDES), 'String', {
 
 
 /***/ }),
-/* 91 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // helper for String#{startsWith, endsWith, includes}
-var isRegExp = __webpack_require__(92);
-var defined = __webpack_require__(41);
+var isRegExp = __webpack_require__(74);
+var defined = __webpack_require__(20);
 
 module.exports = function (that, searchString, NAME) {
   if (isRegExp(searchString)) throw TypeError('String#' + NAME + " doesn't accept regex!");
@@ -2509,13 +1744,13 @@ module.exports = function (that, searchString, NAME) {
 
 
 /***/ }),
-/* 92 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.8 IsRegExp(argument)
-var isObject = __webpack_require__(28);
-var cof = __webpack_require__(40);
-var MATCH = __webpack_require__(21)('match');
+var isObject = __webpack_require__(7);
+var cof = __webpack_require__(19);
+var MATCH = __webpack_require__(0)('match');
 module.exports = function (it) {
   var isRegExp;
   return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
@@ -2523,10 +1758,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 93 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MATCH = __webpack_require__(21)('match');
+var MATCH = __webpack_require__(0)('match');
 module.exports = function (KEY) {
   var re = /./;
   try {
@@ -2541,20 +1776,20 @@ module.exports = function (KEY) {
 
 
 /***/ }),
-/* 94 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(95);
-module.exports = __webpack_require__(22).Object.values;
+__webpack_require__(77);
+module.exports = __webpack_require__(1).Object.values;
 
 
 /***/ }),
-/* 95 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
-var $export = __webpack_require__(24);
-var $values = __webpack_require__(96)(false);
+var $export = __webpack_require__(3);
+var $values = __webpack_require__(78)(false);
 
 $export($export.S, 'Object', {
   values: function values(it) {
@@ -2564,12 +1799,12 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 96 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getKeys = __webpack_require__(36);
-var toIObject = __webpack_require__(29);
-var isEnum = __webpack_require__(42).f;
+var getKeys = __webpack_require__(15);
+var toIObject = __webpack_require__(8);
+var isEnum = __webpack_require__(21).f;
 module.exports = function (isEntries) {
   return function (it) {
     var O = toIObject(it);
@@ -2586,22 +1821,22 @@ module.exports = function (isEntries) {
 
 
 /***/ }),
-/* 97 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(98);
-module.exports = __webpack_require__(22).Array.find;
+__webpack_require__(80);
+module.exports = __webpack_require__(1).Array.find;
 
 
 /***/ }),
-/* 98 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
-var $export = __webpack_require__(24);
-var $find = __webpack_require__(54)(5);
+var $export = __webpack_require__(3);
+var $find = __webpack_require__(34)(5);
 var KEY = 'find';
 var forced = true;
 // Shouldn't skip holes
@@ -2611,15 +1846,15 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(53)(KEY);
+__webpack_require__(33)(KEY);
 
 
 /***/ }),
-/* 99 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-var speciesConstructor = __webpack_require__(100);
+var speciesConstructor = __webpack_require__(82);
 
 module.exports = function (original, length) {
   return new (speciesConstructor(original))(length);
@@ -2627,12 +1862,12 @@ module.exports = function (original, length) {
 
 
 /***/ }),
-/* 100 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
-var isArray = __webpack_require__(61);
-var SPECIES = __webpack_require__(21)('species');
+var isObject = __webpack_require__(7);
+var isArray = __webpack_require__(41);
+var SPECIES = __webpack_require__(0)('species');
 
 module.exports = function (original) {
   var C;
@@ -2649,30 +1884,30 @@ module.exports = function (original) {
 
 
 /***/ }),
-/* 101 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(65);
-__webpack_require__(102);
-module.exports = __webpack_require__(22).Array.from;
+__webpack_require__(45);
+__webpack_require__(84);
+module.exports = __webpack_require__(1).Array.from;
 
 
 /***/ }),
-/* 102 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var ctx = __webpack_require__(44);
-var $export = __webpack_require__(24);
-var toObject = __webpack_require__(52);
-var call = __webpack_require__(103);
-var isArrayIter = __webpack_require__(104);
-var toLength = __webpack_require__(48);
-var createProperty = __webpack_require__(105);
-var getIterFn = __webpack_require__(106);
+var ctx = __webpack_require__(24);
+var $export = __webpack_require__(3);
+var toObject = __webpack_require__(32);
+var call = __webpack_require__(85);
+var isArrayIter = __webpack_require__(86);
+var toLength = __webpack_require__(28);
+var createProperty = __webpack_require__(87);
+var getIterFn = __webpack_require__(88);
 
-$export($export.S + $export.F * !__webpack_require__(107)(function (iter) { Array.from(iter); }), 'Array', {
+$export($export.S + $export.F * !__webpack_require__(89)(function (iter) { Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
   from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
     var O = toObject(arrayLike);
@@ -2702,11 +1937,11 @@ $export($export.S + $export.F * !__webpack_require__(107)(function (iter) { Arra
 
 
 /***/ }),
-/* 103 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
-var anObject = __webpack_require__(32);
+var anObject = __webpack_require__(11);
 module.exports = function (iterator, fn, value, entries) {
   try {
     return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -2720,12 +1955,12 @@ module.exports = function (iterator, fn, value, entries) {
 
 
 /***/ }),
-/* 104 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(37);
-var ITERATOR = __webpack_require__(21)('iterator');
+var Iterators = __webpack_require__(16);
+var ITERATOR = __webpack_require__(0)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -2734,13 +1969,13 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 105 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $defineProperty = __webpack_require__(27);
-var createDesc = __webpack_require__(33);
+var $defineProperty = __webpack_require__(6);
+var createDesc = __webpack_require__(12);
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -2749,13 +1984,13 @@ module.exports = function (object, index, value) {
 
 
 /***/ }),
-/* 106 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof = __webpack_require__(64);
-var ITERATOR = __webpack_require__(21)('iterator');
-var Iterators = __webpack_require__(37);
-module.exports = __webpack_require__(22).getIteratorMethod = function (it) {
+var classof = __webpack_require__(44);
+var ITERATOR = __webpack_require__(0)('iterator');
+var Iterators = __webpack_require__(16);
+module.exports = __webpack_require__(1).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
     || Iterators[classof(it)];
@@ -2763,10 +1998,10 @@ module.exports = __webpack_require__(22).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 107 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(21)('iterator');
+var ITERATOR = __webpack_require__(0)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -2791,22 +2026,22 @@ module.exports = function (exec, skipClosing) {
 
 
 /***/ }),
-/* 108 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(109);
-module.exports = __webpack_require__(22).Array.includes;
+__webpack_require__(91);
+module.exports = __webpack_require__(1).Array.includes;
 
 
 /***/ }),
-/* 109 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // https://github.com/tc39/Array.prototype.includes
-var $export = __webpack_require__(24);
-var $includes = __webpack_require__(59)(true);
+var $export = __webpack_require__(3);
+var $includes = __webpack_require__(39)(true);
 
 $export($export.P, 'Array', {
   includes: function includes(el /* , fromIndex = 0 */) {
@@ -2814,27 +2049,27 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(53)('includes');
+__webpack_require__(33)('includes');
 
 
 /***/ }),
-/* 110 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(111);
-module.exports = __webpack_require__(22).Array.map;
+__webpack_require__(93);
+module.exports = __webpack_require__(1).Array.map;
 
 
 /***/ }),
-/* 111 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $export = __webpack_require__(24);
-var $map = __webpack_require__(54)(1);
+var $export = __webpack_require__(3);
+var $map = __webpack_require__(34)(1);
 
-$export($export.P + $export.F * !__webpack_require__(67)([].map, true), 'Array', {
+$export($export.P + $export.F * !__webpack_require__(47)([].map, true), 'Array', {
   // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
   map: function map(callbackfn /* , thisArg */) {
     return $map(this, callbackfn, arguments[1]);
@@ -2843,29 +2078,795 @@ $export($export.P + $export.F * !__webpack_require__(67)([].map, true), 'Array',
 
 
 /***/ }),
-/* 112 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(113);
-module.exports = __webpack_require__(22).Array.filter;
+__webpack_require__(95);
+module.exports = __webpack_require__(1).Array.filter;
 
 
 /***/ }),
-/* 113 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $export = __webpack_require__(24);
-var $filter = __webpack_require__(54)(2);
+var $export = __webpack_require__(3);
+var $filter = __webpack_require__(34)(2);
 
-$export($export.P + $export.F * !__webpack_require__(67)([].filter, true), 'Array', {
+$export($export.P + $export.F * !__webpack_require__(47)([].filter, true), 'Array', {
   // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
   filter: function filter(callbackfn /* , thisArg */) {
     return $filter(this, callbackfn, arguments[1]);
   }
 });
 
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _form_manager = __webpack_require__(97);
+
+var _form_manager2 = _interopRequireDefault(_form_manager);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PageManager = function () {
+  function PageManager(_ref) {
+    var addressFormConfigurations = _ref.addressFormConfigurations,
+        widgetConfig = _ref.widgetConfig,
+        eventToDispatch = _ref.eventToDispatch;
+
+    _classCallCheck(this, PageManager);
+
+    // Each formHelper is an instance of the FormManager class
+    this.formHelpers = [];
+    // An object containing identifying information about an address form, such as the id values 
+    this.addressFormConfigurations = addressFormConfigurations;
+    // Configuration provided by the user, such as keys and widget options
+    this.widgetConfig = widgetConfig;
+    // The event type to trigger when a field value is changed by AddressFinder 
+    this.eventToDispatch = eventToDispatch;
+
+    this.reload = this.reload.bind(this);
+
+    this.loadFormHelpers();
+  }
+
+  _createClass(PageManager, [{
+    key: "reload",
+    value: function reload(addressFormConfigurations) {
+      // Takes the addressFormConfigurations (static and dynamic) provided by the ConfigManager and loads our formHelpers
+      this.addressFormConfigurations = addressFormConfigurations;
+      this.loadFormHelpers();
+    }
+  }, {
+    key: "loadFormHelpers",
+    value: function loadFormHelpers() {
+      // We destroy and reset all our current helpers and configurations, then recreate them.
+      this.formHelpers.forEach(function (formHelper) {
+        return formHelper.destroy();
+      });
+      this.identifiedAddressFormConfigurations = [];
+      this.formHelpers = [];
+
+      this._identifyAddressForms();
+      this.identifiedAddressFormConfigurations.forEach(this._initialiseFormHelper.bind(this));
+    }
+  }, {
+    key: "_identifyAddressForms",
+    value: function _identifyAddressForms() {
+      // Checks if each of our form configs are present on the page
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.addressFormConfigurations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var addressFormConfig = _step.value;
+
+          var identifyingElement = document.querySelector(addressFormConfig.layoutSelector);
+
+          if (identifyingElement) {
+            this.log("Identified layout named: " + addressFormConfig.label);
+
+            this.identifiedAddressFormConfigurations.push(addressFormConfig);
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }
+  }, {
+    key: "_initialiseFormHelper",
+    value: function _initialiseFormHelper(addressFormConfig) {
+      // For each configuration, create a formHelperConfig. This maps our form configurations to the corresponding DOM elements. 
+      var searchElement = document.getElementById(addressFormConfig.searchIdentifier);
+
+      if (searchElement) {
+        var formHelperConfig = {
+          countryElement: document.getElementById(addressFormConfig.countryIdentifier),
+          searchElement: document.getElementById(addressFormConfig.searchIdentifier),
+          label: addressFormConfig.label,
+          layoutSelector: addressFormConfig.layoutSelector,
+          nz: {
+            countryValue: addressFormConfig.nz.countryValue,
+            elements: {
+              address_line_1: document.getElementById(addressFormConfig.nz.elements.address1),
+              address_line_2: document.getElementById(addressFormConfig.nz.elements.address2),
+              suburb: document.getElementById(addressFormConfig.nz.elements.suburb),
+              city: document.getElementById(addressFormConfig.nz.elements.city),
+              region: document.getElementById(addressFormConfig.nz.elements.region),
+              postcode: document.getElementById(addressFormConfig.nz.elements.postcode)
+            },
+            regionMappings: addressFormConfig.nz.regionMappings
+          },
+          au: {
+            countryValue: addressFormConfig.au.countryValue,
+            elements: {
+              address_line_1: document.getElementById(addressFormConfig.au.elements.address1),
+              address_line_2: document.getElementById(addressFormConfig.au.elements.address2),
+              locality_name: document.getElementById(addressFormConfig.au.elements.suburb),
+              city: null,
+              state_territory: document.getElementById(addressFormConfig.au.elements.state),
+              postcode: document.getElementById(addressFormConfig.au.elements.postcode)
+            },
+            stateMappings: addressFormConfig.au.stateMappings
+          }
+        };
+
+        var helper = new _form_manager2.default(this.widgetConfig, formHelperConfig, this.eventToDispatch);
+        this.formHelpers.push(helper);
+      }
+    }
+  }, {
+    key: "log",
+    value: function log(message) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+
+      if (this.widgetConfig.debug && window.console) {
+        if (data != undefined) {
+          console.log("" + message, data);
+        } else {
+          console.log("" + message);
+        }
+      }
+    }
+  }]);
+
+  return PageManager;
+}();
+
+exports.default = PageManager;
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var FormManager = function () {
+  function FormManager(widgetConfig, formHelperConfig, eventToDispatch) {
+    _classCallCheck(this, FormManager);
+
+    this.widgetConfig = widgetConfig;
+    // Contains references to the DOM elements that make up this form
+    this.formHelperConfig = formHelperConfig;
+    this.eventToDispatch = eventToDispatch;
+    this.widgets = {};
+    this.countryCodes = ["au", "nz"];
+
+    this._bindToForm();
+  }
+
+  // Shuts down this form_helper by disabling the widget and any callback handlers.
+
+
+  _createClass(FormManager, [{
+    key: "destroy",
+    value: function destroy() {
+      this._log("Destroying widget", this.formHelperConfig.label);
+
+      for (var widgetCountryCode in this.widgets) {
+        this.widgets[widgetCountryCode].disable();
+        this.widgets[widgetCountryCode].destroy();
+      }
+
+      this.widgets = null;
+
+      this.formHelperConfig.countryElement.removeEventListener("change", this.boundCountryChangedListener);
+    }
+  }, {
+    key: "_bindToForm",
+    value: function _bindToForm() {
+      this.boundCountryChangedListener = this._countryChanged.bind(this); // save this so we can unbind in the destroy() method
+      this.formHelperConfig.countryElement.addEventListener("change", this.boundCountryChangedListener);
+
+      var nzWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.nzKey, "nz", this.widgetConfig.nzWidgetOptions);
+      nzWidget.on("result:select", this._nzAddressSelected.bind(this));
+      this.widgets["nz"] = nzWidget;
+
+      var auWidget = new window.AddressFinder.Widget(this.formHelperConfig.searchElement, this.widgetConfig.auKey, "au", this.widgetConfig.auWidgetOptions);
+      auWidget.on("result:select", this._auAddressSelected.bind(this));
+      this.widgets["au"] = auWidget;
+
+      // Prevents the widget from throwing errors if the activeCountry is not 'nz' or 'au'
+      this.widgets["null"] = {
+        enable: function enable() {},
+        disable: function disable() {},
+        destroy: function destroy() {}
+      };
+
+      this._countryChanged(null, true);
+    }
+  }, {
+    key: "_countryChanged",
+    value: function _countryChanged(event, preserveValues) {
+      var activeCountry;
+      switch (this.formHelperConfig.countryElement.value) {
+        case this.formHelperConfig.nz.countryValue:
+          activeCountry = "nz";
+          break;
+        case this.formHelperConfig.au.countryValue:
+          activeCountry = "au";
+          break;
+        default:
+          activeCountry = "null";
+      }
+
+      this._setActiveCountry(activeCountry);
+
+      // Usually, preserveValues should be true, as this prevents the users saved addresses being cleared on page load.
+      // Setting preverseValues to false clears the address fields on country change, which is useful for testing.  
+      if (!preserveValues) {
+        var isInactiveCountry = function isInactiveCountry(countryCode) {
+          return countryCode != activeCountry;
+        };
+        this.countryCodes.filter(isInactiveCountry).forEach(this._clearElementValues.bind(this));
+      }
+    }
+  }, {
+    key: "_clearElementValues",
+    value: function _clearElementValues(countryCode) {
+      var _this = this;
+
+      var elements = this.formHelperConfig[countryCode].elements;
+      Object.entries(elements).forEach(function (_ref) {
+        var _ref2 = _slicedToArray(_ref, 2),
+            name = _ref2[0],
+            element = _ref2[1];
+
+        if (element) _this._setElementValue(element, "", name);
+      });
+    }
+  }, {
+    key: "_setActiveCountry",
+    value: function _setActiveCountry(countryCode) {
+      this._log("Setting active country", countryCode);
+
+      Object.values(this.widgets).forEach(function (widget) {
+        return widget.disable();
+      });
+      this.widgets[countryCode].enable();
+    }
+  }, {
+    key: "_combineAddressElements",
+    value: function _combineAddressElements(elements) {
+      // If we have two valid address elements, connect the string with a comma in between, otherwise just use the first.
+      // For example: 
+      // ['65 Beauchamp Street', 'Karori'] becomes '65 Beauchamp Street, Karori'
+      // ['34 Arapuni Road', ""] becomes '34 Arapuni Road'
+
+      var addressIsPresent = function addressIsPresent(element) {
+        return element != null && element != "";
+      };
+      var combined = elements.filter(addressIsPresent);
+      return combined.length > 1 ? combined.join(", ") : combined[0];
+    }
+  }, {
+    key: "_nzAddressSelected",
+    value: function _nzAddressSelected(fullAddress, metaData) {
+      var elements = this.formHelperConfig.nz.elements;
+      var selected = new AddressFinder.NZSelectedAddress(fullAddress, metaData);
+
+      if (!elements.address_line_2 && !elements.suburb) {
+        // If we only have address_line_1, the address line 1, 2 and suburb values are populated in that field.
+        var combined = this._combineAddressElements([selected.address_line_1_and_2(), selected.suburb()]);
+        this._setElementValue(elements.address_line_1, combined, "address_line_1");
+      } else if (!elements.address_line_2 && elements.suburb) {
+        // If we have address_line_1 and a suburb field, put address 1 and 2 into address line 1, and suburb into the suburb field.
+        this._setElementValue(elements.address_line_1, selected.address_line_1_and_2(), "address_line_1");
+        this._setElementValue(elements.suburb, selected.suburb(), "suburb");
+      } else {
+        // If we have all 3 fields populate each one.
+        this._setElementValue(elements.address_line_1, selected.address_line_1(), "address_line_1");
+        this._setElementValue(elements.address_line_2, selected.address_line_2(), "address_line_2");
+        this._setElementValue(elements.suburb, selected.suburb(), "suburb");
+      }
+
+      this._setElementValue(elements.city, selected.city(), "city");
+      this._setElementValue(elements.postcode, selected.postcode(), "postcode");
+
+      if (this.formHelperConfig.nz.regionMappings) {
+        // matches the region returned by the api with the region values in the select field 
+        var translatedRegionValue = this.formHelperConfig.nz.regionMappings[metaData.region];
+        this._setElementValue(elements.region, translatedRegionValue, "region");
+      } else {
+        this._setElementValue(elements.region, metaData.region, "region");
+      }
+    }
+  }, {
+    key: "_auAddressSelected",
+    value: function _auAddressSelected(fullAddress, metaData) {
+      var elements = this.formHelperConfig.au.elements;
+
+      if (!elements.address_line_2) {
+        // If we only have address_line_1, put both address 1 and 2 into this line
+        var combined = this._combineAddressElements([metaData.address_line_1, metaData.address_line_2]);
+        this._setElementValue(elements.address_line_1, combined, "address_line_1");
+      } else {
+        this._setElementValue(elements.address_line_1, metaData.address_line_1, "address_line_1");
+        // metaData.address_line_2 could be undefined, in which case we replace it with an empty string
+        var address_line_2 = metaData.address_line_2 || "";
+        this._setElementValue(elements.address_line_2, address_line_2, "address_line_2");
+      }
+
+      this._setElementValue(elements.locality_name, metaData.locality_name, "suburb");
+      this._setElementValue(elements.postcode, metaData.postcode, "postcode");
+
+      if (this.formHelperConfig.au.stateMappings) {
+        // matches the state returned by the api with the region values in the select field 
+        var translatedStateValue = this.formHelperConfig.au.stateMappings[metaData.state_territory];
+        this._setElementValue(elements.state_territory, translatedStateValue, "state_territory");
+      } else {
+        this._setElementValue(elements.state_territory, metaData.state_territory, "state_territory");
+      }
+    }
+  }, {
+    key: "_setElementValue",
+    value: function _setElementValue(element, value, elementName) {
+      if (!element) {
+        var errorMessage = 'AddressFinder Error: ' + 'Attempted to update value for element that could not be found.\n' + '\nElement: ' + elementName + '\nValue: ' + value;
+
+        if (window.console) {
+          console.warn(errorMessage);
+        }
+
+        return;
+      }
+
+      element.value = value;
+      this._dispatchEvent(element);
+    }
+  }, {
+    key: "_dispatchEvent",
+    value: function _dispatchEvent(element) {
+      // This function dispatches an event when the form fields are set, so the store knows the fields have changed. This can affect form validation.
+      // Typically we would use a 'change' event here, but Shopify is listening for the 'input' event specifically, so we pass the eventToDispatch as a param.
+      // It is also important to set 'bubbles' to true, as the store may listen for the event on the document, rather than	
+      // the input field itself. This allows the event to move up the tree, triggering the event on both the input element and the document.	
+      var event;
+      switch (typeof Event === "undefined" ? "undefined" : _typeof(Event)) {
+        case 'function':
+          event = new Event(this.eventToDispatch, { 'bubbles': true, "cancelable": false });
+          break;
+        default:
+          event = document.createEvent('Event');
+          event.initEvent(this.eventToDispatch, true, false);
+      }
+      element.dispatchEvent(event);
+    }
+  }, {
+    key: "_log",
+    value: function _log(message) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+
+      if (this.widgetConfig.debug && window.console) {
+        if (data != undefined) {
+          console.log("FormHelper for layout " + this.formHelperConfig.label + ": " + message, data);
+        } else {
+          console.log("FormHelper for layout " + this.formHelperConfig.label + ": " + message);
+        }
+      }
+    }
+  }]);
+
+  return FormManager;
+}();
+
+exports.default = FormManager;
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var MutationManager = function () {
+  function MutationManager(_ref) {
+    var mutationEventHandler = _ref.mutationEventHandler,
+        ignoredClass = _ref.ignoredClass;
+
+    _classCallCheck(this, MutationManager);
+
+    this.mutationEventHandler = mutationEventHandler;
+    this.millisecondsToIgnoreMutations = 750;
+    // Mutation events emitted by elements with this class are ignored.
+    this.ignoredClass = ignoredClass;
+
+    this.monitorMutations();
+  }
+
+  _createClass(MutationManager, [{
+    key: 'monitorMutations',
+    value: function monitorMutations() {
+      if (window.MutationObserver) {
+        /* for modern browsers */
+        var observer = new MutationObserver(this._mutationHandler.bind(this));
+        observer.observe(document.body, { childList: true, subtree: true });
+      } else if (window.addEventListener) {
+        /* for IE 9 and 10 */
+        document.body.addEventListener('DOMNodeInserted', this._domNodeModifiedHandler.bind(this), false);
+        document.body.addEventListener('DOMNodeRemoved', this._domNodeModifiedHandler.bind(this), false);
+      } else {
+        if (window.console) {
+          console.info('AddressFinder Error - please use a more modern browser');
+        }
+      }
+    }
+  }, {
+    key: '_mutationHandler',
+    value: function _mutationHandler(mutations) {
+      var _this = this;
+
+      var changedNodes = mutations.reduce(function (nodes, mutation) {
+        // ignore this mutation if the target is the AddressFinder UL element
+        if (mutation.target && mutation.target.classList && mutation.target.classList.contains(_this.ignoredClass)) {
+          return nodes;
+        }
+
+        return nodes.concat([].concat(_toConsumableArray(mutation.addedNodes))).concat([].concat(_toConsumableArray(mutation.removedNodes)));
+      }, []);
+
+      var anyStoreMutations = changedNodes.find(function (node) {
+        return !(node.classList && node.classList.contains(_this.ignoredClass));
+      });
+
+      if (!anyStoreMutations) {
+        return; // ignore AddressFinder changes
+      }
+
+      this._setMutationTimeout();
+    }
+  }, {
+    key: '_domNodeModifiedHandler',
+    value: function _domNodeModifiedHandler(event) {
+      if (event.target.className && event.target.className.includes(this.ignoredClass) || event.relatedNode && event.relatedNode.className && event.relatedNode.className.includes(this.ignoredClass)) {
+        return; // ignore AddressFinder changes
+      }
+
+      _setMutationTimeout();
+    }
+  }, {
+    key: '_setMutationTimeout',
+    value: function _setMutationTimeout() {
+      if (this._mutationTimeout) {
+        clearTimeout(this._mutationTimeout); // reset previous timeout
+      }
+
+      // ignore any further changes for the next 750 mS
+      this._mutationTimeout = setTimeout(this.mutationEventHandler, this.millisecondsToIgnoreMutations);
+    }
+  }]);
+
+  return MutationManager;
+}();
+
+exports.default = MutationManager;
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _billing_checkout = __webpack_require__(100);
+
+var _billing_checkout2 = _interopRequireDefault(_billing_checkout);
+
+var _shipping_checkout = __webpack_require__(101);
+
+var _shipping_checkout2 = _interopRequireDefault(_shipping_checkout);
+
+var _user_registration_new_address = __webpack_require__(102);
+
+var _user_registration_new_address2 = _interopRequireDefault(_user_registration_new_address);
+
+var _region_mappings = __webpack_require__(22);
+
+var _region_mappings2 = _interopRequireDefault(_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ConfigManager = function () {
+  function ConfigManager() {
+    _classCallCheck(this, ConfigManager);
+  }
+
+  _createClass(ConfigManager, [{
+    key: 'load',
+    value: function load() {
+      // This function is called when the page mutates and adds any dynamic configurations we may be missing
+      var dynamicForms = this.generateDynamicForms();
+
+      var addressFormConfigurations = [_billing_checkout2.default, _shipping_checkout2.default, _user_registration_new_address2.default].concat(_toConsumableArray(dynamicForms));
+
+      return addressFormConfigurations;
+    }
+  }, {
+    key: 'generateDynamicForms',
+    value: function generateDynamicForms() {
+      var _this = this;
+
+      var dynamicForms = [];
+      // find all elements with an ID starting with EditAddress. For example id="EditAddress_345987345"
+      var identifyingElements = document.querySelectorAll('[id^="EditAddress"]');
+
+      // create a new form configuration for each EditAddress form we find
+      identifyingElements.forEach(function (identifyingElement, index) {
+        dynamicForms.push(_this._configureDynamicForm(identifyingElement, index));
+      });
+
+      return dynamicForms;
+    }
+  }, {
+    key: '_configureDynamicForm',
+    value: function _configureDynamicForm(identifyingElement, index) {
+      if (identifyingElement) {
+
+        // Shopify appends a unique identifier to each of the form elements in an EditAddress form.
+        // We split this identifier off the id of our identifying element, and add it to our address field ids to find the correct fields
+
+        var id = identifyingElement['id'].split('_')[1];
+        var formConfig = {
+          label: 'Edit Address Form ' + index,
+          layoutSelector: '#EditAddress_' + id,
+          countryIdentifier: 'AddressCountry_' + id,
+          searchIdentifier: 'AddressAddress1_' + id,
+          nz: {
+            countryValue: "New Zealand",
+            elements: {
+              address1and2: 'AddressAddress1_' + id,
+              address1: null,
+              address2: null,
+              suburb: 'AddressAddress2_' + id,
+              city: 'AddressCity_' + id,
+              region: 'AddressProvince_' + id,
+              postcode: 'AddressZip_' + id
+            },
+            regionMappings: _region_mappings2.default
+          },
+          au: {
+            countryValue: "Australia",
+            elements: {
+              address1and2: null,
+              address1: 'AddressAddress1_' + id,
+              address2: 'AddressAddress2_' + id,
+              suburb: 'AddressCity_' + id,
+              state: 'AddressProvince_' + id,
+              postcode: 'AddressZip_' + id
+            },
+            stateMappings: null
+          }
+        };
+        return formConfig;
+      }
+    }
+  }]);
+
+  return ConfigManager;
+}();
+
+exports.default = ConfigManager;
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _region_mappings = __webpack_require__(22);
+
+var _region_mappings2 = _interopRequireDefault(_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  label: "Billing Checkout",
+  layoutSelector: "#section--billing-address__different",
+  countryIdentifier: 'checkout_billing_address_country',
+  searchIdentifier: "checkout_billing_address_address1",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: 'checkout_billing_address_address1',
+      address2: 'checkout_billing_address_address2',
+      suburb: null,
+      city: 'checkout_billing_address_city',
+      region: 'checkout_billing_address_province',
+      postcode: 'checkout_billing_address_zip'
+    },
+    regionMappings: _region_mappings2.default
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: 'checkout_billing_address_address1',
+      address2: 'checkout_billing_address_address2',
+      suburb: 'checkout_billing_address_city',
+      state: 'checkout_billing_address_province',
+      postcode: 'checkout_billing_address_zip'
+    },
+    stateMappings: null
+  }
+};
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _region_mappings = __webpack_require__(22);
+
+var _region_mappings2 = _interopRequireDefault(_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  label: "Shipping Checkout",
+  layoutSelector: ".section--shipping-address",
+  countryIdentifier: 'checkout_shipping_address_country',
+  searchIdentifier: "checkout_shipping_address_address1",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
+      suburb: null,
+      city: 'checkout_shipping_address_city',
+      region: 'checkout_shipping_address_province',
+      postcode: 'checkout_shipping_address_zip'
+    },
+    regionMappings: _region_mappings2.default
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: 'checkout_shipping_address_address1',
+      address2: 'checkout_shipping_address_address2',
+      suburb: 'checkout_shipping_address_city',
+      state: 'checkout_shipping_address_province',
+      postcode: 'checkout_shipping_address_zip'
+    },
+    stateMappings: null
+  }
+};
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _region_mappings = __webpack_require__(22);
+
+var _region_mappings2 = _interopRequireDefault(_region_mappings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  label: "User Registration Address Form",
+  layoutSelector: "#AddressNewForm",
+  countryIdentifier: 'AddressCountryNew',
+  searchIdentifier: 'AddressAddress1New',
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: 'AddressAddress1New',
+      address2: 'AddressAddress2New',
+      suburb: 'AddressAddress2New',
+      city: 'AddressCityNew',
+      region: 'AddressProvinceNew',
+      postcode: 'AddressZipNew'
+    },
+    regionMappings: _region_mappings2.default
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: 'AddressAddress1New',
+      address2: 'AddressAddress2New',
+      suburb: 'AddressCityNew',
+      state: 'AddressProvinceNew',
+      postcode: 'AddressZipNew'
+    },
+    stateMappings: null
+  }
+};
 
 /***/ })
 /******/ ]);
