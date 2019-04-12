@@ -7,17 +7,20 @@
   "author": "@Abletech",
   "license": "MIT",
   "devDependencies": {
-    "concat": "^1.0.3",
-    "eslint": "^3.19.0",
-    "uglify-js": "^3.0.1",
-    "watch": "^1.0.2"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.7.0",
+    "uglify-js": "^3.0.27",
+    "webpack": "^3.5.1"
+  },
+  "dependencies": {
+    "@addressfinder/addressfinder-webpage-tools": "^1.0.2",
+    "core-js": "^2.5.0"
   },
   "scripts": {
-    "lint": "eslint src/*.js",
-    "concat": "concat src/*.js -o dist/shopify-v1-boot.js",
-    "minify": "uglifyjs dist/shopify-v1-boot.js -m -o dist/shopify-v1-boot.min.js",
-    "build": "npm run lint && npm run concat",
-    "build:production": "npm run build && npm run minify",
-    "watch": "watch 'npm run concat' src/"
+    "watch": "webpack -w --config webpack.config.js",
+    "build": "webpack --config webpack.config.js",
+    "build:production": "npm run build && NODE_ENV=production webpack --config webpack.config.js"
   }
 }
