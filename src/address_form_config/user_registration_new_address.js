@@ -1,5 +1,6 @@
 
-import regionMappings from './region_mappings'
+import userRegistrationRegionMappings from './user_registration_region_mappings'
+import userRegistrationStateMappings from './user_registration_state_mappings'
 
 export default {
   label: "User Registration Address Form",
@@ -16,7 +17,7 @@ export default {
       region: '#AddressProvinceNew',
       postcode: '#AddressZipNew',
     },
-    regionMappings: regionMappings
+    regionMappings: userRegistrationRegionMappings
   },
   au: {
     countryValue: "Australia",
@@ -27,6 +28,6 @@ export default {
       state: '#AddressProvinceNew',
       postcode: '#AddressZipNew',
     },
-    stateMappings: null
+    stateMappings: userRegistrationStateMappings
   }
 }
