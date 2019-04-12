@@ -1,23 +1,8 @@
-
-import "core-js/fn/symbol" // see https://github.com/zloirock/core-js
-import "core-js/fn/symbol/iterator"
-import "core-js/fn/string/includes"
-import "core-js/fn/object/values"
-import "core-js/fn/array/find"
-import "core-js/fn/array/from"
-import "core-js/fn/array/includes"
-import "core-js/fn/array/map"
-import "core-js/fn/array/filter"
-
-import PageManager from "./page_manager";
-import MutationManager from "./mutation_manager"
-import ConfigManager from "./config_manager"
+import { PageManager, MutationManager } from '@addressfinder/addressfinder'
 
 (function(d, w) {
   class ShopifyPlugin {
     constructor() {
-      this._initPlugin()
-
       // Manages the mapping of the form configurations to the DOM. 
       this.PageManager = null
 
@@ -29,6 +14,8 @@ import ConfigManager from "./config_manager"
         mutationEventHandler: this.mutationEventHandler.bind(this),
         ignoredClass: "af_list"
       })
+
+      this._initPlugin()
     }
 
     mutationEventHandler() {

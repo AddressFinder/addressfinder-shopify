@@ -1,8 +1,10 @@
+
+import "core-js/fn/array/for-each"
+
 import BillingCheckout from './address_form_config/billing_checkout'
 import ShippingCheckout from './address_form_config/shipping_checkout'
 import userRegistrationNewAddress from './address_form_config/user_registration_new_address'
 import regionMappings from './address_form_config/region_mappings'
-
 export default class ConfigManager {
 
    load() {
