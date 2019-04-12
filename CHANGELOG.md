@@ -1,3 +1,7 @@
+##[1.3.0] - 2019-04-12
+###Added
+- Updated to use new addressfinder-webpage-tools npm package
+
 ##[1.2.9] - 2019-04-02
 ###Fixed
 - Correct version number in code
