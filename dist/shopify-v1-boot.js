@@ -398,7 +398,6 @@ var ConfigManager = function () {
       identifyingElements.forEach(function (identifyingElement, index) {
         dynamicForms.push(_this._configureDynamicForm(identifyingElement, index));
       });
-
       return dynamicForms;
     }
   }, {
@@ -413,18 +412,18 @@ var ConfigManager = function () {
         var formConfig = {
           label: 'Edit Address Form ' + index,
           layoutSelector: '#EditAddress_' + id,
-          countryIdentifier: 'AddressCountry_' + id,
-          searchIdentifier: 'AddressAddress1_' + id,
+          countryIdentifier: '#AddressCountry_' + id,
+          searchIdentifier: '#AddressAddress1_' + id,
           nz: {
             countryValue: "New Zealand",
             elements: {
-              address1and2: 'AddressAddress1_' + id,
+              address1and2: '#AddressAddress1_' + id,
               address1: null,
               address2: null,
-              suburb: 'AddressAddress2_' + id,
-              city: 'AddressCity_' + id,
-              region: 'AddressProvince_' + id,
-              postcode: 'AddressZip_' + id
+              suburb: '#AddressAddress2_' + id,
+              city: '#AddressCity_' + id,
+              region: '#AddressProvince_' + id,
+              postcode: '#AddressZip_' + id
             },
             regionMappings: _user_registration_region_mappings2.default
           },
@@ -432,11 +431,11 @@ var ConfigManager = function () {
             countryValue: "Australia",
             elements: {
               address1and2: null,
-              address1: 'AddressAddress1_' + id,
-              address2: 'AddressAddress2_' + id,
-              suburb: 'AddressCity_' + id,
-              state: 'AddressProvince_' + id,
-              postcode: 'AddressZip_' + id
+              address1: '#AddressAddress1_' + id,
+              address2: '#AddressAddress2_' + id,
+              suburb: '#AddressCity_' + id,
+              state: '#AddressProvince_' + id,
+              postcode: '#AddressZip_' + id
             },
             stateMappings: _user_registration_state_mappings2.default
           }

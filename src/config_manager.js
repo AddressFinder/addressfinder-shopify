@@ -32,7 +32,6 @@ export default class ConfigManager {
     identifyingElements.forEach((identifyingElement, index) => {
       dynamicForms.push(this._configureDynamicForm(identifyingElement, index))
     })
-
     return dynamicForms
   }
   
@@ -46,18 +45,18 @@ export default class ConfigManager {
        var formConfig = {
         label: `Edit Address Form ${index}`,
         layoutSelector: `#EditAddress_${id}`,
-        countryIdentifier: `AddressCountry_${id}`,
-        searchIdentifier: `AddressAddress1_${id}`,
+        countryIdentifier: `#AddressCountry_${id}`,
+        searchIdentifier: `#AddressAddress1_${id}`,
         nz: {
           countryValue: "New Zealand",
           elements: {
-            address1and2: `AddressAddress1_${id}`,
+            address1and2: `#AddressAddress1_${id}`,
             address1: null,
             address2: null,
-            suburb: `AddressAddress2_${id}`,
-            city: `AddressCity_${id}`,
-            region: `AddressProvince_${id}`,
-            postcode: `AddressZip_${id}`,
+            suburb: `#AddressAddress2_${id}`,
+            city: `#AddressCity_${id}`,
+            region: `#AddressProvince_${id}`,
+            postcode: `#AddressZip_${id}`,
           },
           regionMappings: userRegistrationRegionMappings
         },
@@ -65,11 +64,11 @@ export default class ConfigManager {
           countryValue: "Australia",
           elements: {
             address1and2: null,
-            address1: `AddressAddress1_${id}`,
-            address2: `AddressAddress2_${id}`,
-            suburb: `AddressCity_${id}`,
-            state: `AddressProvince_${id}`,
-            postcode: `AddressZip_${id}`,
+            address1: `#AddressAddress1_${id}`,
+            address2: `#AddressAddress2_${id}`,
+            suburb: `#AddressCity_${id}`,
+            state: `#AddressProvince_${id}`,
+            postcode: `#AddressZip_${id}`,
           },
           stateMappings: userRegistrationStateMappings
         }
