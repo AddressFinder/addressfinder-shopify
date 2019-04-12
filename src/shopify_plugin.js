@@ -1,4 +1,5 @@
-import { PageManager, MutationManager } from '@addressfinder/addressfinder'
+import ConfigManager from './config_manager'
+import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpage-tools'
 
 (function(d, w) {
   class ShopifyPlugin {
@@ -63,7 +64,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder'
   var s = document.createElement('script')
   s.src = 'https://api.addressfinder.io/assets/v3/widget.js'
   s.async = 1
-  s.onload = new ShopifyPlugin
+  s.onload = function() { new ShopifyPlugin }
   document.body.appendChild(s)
 
 })(document, window)
