@@ -417,8 +417,7 @@ var ConfigManager = function () {
           nz: {
             countryValue: "New Zealand",
             elements: {
-              address1and2: '#AddressAddress1_' + id,
-              address1: null,
+              address1: '#AddressAddress1_' + id,
               address2: null,
               suburb: '#AddressAddress2_' + id,
               city: '#AddressCity_' + id,
@@ -430,7 +429,6 @@ var ConfigManager = function () {
           au: {
             countryValue: "Australia",
             elements: {
-              address1and2: null,
               address1: '#AddressAddress1_' + id,
               address2: '#AddressAddress2_' + id,
               suburb: '#AddressCity_' + id,
