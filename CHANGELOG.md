@@ -1,8 +1,12 @@
-##[1.2.9] - 2017-10-12
+##[1.3.0] - 2019-04-12
+###Added
+- Updated to use new addressfinder-webpage-tools npm package
+
+##[1.2.9] - 2019-04-02
 ###Fixed
 - Correct version number in code
 
-##[1.2.8] - 2017-10-12
+##[1.2.8] - 2019-04-02
 ###Fixed
 - Dispatch input event on address field change
 
