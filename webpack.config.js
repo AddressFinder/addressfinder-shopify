@@ -27,7 +27,7 @@ const config = {
 
 switch (process.env.NODE_ENV) {
   case "production":
-    config.output.filename = "shopify-v1-boot-min.js";
+    config.output.filename = "shopify-v1-boot.min.js";
     config.plugins = [
       new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false }
