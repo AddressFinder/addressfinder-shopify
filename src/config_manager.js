@@ -26,7 +26,7 @@ export default class ConfigManager {
   generateDynamicForms() {
     let dynamicForms = []
     // find all elements with an ID starting with EditAddress. For example id="EditAddress_345987345"
-    let identifyingElements = document.querySelectorAll('[id^="EditAddress"]')
+    let identifyingElements = Array.from(document.querySelectorAll('[id^="EditAddress"]'))
   
     // create a new form configuration for each EditAddress form we find
     identifyingElements.forEach((identifyingElement, index) => {
