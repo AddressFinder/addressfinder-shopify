@@ -18,6 +18,11 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
         ignoredClass: "af_list"
       })
 
+      this.events = {
+        dispatchOnAddressSelected: 'input', // When an address is selected dispatch this event so the store knows fields have changed
+        listenOnCountryElement: 'change' // Listen for this event type on the country element to set the active country
+      }
+
       this._initPlugin()
     }
 
@@ -56,7 +61,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       this.PageManager = new PageManager({
         addressFormConfigurations: this.ConfigManager.load(),
         widgetConfig,
-        eventToDispatch: 'input' 
+        events: this.events
       })
     
       w.AddressFinderPlugin._shopifyPlugin = this.PageManager
