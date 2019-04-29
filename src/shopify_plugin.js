@@ -29,7 +29,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
 
     _disableGoogleAutocomplete(repetitions) {
       // Attempt to find the google autocomplete iframe. If it is found disable it, otherwise continue trying for 5 repetitions.
-      var iframe = document.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
+      var iframe = d.querySelector('#google-autocomplete-iframe, #autocomplete-service-iframe');
     
       if (iframe) {
         iframe.src = '';
@@ -44,11 +44,11 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       this._disableGoogleAutocomplete(5);
     
       const widgetConfig = {
-        nzKey: window.AddressFinderPlugin.key,
-        auKey: window.AddressFinderPlugin.key,
-        nzWidgetOptions: window.AddressFinderPlugin.nzWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-        auWidgetOptions: window.AddressFinderPlugin.auWidgetOptions || window.AddressFinderPlugin.widgetOptions || {},
-        debug: window.AddressFinderPlugin.debug || false
+        nzKey: w.AddressFinderPlugin.key,
+        auKey: w.AddressFinderPlugin.key,
+        nzWidgetOptions: w.AddressFinderPlugin.nzWidgetOptions || w.AddressFinderPlugin.widgetOptions || {},
+        auWidgetOptions: w.AddressFinderPlugin.auWidgetOptions || w.AddressFinderPlugin.widgetOptions || {},
+        debug: w.AddressFinderPlugin.debug || false
       }
 
       this.PageManager = new PageManager({
@@ -57,14 +57,14 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
         eventToDispatch: 'input' 
       })
     
-      window.AddressFinderPlugin._shopifyPlugin = this.PageManager
+      w.AddressFinderPlugin._shopifyPlugin = this.PageManager
     }
   }
 
-  var s = document.createElement('script')
+  var s = d.createElement('script')
   s.src = 'https://api.addressfinder.io/assets/v3/widget.js'
   s.async = 1
   s.onload = function() { new ShopifyPlugin }
-  document.body.appendChild(s)
+  d.body.appendChild(s)
 
 })(document, window)
