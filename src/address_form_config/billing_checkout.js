@@ -2,7 +2,7 @@ import regionMappings from './region_mappings'
 
 export default {
   label: "Billing Checkout",
-  layoutSelector: "#section--billing-address__different",
+  layoutSelector: ["#section--billing-address__different"],
   countryIdentifier: '#checkout_billing_address_country',
   searchIdentifier: "#checkout_billing_address_address1",
   nz: {
