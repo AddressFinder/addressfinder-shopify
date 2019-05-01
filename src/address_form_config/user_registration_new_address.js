@@ -4,7 +4,7 @@ import userRegistrationStateMappings from './user_registration_state_mappings'
 
 export default {
   label: "User Registration Address Form",
-  layoutSelector: ["#AddressNewForm"],
+  layoutSelectors: ["#AddressNewForm"],
   countryIdentifier: '#AddressCountryNew',
   searchIdentifier: '#AddressAddress1New',
   nz: {
