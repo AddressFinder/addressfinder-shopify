@@ -9,8 +9,7 @@ export default {
     countryValue: "New Zealand",
     elements: {
       address1: '#checkout_shipping_address_address1',
-      address2: '#checkout_shipping_address_address2',
-      suburb: null,
+      suburb: '#checkout_shipping_address_address2',
       city: '#checkout_shipping_address_city',
       region: '#checkout_shipping_address_province',
       postcode: '#checkout_shipping_address_zip',

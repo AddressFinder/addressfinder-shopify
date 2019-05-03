@@ -51,7 +51,6 @@ export default class ConfigManager {
           countryValue: "New Zealand",
           elements: {
             address1: `#AddressAddress1_${id}`,
-            address2: null,
             suburb: `#AddressAddress2_${id}`,
             city: `#AddressCity_${id}`,
             region: `#AddressProvince_${id}`,
