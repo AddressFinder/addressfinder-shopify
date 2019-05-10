@@ -1,7 +1,19 @@
 import ConfigManager from './config_manager'
-import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpage-tools'
+import { PageManager, MutationManager } from './addressfinder-webpage-tools'
 
 (function(d, w) {
+
+  /*
+  * When addressfinderDebugMode() is typed into the Javascript console the plugin will be reinitialised with debug set to true.
+  * This allows us to debug more easily on customer sites.
+  */
+  function addressfinderDebugMode() {
+    if (w.AddressFinder.initPlugin) {
+      w.AddressFinderPlugin.debug = true
+      w.AddressFinder.initPlugin()
+    }
+  }
+  w.addressfinderDebugMode = addressfinderDebugMode
   class ShopifyPlugin {
     constructor() {
 
@@ -13,7 +25,10 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       // Manages the form configuraions, and creates any dynamic forms
       this.ConfigManager = null
 
-      this._initPlugin()
+      this._disableGoogleAutocomplete(5);
+      this.initPlugin()
+      // Create a reference to the initPlugin function so we can call it from the javascript console.
+      w.AddressFinder.initPlugin = this.initPlugin
     }
 
     mutationEventHandler() {
@@ -37,8 +52,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       }
     }
 
-    _initPlugin(){
-      this._disableGoogleAutocomplete(5);
+    initPlugin(){
     
       const widgetConfig = {
         nzKey: w.AddressFinderPlugin.key,
@@ -52,6 +66,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
 
       // Watches for any mutations to the DOM, so we can reload our configurations when something changes.
       new MutationManager({
+        widgetConfig: widgetConfig,
         mutationEventHandler: this.mutationEventHandler.bind(this),
         ignoredClass: "af_list"
       })
