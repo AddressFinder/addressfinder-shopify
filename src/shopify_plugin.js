@@ -1,5 +1,5 @@
 import ConfigManager from './config_manager'
-import { PageManager, MutationManager } from './addressfinder-webpage-tools'
+import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpage-tools'
 
 (function(d, w) {
 
