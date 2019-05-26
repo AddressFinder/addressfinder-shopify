@@ -1,4 +1,6 @@
 
+// We also have a config for editing addresses in the users account. This is dynamically generated in config_manager.js
+
 import userRegistrationRegionMappings from './user_registration_region_mappings'
 import userRegistrationStateMappings from './user_registration_state_mappings'
 
