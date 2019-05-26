@@ -2,18 +2,6 @@ import ConfigManager from './config_manager'
 import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpage-tools'
 
 (function(d, w) {
-
-  /*
-  * When addressfinderDebugMode() is typed into the Javascript console the plugin will be reinitialised with debug set to true.
-  * This allows us to debug more easily on customer sites.
-  */
-  function addressfinderDebugMode() {
-    if (w.AddressFinder.initPlugin) {
-      w.AddressFinderPlugin.debug = true
-      w.AddressFinder.initPlugin()
-    }
-  }
-  w.addressfinderDebugMode = addressfinderDebugMode
   class ShopifyPlugin {
     constructor() {
 
@@ -81,6 +69,15 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       })
     
       w.AddressFinderPlugin._shopifyPlugin = this.PageManager
+    }
+
+    /*
+    * When addressfinderDebugMode() is typed into the Javascript console the plugin will be reinitialised with debug set to true.
+    * This allows us to debug more easily on customer sites.
+    */
+    addressfinderDebugMode() {
+      w.AddressFinderConfig.debug = true
+      this._initPlugin()
     }
   }
 
