@@ -13,7 +13,6 @@ export default [{
     countryValue: "New Zealand",
     elements: {
       address1: '#AddressAddress1New',
-      address2: '#AddressAddress2New',
       suburb: '#AddressAddress2New',
       city: '#AddressCityNew',
       region: '#AddressProvinceNew',
@@ -42,7 +41,6 @@ export default [{
     countryValue: "New Zealand",
     elements: {
       address1: '#AddressAddress1New',
-      address2: '#AddressAddress2New',
       suburb: '#AddressAddress2New',
       city: '#AddressCityNew',
       region: '#AddressProvinceNew',
@@ -61,4 +59,33 @@ export default [{
     },
     stateMappings: userRegistrationStateMappings
   }
-}]
+},
+{
+  label: "User Registration Address Form Alternate 2",
+  layoutSelectors: ["#address_form_new"],
+  countryIdentifier: '#address_country_new',
+  searchIdentifier: '#address_address1_new',
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: '#address_address1_new',
+      address2: '#address_address2_new',
+      city: '#address_city_new',
+      region: '#address_province_new',
+      postcode: '#address_zip_new',
+    },
+    regionMappings: userRegistrationRegionMappings
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: '#address_address1_new',
+      address2: '#address_address2_new',
+      suburb: '#address_city_new',
+      state: '#address_province_new',
+      postcode: '#address_zip_new',
+    },
+    stateMappings: userRegistrationStateMappings
+  }
+}
+]

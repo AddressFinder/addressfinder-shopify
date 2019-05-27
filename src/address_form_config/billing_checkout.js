@@ -29,7 +29,7 @@ export default [{
   }
 },
 {
-  label: "Billing Checkout 2",
+  label: "Billing Checkout Alternate",
   layoutSelectors: [".fieldset--billing-address, #address1_billing"],
   countryIdentifier: '#checkout_billing_address_country',
   searchIdentifier: "#address1_billing",
