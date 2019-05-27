@@ -44,14 +44,13 @@ export default class ConfigManager {
       var id = identifyingElement['id'].split('_')[1]
        var formConfig = {
         label: `Edit Address Form ${index}`,
-        layoutSelector: `#EditAddress_${id}`,
+        layoutSelectors: [`#EditAddress_${id}`],
         countryIdentifier: `#AddressCountry_${id}`,
         searchIdentifier: `#AddressAddress1_${id}`,
         nz: {
           countryValue: "New Zealand",
           elements: {
             address1: `#AddressAddress1_${id}`,
-            address2: null,
             suburb: `#AddressAddress2_${id}`,
             city: `#AddressCity_${id}`,
             region: `#AddressProvince_${id}`,
