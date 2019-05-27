@@ -14,9 +14,9 @@ export default class ConfigManager {
     let dynamicForms = this.generateDynamicForms()
 
     const addressFormConfigurations = [
-      BillingCheckout,
-      ShippingCheckout,
-      userRegistrationNewAddress,
+      ...BillingCheckout,
+      ...ShippingCheckout,
+      ...userRegistrationNewAddress,
       ...dynamicForms
     ]
 

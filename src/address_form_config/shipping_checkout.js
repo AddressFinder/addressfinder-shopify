@@ -29,12 +29,12 @@ export default [{
   }
 },
 {
-  label: "Shipping Checkout 2",
+  label: "Shipping Checkout Alternate",
   layoutSelectors: ["#shipping-address"],
   countryIdentifier: '#checkout_shipping_address_country',
   searchIdentifier: "#checkout_shipping_address_address1",
   nz: {
-    countryValue: "New Zealand",
+    countryValue: "NZ",
     elements: {
       address1: '#checkout_shipping_address_address1',
       suburb: '#checkout_shipping_address_address2',
@@ -45,7 +45,7 @@ export default [{
     regionMappings: regionMappings
   },
   au: {
-    countryValue: "Australia",
+    countryValue: "AU",
     elements: {
       address1: '#checkout_shipping_address_address1',
       address2: '#checkout_shipping_address_address2',

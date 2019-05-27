@@ -34,7 +34,7 @@ export default [{
   }
 },
 {
-  label: "User Registration Address Form 2",
+  label: "User Registration Address Form Alternate",
   layoutSelectors: ["#AddAddress"],
   countryIdentifier: '#AddressCountryNew',
   searchIdentifier: '#AddressAddress1New',

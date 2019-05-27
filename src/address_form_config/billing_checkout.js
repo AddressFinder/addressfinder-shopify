@@ -30,11 +30,11 @@ export default [{
 },
 {
   label: "Billing Checkout 2",
-  layoutSelectors: [".fieldset--billing-address"],
+  layoutSelectors: [".fieldset--billing-address, #address1_billing"],
   countryIdentifier: '#checkout_billing_address_country',
   searchIdentifier: "#address1_billing",
   nz: {
-    countryValue: "New Zealand",
+    countryValue: "NZ",
     elements: {
       address1: '#address1_billing',
       suburb: '#address2_billing',
@@ -45,7 +45,7 @@ export default [{
     regionMappings: regionMappings
   },
   au: {
-    countryValue: "Australia",
+    countryValue: "AU",
     elements: {
       address1: '#address1_billing',
       address2: '#address2_billing',

@@ -433,7 +433,7 @@ function () {
     value: function load() {
       // This function is called when the page mutates and adds any dynamic configurations we may be missing
       var dynamicForms = this.generateDynamicForms();
-      var addressFormConfigurations = [__WEBPACK_IMPORTED_MODULE_3__address_form_config_billing_checkout__["a" /* default */], __WEBPACK_IMPORTED_MODULE_4__address_form_config_shipping_checkout__["a" /* default */], __WEBPACK_IMPORTED_MODULE_5__address_form_config_user_registration_new_address__["a" /* default */]].concat(_toConsumableArray(dynamicForms));
+      var addressFormConfigurations = [].concat(_toConsumableArray(__WEBPACK_IMPORTED_MODULE_3__address_form_config_billing_checkout__["a" /* default */]), _toConsumableArray(__WEBPACK_IMPORTED_MODULE_4__address_form_config_shipping_checkout__["a" /* default */]), _toConsumableArray(__WEBPACK_IMPORTED_MODULE_5__address_form_config_user_registration_new_address__["a" /* default */]), _toConsumableArray(dynamicForms));
       return addressFormConfigurations;
     }
   }, {
