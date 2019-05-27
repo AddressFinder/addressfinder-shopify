@@ -1,3 +1,8 @@
+##[1.3.1] - 2019-05-27
+###Added
+- Updated to latest addressfinder-webpage-tools
+- Added function for easy debugging
+
 ##[1.3.0] - 2019-04-12
 ###Added
 - Updated to use new addressfinder-webpage-tools npm package
