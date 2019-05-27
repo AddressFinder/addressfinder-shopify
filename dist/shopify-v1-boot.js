@@ -950,11 +950,11 @@ module.exports = function (method, arg) {
   }
 }, {
   label: "Billing Checkout 2",
-  layoutSelectors: [".fieldset--billing-address"],
+  layoutSelectors: [".fieldset--billing-address, #address1_billing"],
   countryIdentifier: '#checkout_billing_address_country',
   searchIdentifier: "#address1_billing",
   nz: {
-    countryValue: "New Zealand",
+    countryValue: "NZ",
     elements: {
       address1: '#address1_billing',
       suburb: '#address2_billing',
@@ -965,7 +965,7 @@ module.exports = function (method, arg) {
     regionMappings: __WEBPACK_IMPORTED_MODULE_0__region_mappings__["a" /* default */]
   },
   au: {
-    countryValue: "Australia",
+    countryValue: "AU",
     elements: {
       address1: '#address1_billing',
       address2: '#address2_billing',
@@ -1012,12 +1012,12 @@ module.exports = function (method, arg) {
     stateMappings: null
   }
 }, {
-  label: "Shipping Checkout 2",
+  label: "Shipping Checkout Alternate",
   layoutSelectors: ["#shipping-address"],
   countryIdentifier: '#checkout_shipping_address_country',
   searchIdentifier: "#checkout_shipping_address_address1",
   nz: {
-    countryValue: "New Zealand",
+    countryValue: "NZ",
     elements: {
       address1: '#checkout_shipping_address_address1',
       suburb: '#checkout_shipping_address_address2',
@@ -1028,7 +1028,7 @@ module.exports = function (method, arg) {
     regionMappings: __WEBPACK_IMPORTED_MODULE_0__region_mappings__["a" /* default */]
   },
   au: {
-    countryValue: "Australia",
+    countryValue: "AU",
     elements: {
       address1: '#checkout_shipping_address_address1',
       address2: '#checkout_shipping_address_address2',
@@ -1079,7 +1079,7 @@ module.exports = function (method, arg) {
     stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
   }
 }, {
-  label: "User Registration Address Form 2",
+  label: "User Registration Address Form Alternate",
   layoutSelectors: ["#AddAddress"],
   countryIdentifier: '#AddressCountryNew',
   searchIdentifier: '#AddressAddress1New',
