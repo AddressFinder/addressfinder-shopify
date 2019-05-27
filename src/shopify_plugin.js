@@ -17,6 +17,8 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       this.initPlugin()
       // Create a reference to the initPlugin function so we can call it from the javascript console.
       w.AddressFinder.initPlugin = this.initPlugin
+      
+      this.addressfinderDebugMode = this.addressfinderDebugMode.bind(this)
     }
 
     mutationEventHandler() {
