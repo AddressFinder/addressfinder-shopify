@@ -921,7 +921,7 @@ module.exports = function (method, arg) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__region_mappings__ = __webpack_require__(12);
 
-/* harmony default export */ __webpack_exports__["a"] = ({
+/* harmony default export */ __webpack_exports__["a"] = ([{
   label: "Billing Checkout",
   layoutSelectors: ["#section--billing-address__different"],
   countryIdentifier: '#checkout_billing_address_country',
@@ -948,7 +948,34 @@ module.exports = function (method, arg) {
     },
     stateMappings: null
   }
-});
+}, {
+  label: "Billing Checkout 2",
+  layoutSelectors: [".fieldset--billing-address"],
+  countryIdentifier: '#checkout_billing_address_country',
+  searchIdentifier: "#address1_billing",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: '#address1_billing',
+      suburb: '#address2_billing',
+      city: '#city_billing',
+      region: '.address_info_billing select[name=province_billing]',
+      postcode: '#checkout_billing_address_zip'
+    },
+    regionMappings: __WEBPACK_IMPORTED_MODULE_0__region_mappings__["a" /* default */]
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: '#address1_billing',
+      address2: '#address2_billing',
+      suburb: '#city_billing',
+      region: '.address_info_billing select[name=province_billing]',
+      postcode: '#checkout_billing_address_zip'
+    },
+    stateMappings: null
+  }
+}]);
 
 /***/ }),
 /* 42 */
@@ -957,7 +984,7 @@ module.exports = function (method, arg) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__region_mappings__ = __webpack_require__(12);
 
-/* harmony default export */ __webpack_exports__["a"] = ({
+/* harmony default export */ __webpack_exports__["a"] = ([{
   label: "Shipping Checkout",
   layoutSelectors: [".section--shipping-address"],
   countryIdentifier: '#checkout_shipping_address_country',
@@ -984,7 +1011,34 @@ module.exports = function (method, arg) {
     },
     stateMappings: null
   }
-});
+}, {
+  label: "Shipping Checkout 2",
+  layoutSelectors: ["#shipping-address"],
+  countryIdentifier: '#checkout_shipping_address_country',
+  searchIdentifier: "#checkout_shipping_address_address1",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: '#checkout_shipping_address_address1',
+      suburb: '#checkout_shipping_address_address2',
+      city: '#checkout_shipping_address_city',
+      region: '#checkout_shipping_address_province',
+      postcode: '#checkout_shipping_address_zip'
+    },
+    regionMappings: __WEBPACK_IMPORTED_MODULE_0__region_mappings__["a" /* default */]
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: '#checkout_shipping_address_address1',
+      address2: '#checkout_shipping_address_address2',
+      suburb: '#checkout_shipping_address_city',
+      state: '#checkout_shipping_address_province',
+      postcode: '#checkout_shipping_address_zip'
+    },
+    stateMappings: null
+  }
+}]);
 
 /***/ }),
 /* 43 */
@@ -996,7 +1050,7 @@ module.exports = function (method, arg) {
 // We also have a config for editing addresses in the users account. This is dynamically generated in config_manager.js
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({
+/* harmony default export */ __webpack_exports__["a"] = ([{
   label: "User Registration Address Form",
   layoutSelectors: ["#AddressNewForm"],
   countryIdentifier: '#AddressCountryNew',
@@ -1024,7 +1078,35 @@ module.exports = function (method, arg) {
     },
     stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
   }
-});
+}, {
+  label: "User Registration Address Form 2",
+  layoutSelectors: ["#AddAddress"],
+  countryIdentifier: '#AddressCountryNew',
+  searchIdentifier: '#AddressAddress1New',
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: '#AddressAddress1New',
+      address2: '#AddressAddress2New',
+      suburb: '#AddressAddress2New',
+      city: '#AddressCityNew',
+      region: '#AddressProvinceNew',
+      postcode: '#AddressZipNew'
+    },
+    regionMappings: __WEBPACK_IMPORTED_MODULE_0__user_registration_region_mappings__["a" /* default */]
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: '#AddressAddress1New',
+      address2: '#AddressAddress2New',
+      suburb: '#AddressCityNew',
+      state: '#AddressProvinceNew',
+      postcode: '#AddressZipNew'
+    },
+    stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
+  }
+}]);
 
 /***/ }),
 /* 44 */
