@@ -13,12 +13,14 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       // Manages the form configuraions, and creates any dynamic forms
       this.ConfigManager = null
 
-      this._disableGoogleAutocomplete(5);
-      this.initPlugin()
-      // Create a reference to the initPlugin function so we can call it from the javascript console.
-      w.AddressFinder.initPlugin = this.initPlugin
-      
+      this._initPlugin = this._initPlugin.bind(this)
+
+      // bind debug function to the window
       this.addressfinderDebugMode = this.addressfinderDebugMode.bind(this)
+      w.addressfinderDebugMode = this.addressfinderDebugMode
+
+      this._disableGoogleAutocomplete(5);
+      this._initPlugin()
     }
 
     mutationEventHandler() {
@@ -42,7 +44,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
       }
     }
 
-    initPlugin(){
+    _initPlugin(){
     
       const widgetConfig = {
         nzKey: w.AddressFinderPlugin.key,
@@ -78,7 +80,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
     * This allows us to debug more easily on customer sites.
     */
     addressfinderDebugMode() {
-      w.AddressFinderConfig.debug = true
+      w.AddressFinderPlugin.debug = true
       this._initPlugin()
     }
   }

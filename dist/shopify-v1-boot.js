@@ -298,12 +298,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.PageManager = null; // Manages the form configuraions, and creates any dynamic forms
 
       this.ConfigManager = null;
+      this._initPlugin = this._initPlugin.bind(this); // bind debug function to the window
+
+      this.addressfinderDebugMode = this.addressfinderDebugMode.bind(this);
+      w.addressfinderDebugMode = this.addressfinderDebugMode;
 
       this._disableGoogleAutocomplete(5);
 
-      this.initPlugin(); // Create a reference to the initPlugin function so we can call it from the javascript console.
-
-      w.AddressFinder.initPlugin = this.initPlugin;
+      this._initPlugin();
     }
 
     _createClass(ShopifyPlugin, [{
@@ -331,8 +333,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
       }
     }, {
-      key: "initPlugin",
-      value: function initPlugin() {
+      key: "_initPlugin",
+      value: function _initPlugin() {
         var widgetConfig = {
           nzKey: w.AddressFinderPlugin.key,
           auKey: w.AddressFinderPlugin.key,
@@ -365,7 +367,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "addressfinderDebugMode",
       value: function addressfinderDebugMode() {
-        w.AddressFinderConfig.debug = true;
+        w.AddressFinderPlugin.debug = true;
 
         this._initPlugin();
       }
@@ -991,6 +993,7 @@ module.exports = function (method, arg) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__user_registration_region_mappings__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__ = __webpack_require__(11);
+// We also have a config for editing addresses in the users account. This is dynamically generated in config_manager.js
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
