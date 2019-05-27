@@ -399,7 +399,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__address_form_config_user_registration_state_mappings__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__address_form_config_billing_checkout__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__address_form_config_shipping_checkout__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__address_form_config_user_registration_new_address__ = __webpack_require__(43);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -420,7 +419,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-
 var ConfigManager =
 /*#__PURE__*/
 function () {
@@ -433,7 +431,7 @@ function () {
     value: function load() {
       // This function is called when the page mutates and adds any dynamic configurations we may be missing
       var dynamicForms = this.generateDynamicForms();
-      var addressFormConfigurations = [].concat(_toConsumableArray(__WEBPACK_IMPORTED_MODULE_3__address_form_config_billing_checkout__["a" /* default */]), _toConsumableArray(__WEBPACK_IMPORTED_MODULE_4__address_form_config_shipping_checkout__["a" /* default */]), _toConsumableArray(__WEBPACK_IMPORTED_MODULE_5__address_form_config_user_registration_new_address__["a" /* default */]), _toConsumableArray(dynamicForms));
+      var addressFormConfigurations = [].concat(_toConsumableArray(__WEBPACK_IMPORTED_MODULE_3__address_form_config_billing_checkout__["a" /* default */]), _toConsumableArray(__WEBPACK_IMPORTED_MODULE_4__address_form_config_shipping_checkout__["a" /* default */]), _toConsumableArray(dynamicForms));
       return addressFormConfigurations;
     }
   }, {
@@ -443,7 +441,7 @@ function () {
 
       var dynamicForms = []; // find all elements with an ID starting with EditAddress. For example id="EditAddress_345987345"
 
-      var identifyingElements = Array.from(document.querySelectorAll('[id^="EditAddress"]')); // create a new form configuration for each EditAddress form we find
+      var identifyingElements = Array.from(document.querySelectorAll('[id^="address_form_"]')); // create a new form configuration for each EditAddress form we find
 
       identifyingElements.forEach(function (identifyingElement, index) {
         dynamicForms.push(_this._configureDynamicForm(identifyingElement, index));
@@ -456,31 +454,30 @@ function () {
       if (identifyingElement) {
         // Shopify appends a unique identifier to each of the form elements in an EditAddress form.
         // We split this identifier off the id of our identifying element, and add it to our address field ids to find the correct fields
-        var id = identifyingElement['id'].split('_')[1];
         var formConfig = {
           label: "Edit Address Form ".concat(index),
-          layoutSelectors: ["#EditAddress_".concat(id)],
-          countryIdentifier: "#AddressCountry_".concat(id),
-          searchIdentifier: "#AddressAddress1_".concat(id),
+          layoutSelectors: ["#".concat(identifyingElement.id, " input[name='address[address1]']")],
+          countryIdentifier: "#".concat(identifyingElement.id, " select[name='address[country]']"),
+          searchIdentifier: "#".concat(identifyingElement.id, " input[name='address[address1]']"),
           nz: {
             countryValue: "New Zealand",
             elements: {
-              address1: "#AddressAddress1_".concat(id),
-              suburb: "#AddressAddress2_".concat(id),
-              city: "#AddressCity_".concat(id),
-              region: "#AddressProvince_".concat(id),
-              postcode: "#AddressZip_".concat(id)
+              address1: "#".concat(identifyingElement.id, " input[name='address[address1]']"),
+              suburb: "#".concat(identifyingElement.id, " input[name='address[address2]']"),
+              city: "#".concat(identifyingElement.id, " input[name='address[city]']"),
+              region: "#".concat(identifyingElement.id, " select[name='address[province]']"),
+              postcode: "#".concat(identifyingElement.id, " input[name='address[zip]']")
             },
             regionMappings: __WEBPACK_IMPORTED_MODULE_1__address_form_config_user_registration_region_mappings__["a" /* default */]
           },
           au: {
             countryValue: "Australia",
             elements: {
-              address1: "#AddressAddress1_".concat(id),
-              address2: "#AddressAddress2_".concat(id),
-              suburb: "#AddressCity_".concat(id),
-              state: "#AddressProvince_".concat(id),
-              postcode: "#AddressZip_".concat(id)
+              address1: "#".concat(identifyingElement.id, " input[name='address[address1]']"),
+              address2: "#".concat(identifyingElement.id, " input[name='address[address2]']"),
+              suburb: "#".concat(identifyingElement.id, " input[name='address[city]']"),
+              state: "#".concat(identifyingElement.id, " select[name='address[province]']"),
+              postcode: "#".concat(identifyingElement.id, " input[name='address[zip]']")
             },
             stateMappings: __WEBPACK_IMPORTED_MODULE_2__address_form_config_user_registration_state_mappings__["a" /* default */]
           }
@@ -1041,45 +1038,7 @@ module.exports = function (method, arg) {
 }]);
 
 /***/ }),
-/* 43 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__user_registration_region_mappings__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__ = __webpack_require__(11);
-// We also have a config for editing addresses in the users account. This is dynamically generated in config_manager.js
-
-
-/* harmony default export */ __webpack_exports__["a"] = ([{
-  label: "User Registration Address Form",
-  layoutSelectors: ["input[name='address[address1]']", "input[name='address[address2]']"],
-  countryIdentifier: "select[name='address[country]']",
-  searchIdentifier: "input[name='address[address1]']",
-  nz: {
-    countryValue: "New Zealand",
-    elements: {
-      address1: "input[name='address[address1]']",
-      suburb: "input[name='address[address2]']",
-      city: "input[name='address[city]']",
-      region: "select[name='address[province]']",
-      postcode: "input[name='address[zip]']"
-    },
-    regionMappings: __WEBPACK_IMPORTED_MODULE_0__user_registration_region_mappings__["a" /* default */]
-  },
-  au: {
-    countryValue: "Australia",
-    elements: {
-      address1: "input[name='address[address1]']",
-      address2: "input[name='address[address2]']",
-      suburb: "input[name='address[city]']",
-      state: "select[name='address[province]']",
-      postcode: "input[name='address[zip]']"
-    },
-    stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
-  }
-}]);
-
-/***/ }),
+/* 43 */,
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
