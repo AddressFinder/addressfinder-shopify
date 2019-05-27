@@ -1047,6 +1047,10 @@ module.exports = function (method, arg) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__user_registration_region_mappings__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__ = __webpack_require__(11);
+var _elements;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 // We also have a config for editing addresses in the users account. This is dynamically generated in config_manager.js
 
 
@@ -1095,25 +1099,22 @@ module.exports = function (method, arg) {
   },
   au: {
     countryValue: "Australia",
-    elements: {
+    elements: (_elements = {
       address1: '#AddressAddress1New',
-      address2: '#AddressAddress2New',
-      suburb: '#AddressCityNew',
-      state: '#AddressProvinceNew',
-      postcode: '#AddressZipNew'
-    },
+      suburb: '#AddressAddress2New'
+    }, _defineProperty(_elements, "suburb", '#AddressCityNew'), _defineProperty(_elements, "state", '#AddressProvinceNew'), _defineProperty(_elements, "postcode", '#AddressZipNew'), _elements),
     stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
   }
 }, {
   label: "User Registration Address Form Alternate 2",
-  layoutSelectors: ["#address_form_new"],
+  layoutSelectors: ["#address_form_new", "#address_address1_new"],
   countryIdentifier: '#address_country_new',
   searchIdentifier: '#address_address1_new',
   nz: {
     countryValue: "New Zealand",
     elements: {
       address1: '#address_address1_new',
-      address2: '#address_address2_new',
+      suburb: '#address_address2_new',
       city: '#address_city_new',
       region: '#address_province_new',
       postcode: '#address_zip_new'
@@ -1128,6 +1129,33 @@ module.exports = function (method, arg) {
       suburb: '#address_city_new',
       state: '#address_province_new',
       postcode: '#address_zip_new'
+    },
+    stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
+  }
+}, {
+  label: "User Registration Address Form Alternate 3",
+  layoutSelectors: ["#address_form_new"],
+  countryIdentifier: "input[name='address[country]']",
+  searchIdentifier: "input[name='address[address1]']",
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: "input[name='address[address1]']",
+      suburb: "input[name='address[address2]']",
+      city: "input[name='address[city]']",
+      region: "input[name='address[province]']",
+      postcode: "input[name='address[zip]']"
+    },
+    regionMappings: __WEBPACK_IMPORTED_MODULE_0__user_registration_region_mappings__["a" /* default */]
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: "input[name='address[address1]']",
+      address2: "input[name='address[address2]']",
+      suburb: "input[name='address[city]']",
+      state: "input[name='address[province]']",
+      postcode: "input[name='address[zip]']"
     },
     stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
   }
