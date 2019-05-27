@@ -949,7 +949,7 @@ module.exports = function (method, arg) {
     stateMappings: null
   }
 }, {
-  label: "Billing Checkout 2",
+  label: "Billing Checkout Alternate",
   layoutSelectors: [".fieldset--billing-address, #address1_billing"],
   countryIdentifier: '#checkout_billing_address_country',
   searchIdentifier: "#address1_billing",
@@ -1059,7 +1059,6 @@ module.exports = function (method, arg) {
     countryValue: "New Zealand",
     elements: {
       address1: '#AddressAddress1New',
-      address2: '#AddressAddress2New',
       suburb: '#AddressAddress2New',
       city: '#AddressCityNew',
       region: '#AddressProvinceNew',
@@ -1087,7 +1086,6 @@ module.exports = function (method, arg) {
     countryValue: "New Zealand",
     elements: {
       address1: '#AddressAddress1New',
-      address2: '#AddressAddress2New',
       suburb: '#AddressAddress2New',
       city: '#AddressCityNew',
       region: '#AddressProvinceNew',
@@ -1103,6 +1101,33 @@ module.exports = function (method, arg) {
       suburb: '#AddressCityNew',
       state: '#AddressProvinceNew',
       postcode: '#AddressZipNew'
+    },
+    stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
+  }
+}, {
+  label: "User Registration Address Form Alternate 2",
+  layoutSelectors: ["#address_form_new"],
+  countryIdentifier: '#address_country_new',
+  searchIdentifier: '#address_address1_new',
+  nz: {
+    countryValue: "New Zealand",
+    elements: {
+      address1: '#address_address1_new',
+      address2: '#address_address2_new',
+      city: '#address_city_new',
+      region: '#address_province_new',
+      postcode: '#address_zip_new'
+    },
+    regionMappings: __WEBPACK_IMPORTED_MODULE_0__user_registration_region_mappings__["a" /* default */]
+  },
+  au: {
+    countryValue: "Australia",
+    elements: {
+      address1: '#address_address1_new',
+      address2: '#address_address2_new',
+      suburb: '#address_city_new',
+      state: '#address_province_new',
+      postcode: '#address_zip_new'
     },
     stateMappings: __WEBPACK_IMPORTED_MODULE_1__user_registration_state_mappings__["a" /* default */]
   }
