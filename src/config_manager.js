@@ -23,10 +23,10 @@ export default class ConfigManager {
 
   generateDynamicForms() {
     let dynamicForms = []
-    // find all elements with an ID starting with EditAddress. For example id="EditAddress_345987345"
+    // find all elements with an ID starting with address_form_. For example id="address_form_345987345"
     let identifyingElements = Array.from(document.querySelectorAll('[id^="address_form_"]'))
   
-    // create a new form configuration for each EditAddress form we find
+    // create a new form configuration for each 'address_form_' form we find
     identifyingElements.forEach((identifyingElement, index) => {
       dynamicForms.push(this._configureDynamicForm(identifyingElement, index))
     })
@@ -36,10 +36,10 @@ export default class ConfigManager {
   _configureDynamicForm(identifyingElement, index) {
     if (identifyingElement) {
 
-      // Shopify appends a unique identifier to each of the form elements in an EditAddress form.
-      // We split this identifier off the id of our identifying element, and add it to our address field ids to find the correct fields
+      // These fields don't have any consistent unique identifiers, so we search for the field with the correct name attribute,
+      // inside of a parent, which does have a unique id. This allows a form helper to be created for each Form
       var formConfig = {
-        label: `Edit Address Form ${index}`,
+        label: `User Address Form ${index}`,
         layoutSelectors: [`#${identifyingElement.id} input[name='address[address1]']`],
         countryIdentifier: `#${identifyingElement.id} select[name='address[country]']`,
         searchIdentifier: `#${identifyingElement.id} input[name='address[address1]']`,
