@@ -5,7 +5,7 @@ import { PageManager, MutationManager } from '@addressfinder/addressfinder-webpa
   class ShopifyPlugin {
     constructor() {
 
-      this.version = "1.3.1"
+      this.version = "1.3.2"
       
       // Manages the mapping of the form configurations to the DOM. 
       this.PageManager = null
