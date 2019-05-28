@@ -1,3 +1,7 @@
+##[1.3.2] - 2019-05-28
+###Added
+- Added additional form configurations
+
 ##[1.3.1] - 2019-05-27
 ###Added
 - Updated to latest addressfinder-webpage-tools
